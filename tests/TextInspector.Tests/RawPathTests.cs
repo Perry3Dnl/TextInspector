@@ -2,7 +2,7 @@ using TextInspector;
 
 namespace TextInspector.Tests;
 
-public sealed class LiteRawPathTests
+public sealed class RawPathTests
 {
     private static TextInspectorRulePattern Rule(string key, string regex) => new()
     {
@@ -108,13 +108,13 @@ public sealed class LiteRawPathTests
     }
 
     [Fact]
-    public void LiteEditionExposesOnlyReadOnlyRuleDescriptorsAndNoPolicyCompilation()
+    public void PresetExposesOnlyReadOnlyRuleDescriptorsAndNoPolicyCompilation()
     {
         var engine = TextInspectorEngine.Create();
         Assert.Equal(0, engine.CompiledPolicyCount);
-        Assert.NotEmpty(engine.CompilationDiagnostics is null ? Array.Empty<TextInspectorDiagnostic>() : TextInspectorLite.Rules);
-        Assert.Equal(76, TextInspectorLite.Rules.Count);
-        var metadata = TextInspectorLite.Rules[0];
+        Assert.NotEmpty(engine.CompilationDiagnostics is null ? Array.Empty<TextInspectorDiagnostic>() : TextInspectorDefaults.Rules);
+        Assert.Equal(76, TextInspectorDefaults.Rules.Count);
+        var metadata = TextInspectorDefaults.Rules[0];
         Assert.False(string.IsNullOrWhiteSpace(metadata.Key));
         Assert.True(Enum.IsDefined(typeof(TextInspectorRuleCategory), metadata.Category));
     }

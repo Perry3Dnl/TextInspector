@@ -4,11 +4,11 @@ using TextInspector;
 namespace TextInspector.Tests;
 
 /// <summary>
-/// Lite keeps these DTOs for cross-edition report compatibility even though its
+/// TextInspector keeps these DTOs for cross-edition report compatibility even though its
 /// evaluator never emits URL intelligence or composite policy matches.
 /// Ensure their serialized shape stays usable for shared UIs and upgrade paths.
 /// </summary>
-public sealed class LiteCompatibilityContractTests
+public sealed class CompatibilityContractTests
 {
     [Fact]
     public void UrlObservationRoundTripsEveryPublicMetadataField()

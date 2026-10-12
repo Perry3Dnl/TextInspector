@@ -2,7 +2,7 @@ using TextInspector;
 
 namespace TextInspector.Tests;
 
-/// <summary>Boundary tests for configuration validation, the same in Lite and Pro.</summary>
+/// <summary>Boundary tests for configuration validation, the same in TextInspector and Pro.</summary>
 public sealed class ScoringValidationBoundaryTests
 {
     [Theory]

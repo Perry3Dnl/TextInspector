@@ -1,6 +1,6 @@
-# TextInspector Lite: practical examples
+# TextInspector: practical examples
 
-These examples assume the `TextInspector.Lite` NuGet package. Import `TextInspector` and keep the engine instance for reuse; compile it once, not for every request.
+These examples assume the `TextInspector` NuGet package. Import `TextInspector` and keep the engine instance for reuse; compile it once, not for every request.
 
 ## 1. First result in under a minute
 
@@ -36,7 +36,7 @@ Use `Start` and `Length` against the **original input**, not a separately normal
 ## 3. Basic masking and disabling rules
 
 ```csharp
-var maskedInspector = TextInspectorEngine.Create(new TextInspectorLiteOptions
+var maskedInspector = TextInspectorEngine.Create(new TextInspectorOptions
 {
     EnableMasking = true,
     MaskCharacter = '*',
@@ -46,12 +46,12 @@ var masked = maskedInspector.Inspect("hello@example.com").MaskedText;
 Console.WriteLine(masked);
 ```
 
-Lite masks all matched evidence when enabled. For category/tag-filtered masking or custom rules use Pro. The supported Lite API has a fixed preset; you may disable built-in rules and categories.
+TextInspector masks all matched evidence when enabled. For category/tag-filtered masking or custom rules use Pro. The supported TextInspector API has a fixed preset; you may disable built-in rules and categories.
 
 ## 4. ASP.NET Core dependency injection
 
 ```bash
-dotnet add package TextInspector.Lite.AspNetCore --version 1.0.0
+dotnet add package TextInspector.AspNetCore --version 1.0.0
 ```
 
 In `Program.cs`:
@@ -61,15 +61,15 @@ using TextInspector.AspNetCore;
 builder.Services.AddTextInspector();
 ```
 
-Inject `ITextInspectorService` into an endpoint/service and call `CreateReport(text)`. Do not register Lite and Pro packages in the same project: they intentionally share assembly and namespace names.
+Inject `ITextInspectorService` into an endpoint/service and call `CreateReport(text)`. Do not register TextInspector and Pro packages in the same project: they intentionally share assembly and namespace names.
 
 ## 5. When and how to upgrade
 
-A free, non-monetized public app may use Lite, even if published by a company. If the app introduces advertising, subscriptions, paid access or becomes part of a paid service, replace Lite with licensed Pro **before** monetization. See [the migration checklist](MIGRATION_LITE_TO_PRO.md).
+A free, non-monetized public app may use TextInspector, even if published by a company. If the app introduces advertising, subscriptions, paid access or becomes part of a paid service, replace TextInspector with licensed Pro **before** monetization. See [the migration checklist](MIGRATION_TO_PRO.md).
 
 ```bash
-dotnet remove package TextInspector.Lite
-dotnet add package TextInspector --version 1.0.0
+dotnet remove package TextInspector
+dotnet add package TextInspector.Pro --version 1.0.0
 ```
 
 Replace `TextInspectorEngine.Create()` with `TextInspectorPro.Create()`; `CreateReport()`, `Inspect()`, evidence/source spans and report contracts remain available. Pro includes more rules and policies, so *risk outputs may change*. Compare reports on representative input before enabling Pro in production.
