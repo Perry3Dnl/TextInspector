@@ -1,0 +1,1220 @@
+[
+  {
+    "TextInspectorRuleId": "22222222-2222-2222-2222-000000000001",
+    "Key": "ChildMinor_Base",
+    "Category": "ChildMinor",
+    "SeverityScore": 7,
+    "RuleWeight": 15,
+    "RegexPattern": "\\b(child(?:ren|hood)?|kid(?:s|dy|die)?|minor(?:s)?|underage(?:r|s)?|school\\s*(?:girl|boy|child)|toddler|infant|bab(?:y|ies)|girl(?:s)?|boy(?:s)?|teen(?:s|ager)?)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 100,
+      "RequireAnyCategories": [
+        "Csam",
+        "NonConsensualSex",
+        "Trafficking",
+        "ExploitativePorn",
+        "Threats",
+        "IllegalServices",
+        "AdultContent"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "22222222-2222-2222-2222-000000000003",
+    "Key": "CSAM_Keywords",
+    "Category": "Csam",
+    "SeverityScore": 10,
+    "RuleWeight": 1000,
+    "RegexPattern": "\\b(csam|child\\s*porn(?:o|ography)?|childporn(?:o)?|pedophil(?:e|ia|ic))\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "44444444-4444-4444-4444-000000000010",
+    "Key": "Grooming_Psychology",
+    "Category": "ChildMinor",
+    "SeverityScore": 8,
+    "RuleWeight": 75,
+    "RegexPattern": "\\b(too\\s+mature\\s+for\\s+your\\s+age|your\\s+friends\\s+don't\\s+understand|i'm\\s+the\\s+only\\s+one\\s+who\\s+cares|don't\\s+tell\\s+anyone|keep\\s+it\\s+between\\s+us|they\\s+will\\s+get\\s+mad|secret\\s+friend)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 140,
+      "RequireAnyRuleKeys": [
+        "Underage_Age_Declaration",
+        "ChildMinor_Base"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:minor|underage|teen(?:ager)?|school\\s*(?:girl|boy|child)|\\d{1,2}\\s*(?:yo|y\\/o|years?\\s*old))\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "BBBBBBBB-BBBB-BBBB-BBBB-000000000021",
+    "Key": "Solicitation_Rating_System",
+    "Category": "IllegalServices",
+    "SeverityScore": 1,
+    "RuleWeight": 40,
+    "RegexPattern": "\\b(?:score|rating|rated|solid|looks?|face|body)\\s+(?:a|is|of)?\\s*(?:[1-9]|10)\\s*(?:\\/|out\\s*of)\\s*10\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 70,
+      "RequireAnyRuleKeys": [
+        "Solicitation_SexWork_Shorthand",
+        "Services_Solicitation",
+        "Indicator_Solicitation_Context"
+      ],
+      "RequireAnyCategories": [
+        "AdultContent"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "BBBBBBBB-BBBB-BBBB-BBBB-000000000020",
+    "Key": "Solicitation_SexWork_Shorthand",
+    "Category": "IllegalServices",
+    "SeverityScore": 1,
+    "RuleWeight": 40,
+    "RegexPattern": "\\b(dfk|bbbj(?:tc)?|cim|cob|gfe|pse|owo|daty|lsc|cimw|cops|incall|outcall|session|donations?|hhr|full\\s*service|qv|score\\s*a\\s*(?:[1-9]|10))\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 70,
+      "RequireAnyRuleKeys": [
+        "Services_Solicitation",
+        "Indicator_Solicitation_Context"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:incall|outcall|gfe|service|meet|cash|roses|full\\s+service|escort|appointment)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "22222222-2222-2222-2222-000000000030",
+    "Key": "Emoji_Risk_Indicators",
+    "Category": "Obfuscation",
+    "SeverityScore": 7,
+    "RuleWeight": 60,
+    "RegexPattern": "(🍕|🧀|📸|📽️|🎬|💊|🔌|🚀|🍒|🍑|💰|💦)",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "BBBBBBBB-BBBB-BBBB-BBBB-000000000025",
+    "Key": "Trafficking_Logistics",
+    "Category": "Trafficking",
+    "SeverityScore": 5,
+    "RuleWeight": 50,
+    "RegexPattern": "\\b(on\\s+the\\s+track|main\\s+bottom|new\\s+in\\s+town|fresh\\s+off\\s+the\\s+bus|quota\\s+met|working\\s+the\\s+circuit|stable\\s+member|the\\s+blade)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 110,
+      "RequireAnyRegexPatterns": [
+        "\\b(?:incall|outcall|bring\\s+cash|cash\\s+only|price|available\\s+now|room\\s+\\d+|motel|new\\s+girls?|full\\s+service|roses\\s+for\\s+meet)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "CCCCCCCC-CCCC-CCCC-CCCC-000000000010",
+    "Key": "Crypto_Tickers_Major",
+    "Category": "Fraud",
+    "SeverityScore": 4,
+    "RuleWeight": 30,
+    "RegexPattern": "\\b(btc|bitcoin|eth(?:ereum)?|sol(?:ana)?|xrp|ada|cardano|dot|polkadot|avax|avalanche|link|chainlink|matic|polygon|ltc|litecoin|uni|uniswap|xlm|stellar|xmr|monero)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 90,
+      "RequireAnyRuleKeys": [
+        "Crypto_Scam_Patterns",
+        "Fraud_Scams_Crypto"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:guaranteed\\s+returns?|double\\s+your|100x|to\\s+the\\s+moon|seed\\s+phrase|private\\s+key|wallet\\s+connect|presale\\s+bonus|rug\\s*pull|pump\\s+and\\s+dump|air\\s*drop|airdrop)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "CCCCCCCC-CCCC-CCCC-CCCC-000000000020",
+    "Key": "Crypto_Tickers_Meme",
+    "Category": "Fraud",
+    "SeverityScore": 6,
+    "RuleWeight": 60,
+    "RegexPattern": "\\b(doge(?:coin)?|shib(?:a\\s*inu)?|pepe|bonk|luna|safemoon|floki|babydoge|moonboys?|shitcoin|memecoin)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 90,
+      "RequireAnyRuleKeys": [
+        "Crypto_Scam_Patterns",
+        "Fraud_Scams_Crypto"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:guaranteed\\s+returns?|double\\s+your|100x|to\\s+the\\s+moon|seed\\s+phrase|private\\s+key|wallet\\s+connect|presale\\s+bonus|rug\\s*pull|pump\\s+and\\s+dump|air\\s*drop|airdrop)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "CCCCCCCC-CCCC-CCCC-CCCC-000000000030",
+    "Key": "Crypto_Scam_Patterns",
+    "Category": "Fraud",
+    "SeverityScore": 9,
+    "RuleWeight": 150,
+    "RegexPattern": "\\b(rug\\s*pull|pump\\s*and\\s*dump|guaranteed\\s*returns|100x|presale\\s*bonus)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "99999999-9999-9999-9999-000000000003",
+    "Key": "Threat_Sextortion_Financial",
+    "Category": "NonConsensualSex",
+    "SeverityScore": 10,
+    "RuleWeight": 150,
+    "RegexPattern": "\\b((?:pay|money|cash|dollars|btc|crypto)\\s+(?:or\\s+i\\s+post)|(?:delete|remove)\\s+(?:if\\s+you\\s+pay)|(?:don't\\s+want\\s+your\\s+family\\s+to\\s+see))\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 100,
+      "RequireAnyRegexPatterns": [
+        "\\b(?:pay|money|cash|dollars|btc|crypto|post|delete|remove|nudes?|pics?|photos?|videos?|content|recordings?)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "22222222-2222-2222-2222-000000000017",
+    "Key": "Obfuscation_LeetSpeak_Critical",
+    "Category": "Obfuscation",
+    "SeverityScore": 8,
+    "RuleWeight": 80,
+    "RegexPattern": "\\b(p[0o*]rn|pr[0o]n|p[e3]d[o0]|l[o0]l[i1]|c[\\.\\s\\-*_]+p)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "44444444-4444-4444-4444-000000000006",
+    "Key": "Child_Meeting_Logistics",
+    "Category": "ChildMinor",
+    "SeverityScore": 9,
+    "RuleWeight": 90,
+    "RegexPattern": "\\b(pick\\s+you\\s+up|come\\s+over|meet\\s+me\\s+at|get\\s+an\\s+uber|buy\\s+your\\s+ticket|bus\\s+station|park\\s+near|where\\s+do\\s+you\\s+live)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 140,
+      "RequireAnyRuleKeys": [
+        "Underage_Age_Declaration",
+        "ChildMinor_Base"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:minor|underage|teen(?:ager)?|school\\s*(?:girl|boy|child)|\\d{1,2}\\s*(?:yo|y\\/o|years?\\s*old))\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "55555555-5555-5555-5555-000000000007",
+    "Key": "Platform_Link_Bypass",
+    "Category": "PlatformIntegrity",
+    "SeverityScore": 6,
+    "RuleWeight": 60,
+    "RegexPattern": "\\b\\w+\\s*[\\[\\(]?\\s*(?:dot|\\.)\\s*[\\]\\)]?\\s*(?:com|net|org|xyz|top|site|app|link)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "44444444-4444-4444-4444-000000000004",
+    "Key": "Child_Grooming_Behavior",
+    "Category": "ChildMinor",
+    "SeverityScore": 9,
+    "RuleWeight": 80,
+    "RegexPattern": "\\b(don't\\s+tell\\s+your\\s+(?:parents|mom|dad)|our\\s+little\\s+secret|send\\s+me\\s+a\\s+pic|are\\s+you\\s+home\\s+alone|add\\s+me\\s+on\\s+snap|move\\s+to\\s+discord|move\\s+to\\s+telegram)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 140,
+      "RequireAnyRuleKeys": [
+        "Underage_Age_Declaration",
+        "ChildMinor_Base"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:minor|underage|teen(?:ager)?|school\\s*(?:girl|boy|child)|\\d{1,2}\\s*(?:yo|y\\/o|years?\\s*old))\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "66666666-6666-6666-6666-000000000001",
+    "Key": "Underage_Gamer_Context",
+    "Category": "UnderageContext",
+    "SeverityScore": 5,
+    "RuleWeight": 40,
+    "RegexPattern": "\\b(roblox|minecraft|fortnite|free\\s+robux|vbucks|hypixel|adopt\\s+me|what\\s+grade\\s+are\\s+you\\s+in)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "22222222-2222-2222-2222-000000000005",
+    "Key": "CSAM_Shorthand_Evasion",
+    "Category": "Csam",
+    "SeverityScore": 10,
+    "RuleWeight": 1000,
+    "RegexPattern": "\\b(c[\\.\\-\\s_]+p|p[e3]d[o0]|p[e3]d[o0]s|loli(?:ta)?|shota)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "66666666-6666-6666-6666-000000000002",
+    "Key": "Underage_Age_Declaration",
+    "Category": "UnderageContext",
+    "SeverityScore": 6,
+    "RuleWeight": 50,
+    "RegexPattern": "(?:\\b(?:i\\s*am|i\\s*m|i'm)\\s*(?:[1-9]|1[0-7])(?:\\s*(?:yo|y\\/o|yrs|years\\s*old))?\\b|\\b(?:[1-9]|1[0-7])\\s*(?:yo|y\\/o|yrs|years\\s*old)\\b|\\bunder\\s*18\\b)",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "66666666-6666-6666-6666-000000000003",
+    "Key": "Hard_Age_Digits_Filter",
+    "Category": "UnderageContext",
+    "SeverityScore": 8,
+    "RuleWeight": 100,
+    "RegexPattern": "\\b(?:[1-9]|1[0-7])\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 18,
+      "RequireAnyRuleKeys": [
+        "Underage_Age_Declaration"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:yo|y/o|yrs?|years?\\s*old|age(?:d)?|grade|underage|minor|teen(?:ager)?|school)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "22222222-2222-2222-2222-000000000006",
+    "Key": "CSAM_Slang_Dictionary",
+    "Category": "Csam",
+    "SeverityScore": 10,
+    "RuleWeight": 1000,
+    "RegexPattern": "\\b(cheese\\s*p|c\\.p|p[e3]d[o0]|loli(?:ta)?|shota|bcl)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "33333333-3333-3333-3333-000000000001",
+    "Key": "Threat_Violence",
+    "Category": "Threats",
+    "SeverityScore": 9,
+    "RuleWeight": 60,
+    "RegexPattern": "\\b(i(?:'m|\\s+am)?\\s*(?:gonna|going\\s+to)\\s*(?:kill|murder|hurt|harm)\\s+you|kill(?:ing)?\\s+(?:them|him|her)\\s+all)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "33333333-3333-3333-3333-000000000003",
+    "Key": "Threat_Stalking",
+    "Category": "Threats",
+    "SeverityScore": 8,
+    "RuleWeight": 55,
+    "RegexPattern": "\\b(outside\\s+(?:your|her|his)\\s+window|watching\\s+(?:you|her|him)|coming\\s+to\\s+find\\s+you|know\\s+where\\s+you\\s+live)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "33333333-3333-3333-3333-000000000002",
+    "Key": "Threat_Doxing",
+    "Category": "Threats",
+    "SeverityScore": 8,
+    "RuleWeight": 50,
+    "RegexPattern": "\\b(home\\s+address|phone\\s+number|legal\\s+name|identity\\s+theft|dox(?:x)?ed|ip\\s+address|ssn)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "33333333-3333-3333-3333-000000000004",
+    "Key": "Threat_SelfHarm",
+    "Category": "Threats",
+    "SeverityScore": 6,
+    "RuleWeight": 40,
+    "RegexPattern": "\\b(end\\s+it\\s+all|cutting\\s+my\\s+wrists?|jump(?:ing)?\\s+off\\s+(?:a|the)\\s+(?:bridge|building|roof|balcony)|suicid(?:e|al)|kill\\s+myself)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "AAAAAAAA-AAAA-AAAA-AAAA-000000000001",
+    "Key": "Drug_Prescription",
+    "Category": "DrugSales",
+    "SeverityScore": 7,
+    "RuleWeight": 45,
+    "RegexPattern": "\\b(xanax|alpra|valium|adderall|oxy(?:contin|codone)|percocet|vicodin|viagra|sildenafil|cialis|online\\s+pharmacy)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 70,
+      "RequireAnyRuleKeys": [
+        "Drug_Illegal",
+        "External_Chat_Apps",
+        "PII_Contact_Bypass"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:buy|sell|selling|sold|for\\s+sale|order|ship(?:ping)?|price|cash|vendor|delivery|discreet|discrete\\s+packaging)\\b"
+      ],
+      "ExcludeAnyRegexPatterns": [
+        "\\b(?:prescription|pharmacy|pharmacist|doctor|clinic|hospital|medical|licensed)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "AAAAAAAA-AAAA-AAAA-AAAA-000000000002",
+    "Key": "Drug_PEDs",
+    "Category": "DrugSales",
+    "SeverityScore": 4,
+    "RuleWeight": 30,
+    "RegexPattern": "\\b(anabolic|steroids?|testosterone\\s+cypionate|trembo|dbol|winstrol|hgh|peptides|sarms)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 70,
+      "RequireAnyRuleKeys": [
+        "Drug_Illegal",
+        "External_Chat_Apps",
+        "PII_Contact_Bypass"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:buy|sell|selling|sold|for\\s+sale|order|ship(?:ping)?|price|cash|vendor|delivery|discreet|discrete\\s+packaging)\\b"
+      ],
+      "ExcludeAnyRegexPatterns": [
+        "\\b(?:prescription|pharmacy|pharmacist|doctor|clinic|hospital|medical|licensed)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "22222222-2222-2222-2222-000000000011",
+    "Key": "Drug_Illegal",
+    "Category": "DrugSales",
+    "SeverityScore": 9,
+    "RuleWeight": 70,
+    "RegexPattern": "\\b((?:sell(?:ing)?|buy(?:ing)?|order(?:ing)?)\\s+(cocaine|heroin|meth|fentanyl|crack|narcotics))\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "55555555-5555-5555-5555-000000000001",
+    "Key": "Platform_DarkWeb",
+    "Category": "PlatformIntegrity",
+    "SeverityScore": 10,
+    "RuleWeight": 150,
+    "RegexPattern": "([a-z2-7]{16,56}\\.onion)|(\\b(tor\\s+browser|hidden\\s+service|onion\\s+link|dark\\s+web\\s+market)\\b)",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "88888888-8888-8888-8888-000000000001",
+    "Key": "External_Chat_Apps",
+    "Category": "ExternalContact",
+    "SeverityScore": 4,
+    "RuleWeight": 40,
+    "RegexPattern": "\\b(whatsapp|wa\\.me|telegram|t\\.me|viber|kik\\??|snapchat|snap\\??|wickr|line\\s+id|wechat)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "88888888-8888-8888-8888-000000000002",
+    "Key": "External_Phone_Fuzzy",
+    "Category": "ExternalContact",
+    "SeverityScore": 5,
+    "RuleWeight": 15,
+    "RegexPattern": "(\\+?\\d[\\s\\-\\.\\(\\)]?){7,15}\\d",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 60,
+      "RequireAnyRuleKeys": [
+        "External_Chat_Apps",
+        "PII_Contact_Bypass"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:call|text|whatsapp|telegram|contact|reach|message|dm|phone|number)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "BBBBBBBB-BBBB-BBBB-BBBB-000000000001",
+    "Key": "Services_Solicitation",
+    "Category": "IllegalServices",
+    "SeverityScore": 5,
+    "RuleWeight": 100,
+    "RegexPattern": "\\b(escort(?:ing)?|gfe\\s+service|outcall|incall|price\\s+per\\s+hour|roses\\s+for\\s+meet|full\\s+service|bring\\s+cash|no\\s+questions|room\\s+\\d+|motel|obedient)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "99999999-9999-9999-9999-000000000002",
+    "Key": "Threat_Blackmail",
+    "Category": "NonConsensualSex",
+    "SeverityScore": 9,
+    "RuleWeight": 100,
+    "RegexPattern": "\\b((?:leak|post|upload|share|send|show|distribute)\\s+(?:your|her|his|the|our)\\s+(?:nudes?|pics?|photos?|videos?|tape|content|recordings?|media))\\b|(\\b(?:already\\s+have|got|stole|saved)\\s+(?:your|my)\\s+(?:contacts?|contact\\s+list|friends?|family|boss|parents?))\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 100,
+      "RequireAnyRegexPatterns": [
+        "\\b(?:pay|money|cash|leak|post|upload|share|send|show|distribute|nudes?|pics?|photos?|videos?|tape|recordings?|boss|parents?|family)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "77777777-7777-7777-7777-000000000001",
+    "Key": "Violence_Animal_Cruelty",
+    "Category": "ExtremeViolence",
+    "SeverityScore": 9,
+    "RuleWeight": 100,
+    "RegexPattern": "\\b(crush\\s+video|animal\\s+torture|beastiality|zoophil(?:e|ia)|stomp(?:ing)?\\s+animals)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "DDDDDDDD-DDDD-DDDD-DDDD-000000000001",
+    "Key": "Fraud_Deepfake",
+    "Category": "Fraud",
+    "SeverityScore": 5,
+    "RuleWeight": 60,
+    "RegexPattern": "\\b(undress\\s+app|ai\\s+nude|face\\s+swap\\s+porn|cloth\\s+off\\s+ai|generate\\s+nudes)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "44444444-4444-4444-4444-000000000001",
+    "Key": "Fraud_Scams_Crypto",
+    "Category": "Fraud",
+    "SeverityScore": 6,
+    "RuleWeight": 30,
+    "RegexPattern": "\\b(free\\s+crypto|double\\s+your\\s+money|send\\s+me\\s+your\\s+wallet|guaranteed\\s+returns)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "99999999-9999-9999-9999-000000000001",
+    "Key": "Fraud_GiftCard",
+    "Category": "Fraud",
+    "SeverityScore": 3,
+    "RuleWeight": 50,
+    "RegexPattern": "\\b(gift\\s+card|amazon\\s+card|steam\\s+card|send\\s+me\\s+the\\s+code|picture\\s+of\\s+the\\s+back)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 60,
+      "RequireAnyRuleKeys": [
+        "Fraud_Staff_Impersonation",
+        "Threat_Blackmail"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:send|code|pay|payment|buy|purchase|urgent|fee|redeem|scratch|back\\s+of\\s+the\\s+card)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "44444444-4444-4444-4444-000000000003",
+    "Key": "Hate_Slurs",
+    "Category": "HateSpeech",
+    "SeverityScore": 5,
+    "RuleWeight": 50,
+    "RegexPattern": "\\b(n[i1]gg[e3]r|f[a4]gg[o0]t|k[i1]k[e3]|tr[a4]nny)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 100,
+      "ExcludeAnyRegexPatterns": [
+        "\\b(?:quote|quoted|quotation|dictionary|history|historical|research|paper|article|example|offensive\\s+language|deprecated)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "44444444-4444-4444-4444-000000000005",
+    "Key": "Dangerous_Advice",
+    "Category": "DangerousAdvice",
+    "SeverityScore": 6,
+    "RuleWeight": 40,
+    "RegexPattern": "\\b(bleach\\s+cure|don't\\s+take\\s+insulin|cancer\\s+is\\s+a\\s+hoax|vaccine\\s+microchip)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 100,
+      "ExcludeAnyRegexPatterns": [
+        "\\b(?:doctor|physician|clinic|hospital|fasting|blood\\s+test|procedure|surgery|dose|prescription)\\b",
+        "\\b(?:debunk|debunked|false|myth|misinformation|fact[\\s-]*check|article|study|research|claim)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "44444444-4444-4444-4444-000000000002",
+    "Key": "Terror_Radicalization",
+    "Category": "ExtremeViolence",
+    "SeverityScore": 10,
+    "RuleWeight": 100,
+    "RegexPattern": "\\b(join\\s+the\\s+jihad|martyrdom\\s+operation|bomb\\s+making|extremist\\s+manifesto)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "22222222-2222-2222-2222-000000000014",
+    "Key": "Obfuscation_Symbols",
+    "Category": "Obfuscation",
+    "SeverityScore": 2,
+    "RuleWeight": 6,
+    "RegexPattern": "([a-zA-Z][._!@#$%^&*+=~\\\\-][a-zA-Z])",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "22222222-2222-2222-2222-000000000016",
+    "Key": "Obfuscation_Spaced",
+    "Category": "Obfuscation",
+    "SeverityScore": 2,
+    "RuleWeight": 7,
+    "RegexPattern": "\\b([a-zA-Z]\\s+[a-zA-Z]\\s+[a-zA-Z])\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "55555555-5555-5555-5555-000000000002",
+    "Key": "Platform_Spam_Redirects",
+    "Category": "PlatformIntegrity",
+    "SeverityScore": 4,
+    "RuleWeight": 15,
+    "RegexPattern": "\\b(click\\s+the\\s+link\\s+in\\s+bio|dm\\s+for\\s+collab|check\\s+my\\s+profile\\s+for\\s+leaks|onlyfans\\s+discount)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "CCCCCCC1-CCCC-CCCC-CCCC-000000000001",
+    "Key": "Fraud_Impersonation",
+    "Category": "Fraud",
+    "SeverityScore": 8,
+    "RuleWeight": 80,
+    "RegexPattern": "\\b(pretend(?:ing)?\\s+to\\s+be\\s+me|fake\\s+account|using\\s+my\\s+(?:photos|pics|bio)|messaging\\s+my\\s+friends|impersonat(?:ing|ion))\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "BBBBBBBB-BBBB-BBBB-BBBB-000000000005",
+    "Key": "Exploitation_Context",
+    "Category": "IllegalServices",
+    "SeverityScore": 6,
+    "RuleWeight": 100,
+    "RegexPattern": "\\b(fresh|young|obedient|no\\s+questions|bring\\s+cash|room\\s+\\d+|motel|new\\s+girls)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 90,
+      "RequireAnyRuleKeys": [
+        "Trafficking_Logistics",
+        "Services_Solicitation",
+        "External_Chat_Apps",
+        "PII_Contact_Bypass"
+      ],
+      "RequireAnyCategories": [
+        "Trafficking"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:cash|price|service|room|motel|available|meet|incall|outcall|new\\s+in\\s+town)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "55555555-5555-5555-5555-000000000005",
+    "Key": "Platform_Domain_Link",
+    "Category": "PlatformIntegrity",
+    "SeverityScore": 5,
+    "RuleWeight": 50,
+    "RegexPattern": "\\b(?:[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\\.)+(?:[a-z]{2,63})\\b|(\\b\\w+\\s?[\\(\\[]?dot[\\)\\]]?\\s?\\w+\\.\\w+)|(https?:\\/\\/\\S+)",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 100,
+      "RequireAnyRuleKeys": [
+        "Platform_Spam_Redirects",
+        "External_Chat_Apps",
+        "PII_Contact_Bypass"
+      ],
+      "RequireAnyCategories": [
+        "Fraud",
+        "IllegalServices",
+        "Trafficking"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:dm|contact|message|pay|buy|sell|order|join|leak|private|bio|click)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "55555555-5555-5555-5555-000000000006",
+    "Key": "Platform_IP_Address",
+    "Category": "PlatformIntegrity",
+    "SeverityScore": 5,
+    "RuleWeight": 60,
+    "RegexPattern": "\\b(?:\\d{1,3}\\.){3}\\d{1,3}\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 80,
+      "RequireAnyRuleKeys": [
+        "Threat_Doxing",
+        "Platform_DarkWeb",
+        "Fraud_Staff_Impersonation"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:ip|address|dox|server|connect|login|account)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "33333333-3333-3333-3333-000000000010",
+    "Key": "Indicator_Physical_Harm",
+    "Category": "Threats",
+    "SeverityScore": 5,
+    "RuleWeight": 40,
+    "RegexPattern": "\\b(pain|hurt|fall(?:ing|en)?|jump(?:ed|ing)?|shot|bleed(?:ing)?|blood|wound(?:ed)?|broken)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 80,
+      "RequireAnyRuleKeys": [
+        "Threat_Violence",
+        "Threat_Stalking",
+        "Terror_Radicalization"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:gonna|going\\s+to|will|threaten|attack|kill|murder|find\\s+you|watching\\s+you)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "BBBBBBBB-BBBB-BBBB-BBBB-000000000010",
+    "Key": "Indicator_Solicitation_Context",
+    "Category": "IllegalServices",
+    "SeverityScore": 6,
+    "RuleWeight": 50,
+    "RegexPattern": "\\b(fresh|obedient|available|cash|room|motel|discreet|private|service)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 80,
+      "RequireAnyRuleKeys": [
+        "Services_Solicitation",
+        "Solicitation_SexWork_Shorthand",
+        "Trafficking_Logistics"
+      ],
+      "RequireAnyCategories": [
+        "Trafficking"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "CCCCCCC1-CCCC-CCCC-CCCC-000000000010",
+    "Key": "Indicator_Account_Risk",
+    "Category": "Fraud",
+    "SeverityScore": 4,
+    "RuleWeight": 35,
+    "RegexPattern": "\\b(pretend(?:ing)?|fake|impersonat(?:e|ing)|stolen|hacked|password|verify|official)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 80,
+      "RequireAnyRuleKeys": [
+        "Fraud_Impersonation",
+        "Fraud_Staff_Impersonation",
+        "Fraud_Status_Impersonation"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:account|login|password|support|admin|staff|verify|verification|payment|bank)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "EEEEEEEE-0000-0000-0000-000000000001",
+    "Key": "Fantasy_Actions",
+    "Category": "AdultContent",
+    "SeverityScore": 1,
+    "RuleWeight": 15,
+    "RegexPattern": "\\b(lick|suck|bite|grab|touch|stroke|rub|kneel|bend|moan|groan|pant|whisper)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 70,
+      "RequireAnyRegexPatterns": [
+        "\\b(?:sexual|sex|kink|nude|naked|lingerie|moan(?:ing)?|erotic|adult\\s+(?:role\\s*play|roleplay|content|scene|chat)|sexual\\s+(?:role\\s*play|roleplay)|erotic\\s+(?:role\\s*play|roleplay))\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "EEEEEEEE-0000-0000-0000-000000000002",
+    "Key": "Fantasy_Attire",
+    "Category": "AdultContent",
+    "SeverityScore": 1,
+    "RuleWeight": 15,
+    "RegexPattern": "\\b(leather|latex|lace|silk|lingerie|outfit|costume|collar|leash|blindfold|cuffs|mask)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 70,
+      "RequireAnyRegexPatterns": [
+        "\\b(?:sexual|sex|kink|nude|naked|lingerie|moan(?:ing)?|erotic|adult\\s+(?:role\\s*play|roleplay|content|scene|chat)|sexual\\s+(?:role\\s*play|roleplay)|erotic\\s+(?:role\\s*play|roleplay))\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "EEEEEEEE-0000-0000-0000-000000000003",
+    "Key": "Fantasy_Anatomy",
+    "Category": "AdultContent",
+    "SeverityScore": 1,
+    "RuleWeight": 15,
+    "RegexPattern": "\\b(curves|muscle|thighs|chest|waist|hips|lips|tongue|bare|naked|skin|flesh)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 70,
+      "RequireAnyRegexPatterns": [
+        "\\b(?:sexual|sex|kink|nude|naked|lingerie|moan(?:ing)?|erotic|adult\\s+(?:role\\s*play|roleplay|content|scene|chat)|sexual\\s+(?:role\\s*play|roleplay)|erotic\\s+(?:role\\s*play|roleplay))\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "EEEEEEEE-0000-0000-0000-000000000004",
+    "Key": "Fantasy_Dynamics",
+    "Category": "AdultContent",
+    "SeverityScore": 1,
+    "RuleWeight": 15,
+    "RegexPattern": "\\b(please|beg|obey|rules|command|control|serve|surrender|pleasure|tease|satisfy)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 70,
+      "RequireAnyRegexPatterns": [
+        "\\b(?:sexual|sex|kink|nude|naked|lingerie|moan(?:ing)?|erotic|adult\\s+(?:role\\s*play|roleplay|content|scene|chat)|sexual\\s+(?:role\\s*play|roleplay)|erotic\\s+(?:role\\s*play|roleplay))\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "EEEEEEEE-0000-0000-0000-000000000005",
+    "Key": "Fantasy_Meta",
+    "Category": "AdultContent",
+    "SeverityScore": 1,
+    "RuleWeight": 15,
+    "RegexPattern": "\\b(plot|story|scene|writing|starter|paragraph|detailed|literate|dm\\s+me|private\\s+chat)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 70,
+      "RequireAnyRegexPatterns": [
+        "\\b(?:sexual|sex|kink|nude|naked|lingerie|moan(?:ing)?|erotic|adult\\s+(?:role\\s*play|roleplay|content|scene|chat)|sexual\\s+(?:role\\s*play|roleplay)|erotic\\s+(?:role\\s*play|roleplay))\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "FFFFFFFF-FFFF-FFFF-FFFF-000000000001",
+    "Key": "Weapons_Sale",
+    "Category": "WeaponsSales",
+    "SeverityScore": 9,
+    "RuleWeight": 85,
+    "RegexPattern": "\\b(glock|pistol|rifle|handgun|firearm|ammo|magazines|silencer|3d\\s+print|untraceable|discrete\\s+packaging)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 80,
+      "RequireAnyRuleKeys": [
+        "External_Chat_Apps",
+        "PII_Contact_Bypass"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:buy|sell|selling|sold|for\\s+sale|order|ship(?:ping)?|price|cash|vendor|delivery|discreet|discrete\\s+packaging)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "FFFFFFFF-FFFF-FFFF-FFFF-000000000002",
+    "Key": "Financial_Scams_General",
+    "Category": "Fraud",
+    "SeverityScore": 6,
+    "RuleWeight": 50,
+    "RegexPattern": "\\b(zelle|cashapp|venmo|bank\\s+login|transfer\\s+funds|payroll|work\\s+from\\s+home|commission|deposit)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 90,
+      "RequireAnyRuleKeys": [
+        "Fraud_Staff_Impersonation",
+        "Fraud_Impersonation",
+        "Fraud_MoneyMule"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:send|transfer|pay(?:ment)?|login|password|verify|commission|job|work\\s+from\\s+home|deposit\\s+checks?|fee|urgent|refund|bank)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "11110000-1111-1111-1111-000000000001",
+    "Key": "Fraud_MoneyMule",
+    "Category": "Fraud",
+    "SeverityScore": 6,
+    "RuleWeight": 40,
+    "RegexPattern": "\\b(remotely|payroll|transfer\\s+funds|zelle|cashapp|venmo|bank\\s+login|work\\s+from\\s+home|commission|deposit\\s+checks|remit)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 90,
+      "RequireAnyRuleKeys": [
+        "Fraud_Staff_Impersonation",
+        "Fraud_Impersonation"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:send|transfer|receive|forward|pay(?:ment)?|commission|job|work\\s+from\\s+home|deposit\\s+checks?|bank|account)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "22220000-2222-2222-2222-000000000001",
+    "Key": "Weapons_Assembly_Sale",
+    "Category": "WeaponsSales",
+    "SeverityScore": 9,
+    "RuleWeight": 75,
+    "RegexPattern": "\\b(glock|pistol|ammo|magazines|silencer|3d\\s+print|receiver|untraceable|shipping\\s+included|discrete\\s+packaging|ghost\\s+gun|solvent\\s+trap)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 80,
+      "RequireAnyRuleKeys": [
+        "External_Chat_Apps",
+        "PII_Contact_Bypass"
+      ],
+      "RequireAnyRegexPatterns": [
+        "\\b(?:buy|sell|selling|sold|for\\s+sale|order|ship(?:ping)?|price|cash|vendor|delivery|discreet|discrete\\s+packaging)\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "33330000-3333-3333-3333-000000000001",
+    "Key": "Terrorism_Coded_Language",
+    "Category": "ExtremeViolence",
+    "SeverityScore": 9,
+    "RuleWeight": 80,
+    "RegexPattern": "\\b(accelerationism|day\\s+of\\s+the\\s+rope|blackpill|foid|stormfront|supreme\\s+gentleman|great\\s+replacement|incel|beta\\s+uprising)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "44440000-4444-4444-4444-000000000001",
+    "Key": "PII_Contact_Bypass",
+    "Category": "ExternalContact",
+    "SeverityScore": 4,
+    "RuleWeight": 30,
+    "RegexPattern": "\\b(at\\s+g\\s*mail|at\\s+outlook|handle\\s+is|my\\s+insta\\s+is|find\\s+me\\s+on|user\\s+is|add\\s+my\\s+snap)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "CCCC0000-CCCC-CCCC-CCCC-000000000001",
+    "Key": "Fraud_Staff_Impersonation",
+    "Category": "Fraud",
+    "SeverityScore": 9,
+    "RuleWeight": 200,
+    "RegexPattern": "\\b(i(?:'m|\\s+am)\\s+(?:an?\\s+)?(?:admin(?:istrator)?|moderator|staff)|official\\s+support(?:\\s+team)?|support\\s+team\\s+(?:here|speaking)|official\\s+help|dev\\s+team\\s+(?:here|speaking)|login\\s+details|logout\\s+now|verify\\s+(?:your\\s+)?password|account\\s+(?:is\\s+)?restricted|system\\s+message)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "ABCD0000-ABCD-ABCD-ABCD-000000000001",
+    "Key": "Legal_Compliance_Terms",
+    "Category": "PlatformIntegrity",
+    "SeverityScore": 4,
+    "RuleWeight": 30,
+    "RegexPattern": "\\b(lawsuit|litigation|attorney|lawyer|legal\\s+action|summons|subpoena|breach\\s+of\\s+contract|non-disclosure|nda|affidavit|notary|power\\s+of\\s+attorney|terms\\s+of\\s+service|privacy\\s+policy|copyright\\s+infringement|dmca|cease\\s+and\\s+desist)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "CCCC0000-CCCC-CCCC-CCCC-000000000002",
+    "Key": "Fraud_Status_Impersonation",
+    "Category": "Fraud",
+    "SeverityScore": 7,
+    "RuleWeight": 60,
+    "RegexPattern": "\\b(verified\\s+account|official\\s+profile|certified\\s+user|account\\s+status\\s+active|mod\\s+status|staff\\s+member)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "A1100000-A110-A110-A110-000000000001",
+    "Key": "Action_File_Sharing",
+    "Category": "Obfuscation",
+    "SeverityScore": 2,
+    "RuleWeight": 20,
+    "RegexPattern": "\\b(upload(?:ing|ed)?|download(?:ing|ed)?|shar(?:e|ing|ed)|send(?:ing|t)|post(?:ing|ed)|distribut(?:e|ing|ion))\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "A9900000-A990-A990-A990-000000000001",
+    "Key": "Context_AgePlay_Minor",
+    "Category": "ChildMinor",
+    "SeverityScore": 8,
+    "RuleWeight": 50,
+    "RegexPattern": "\\b(homework|math\\s+class|study\\s+hall|recess|middle\\s+school|high\\s+school|backpack|teacher\\s+gave\\s+me)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 90,
+      "RequireAnyRuleKeys": [
+        "Context_Kink_Roles",
+        "Fantasy_Actions",
+        "Fantasy_Attire",
+        "Fantasy_Anatomy",
+        "Fantasy_Dynamics",
+        "Fantasy_Meta"
+      ],
+      "RequireAnyCategories": [
+        "Csam",
+        "NonConsensualSex",
+        "IllegalServices"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "A1100000-A110-A110-A110-000000000002",
+    "Key": "Action_Media_Movement",
+    "Category": "Obfuscation",
+    "SeverityScore": 3,
+    "RuleWeight": 25,
+    "RegexPattern": "\\b(video|recorded|recording|file|cloud|upload|download|leak|media|tape)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "B2200000-B220-B220-B220-000000000002",
+    "Key": "Context_Kink_Roles",
+    "Category": "AdultContent",
+    "SeverityScore": 4,
+    "RuleWeight": 35,
+    "RegexPattern": "\\b(teacher|student|professor|school\\s*girl|classmate|homework|study\\s*hall|principal)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Context": {
+      "WindowCharacters": 80,
+      "RequireAnyRegexPatterns": [
+        "\\b(?:sexual|sex|kink|nude|naked|lingerie|moan(?:ing)?|erotic|adult\\s+(?:role\\s*play|roleplay|content|scene|chat)|sexual\\s+(?:role\\s*play|roleplay)|erotic\\s+(?:role\\s*play|roleplay))\\b"
+      ]
+    }
+  },
+  {
+    "TextInspectorRuleId": "C3300000-C330-C330-C330-000000000003",
+    "Key": "Action_Direct_Send",
+    "Category": "PlatformIntegrity",
+    "SeverityScore": 2,
+    "RuleWeight": 20,
+    "RegexPattern": "\\b(send|sending|sent|dm|direct\\s*message|message\\s*me)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "9d4c53bb-5368-4622-8767-6e5ec6bd66c6",
+    "Key": "System_Auth_Restriction_Terms",
+    "Category": "PlatformIntegrity",
+    "SeverityScore": 2,
+    "RuleWeight": 20,
+    "RegexPattern": "\\b(registration|register|signup|sign-up|sign\\s+up|signin|sign-in|sign\\s+in|signout|sign-out|sign\\s+out|login|log-in|log\\s+in|logon|log-on|log\\s+on|logout|log-out|log\\s+out|logoff|log-off|log\\s+off|banned|ban|blocked|block|suspended|disabled|deactivated|restricted|denied|revoked|prohibited|forbidden|verify|verified|verification|authenticate|authenticated|authorization|authorized|confirmation|confirm|approved|approve|enroll|enrol|enrollment|enrolment|create\\s+account|join)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "c6f0f1ae-4cf8-4c97-9e68-4c53f68c3c22",
+    "Key": "System_Explosive_Instruction_Content",
+    "Category": "PlatformIntegrity",
+    "SeverityScore": 5,
+    "RuleWeight": 70,
+    "RegexPattern": "(?is)^(?=.*\\b(mix(?:ing)?\\s+household\\s+items|high[-\\s]?yield\\s+compounds?|correct\\s+ratios?|assembly\\s+of\\s+the\\s+initiation\\s+device|initiation\\s+device|wiring\\s+diagrams?|specific\\s+wiring\\s+diagrams?|timer(?:s)?)\\b)(?=.*\\b(without\\s+raising\\s+suspicion|encrypted\\s+chat|list\\s+of\\s+stores?|buy\\s+(?:the\\s+)?ingredients|keep\\s+(?:your\\s+)?projects?\\s+discrete|defend\\s+your\\s+property\\s+with\\s+effective\\s+tools|for\\s+educational\\s+purposes\\s+only)\\b).*$",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "EvidenceGroup": "1"
+  },
+  {
+    "TextInspectorRuleId": "F3000000-0000-0000-0000-000000000001",
+    "Key": "PII_Email_Address",
+    "Category": "ExternalContact",
+    "SeverityScore": 2,
+    "RuleWeight": 10,
+    "RegexPattern": "\\b[A-Z0-9._%+\\-]+@[A-Z0-9.\\-]+\\.[A-Z]{2,63}\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Tags": [
+      "pii",
+      "email",
+      "contact"
+    ]
+  },
+  {
+    "TextInspectorRuleId": "F3000000-0000-0000-0000-000000000002",
+    "Key": "PII_IBAN",
+    "Category": "PlatformIntegrity",
+    "SeverityScore": 4,
+    "RuleWeight": 20,
+    "RegexPattern": "\\b[A-Z]{2}\\d{2}(?:\\s?[A-Z0-9]){11,30}\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Tags": [
+      "pii",
+      "financial",
+      "iban"
+    ]
+  },
+  {
+    "TextInspectorRuleId": "F4000000-0000-0000-0000-000000000001",
+    "Key": "External_Discord",
+    "Category": "ExternalContact",
+    "SeverityScore": 3,
+    "RuleWeight": 20,
+    "RegexPattern": "\\b(?:discord(?:\\.gg)?|discordapp)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Tags": [
+      "external-contact",
+      "discord"
+    ],
+    "PrefilterTerms": [
+      "discord"
+    ]
+  },
+  {
+    "TextInspectorRuleId": "F4000000-0000-0000-0000-000000000002",
+    "Key": "External_Signal",
+    "Category": "ExternalContact",
+    "SeverityScore": 3,
+    "RuleWeight": 20,
+    "RegexPattern": "\\b(?:signal\\s+(?:app|username|number)|signal\\.me)\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Tags": [
+      "external-contact",
+      "signal"
+    ],
+    "PrefilterTerms": [
+      "signal"
+    ]
+  },
+  {
+    "TextInspectorRuleId": "F4000000-0000-0000-0000-000000000003",
+    "Key": "External_Instagram",
+    "Category": "ExternalContact",
+    "SeverityScore": 3,
+    "RuleWeight": 20,
+    "RegexPattern": "\\b(?:instagram|insta)\\s*(?:is|:|@)\\s*@?[A-Za-z0-9._]{2,30}\\b|\\big\\s*[:@]\\s*@?[A-Za-z0-9._]{2,30}\\b",
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Tags": [
+      "external-contact",
+      "instagram"
+    ],
+    "PrefilterTerms": [
+      "instagram",
+      "insta",
+      "ig"
+    ]
+  },
+  {
+    "TextInspectorRuleId": "FC000000-0000-0000-0000-000000000003",
+    "Key": "Spam_BulkDM",
+    "Category": "PlatformIntegrity",
+    "SeverityScore": 5,
+    "RuleWeight": 35,
+    "RegexPattern": "\\b(?:dm|message|send)\\s+(?:this|it)\\s+to\\s+(?:everyone|\\d+\\s+(?:people|friends|accounts))\\b|\\bmass\\s+(?:dm|message|send)\\b",
+    "MaxCountForScoring": 5,
+    "MaxEvidenceSnippets": 3,
+    "IsEnabled": true,
+    "Tags": [
+      "spam",
+      "bulk"
+    ],
+    "PrefilterTerms": [
+      "dm",
+      "message",
+      "mass"
+    ]
+  }
+]

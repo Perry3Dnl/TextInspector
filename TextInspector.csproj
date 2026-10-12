@@ -1,0 +1,53 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0;net8.0;net10.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RootNamespace>TextInspector</RootNamespace>
+    <AssemblyName>TextInspector</AssemblyName>
+
+    <IsPackable>true</IsPackable>
+    <PackageId>TextInspector.Lite</PackageId>
+    <Title>TextInspector Lite</Title>
+    <Description>TextInspector Lite: fixed built-in text detection with exact evidence, explainable risk scoring and UI-ready reports.</Description>
+    <PackageTags>text;inspection;regex;detection;highlighting;scoring;moderation;content-safety;lite;netstandard</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <EnablePackageValidation>true</EnablePackageValidation>
+
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="System.Text.Json" Version="10.0.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Presets/options.json" />
+    <EmbeddedResource Include="Presets/rules.json" />
+    <None Update="Presets/lite-manifest.json" Pack="true" PackagePath="" />
+    <None Include="LICENSE" Pack="true" PackagePath="" />
+    <None Remove="README.md" />
+    <None Include="README.md" Pack="true" PackagePath="" />
+    <None Remove="CHANGELOG.md" />
+    <None Include="CHANGELOG.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="tests/**/*.cs" />
+    <None Remove="tests/**/*" />
+    <Compile Remove="benchmarks/**/*.cs" />
+    <None Remove="benchmarks/**/*" />
+    <Compile Remove="evaluation/**/*.cs" />
+    <None Remove="evaluation/**/*" />
+    <Compile Remove="TextInspector.AspNetCore/**/*.cs" />
+    <None Remove="TextInspector.AspNetCore/**/*" />
+    <Compile Remove="TextInspector.AspNet.EntityFramework6/**/*.cs" />
+    <None Remove="TextInspector.AspNet.EntityFramework6/**/*" />
+  </ItemGroup>
+
+</Project>
