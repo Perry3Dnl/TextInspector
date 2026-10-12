@@ -1,4 +1,4 @@
-name: Lite CI
+name: TextInspector CI
 
 on:
   push:
@@ -26,7 +26,7 @@ jobs:
             10.0.x
       - name: Restore
         run: dotnet restore TextInspector.sln
-      - name: Build all Lite targets
+      - name: Build all TextInspector targets
         run: dotnet build TextInspector.sln -c Release --no-restore
       - name: Unit tests (.NET 8)
         run: dotnet test tests/TextInspector.Tests/TextInspector.Tests.csproj -c Release -f net8.0 --no-build --no-restore --collect:"XPlat Code Coverage"
@@ -42,28 +42,28 @@ jobs:
         run: |
           dotnet pack TextInspector.csproj -c Release --no-build --no-restore -o artifacts
           dotnet pack TextInspector.AspNetCore/TextInspector.AspNetCore.csproj -c Release --no-build --no-restore -o artifacts
-      - name: Install packed Lite into clean consumer
+      - name: Install packed TextInspector into clean consumer
         shell: bash
         run: |
-          mkdir -p /tmp/textinspector-lite-consumer
-          cd /tmp/textinspector-lite-consumer
+          mkdir -p /tmp/textinspector-consumer
+          cd /tmp/textinspector-consumer
           dotnet new console --framework net8.0
-          dotnet add package TextInspector.Lite --version 1.0.0 --source "$GITHUB_WORKSPACE/artifacts"
+          dotnet add package TextInspector --version 1.0.0 --source "$GITHUB_WORKSPACE/artifacts"
           cat > Program.cs <<'EOF'
           using TextInspector;
           var engine = TextInspectorEngine.Create();
           var report = engine.CreateReport("Contact us at hello@example.com.");
           if(engine.CompiledRuleCount != 76 || !report.HasDetections || report.RequiresReview || report.RiskAssessment.TotalRiskPoints != 0)
-              throw new Exception("Packed Lite consumer failed.");
+              throw new Exception("Packed TextInspector consumer failed.");
           if(typeof(TextInspectorEngine).GetMethods().Any(method => method.Name == "Compile"))
-              throw new Exception("Custom rule compilation must not be public in Lite.");
-          Console.WriteLine("Packed Lite consumer passed.");
+              throw new Exception("Custom rule compilation must not be public in TextInspector.");
+          Console.WriteLine("Packed TextInspector consumer passed.");
           EOF
           dotnet run -c Release
       - uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: lite-packages-and-test-results
+          name: packages-and-test-results
           path: |
             artifacts/*.nupkg
             artifacts/*.snupkg

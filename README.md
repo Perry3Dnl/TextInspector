@@ -1,4 +1,4 @@
-# TextInspector Lite
+# TextInspector
 
 **Version 1.0** · Complete standalone package · Free distribution on NuGet
 
@@ -6,18 +6,18 @@
 
 **TextInspector separates what was detected from what is actually risky.**
 
-TextInspector Lite is a complete, standalone .NET text inspection package, distributed free on NuGet for the uses permitted by its license. It includes the inspection engine, explainable risk assessment, masking, reports, and ASP.NET Core integration. It has no inspection-count or text-length quota. Pro extends the same package foundation with additional rules, detection methods, configuration, and developer helpers.
+TextInspector is a complete, standalone .NET text inspection package, distributed free on NuGet for the uses permitted by its license. It includes the inspection engine, explainable risk assessment, masking, reports, and ASP.NET Core integration. It has no inspection-count or text-length quota. Pro extends the same package foundation with additional rules, detection methods, configuration, and developer helpers.
 
-The Lite preset includes **76 rules**: all **70 rules from the first standalone import**, using their current calibrated definitions, plus six basic contact, financial and spam signals. It provides exact evidence, explainable risk scores, category findings and UI-ready highlights.
+The TextInspector preset includes **76 rules**: all **70 rules from the first standalone import**, using their current calibrated definitions, plus six basic contact, financial and spam signals. It provides exact evidence, explainable risk scores, category findings and UI-ready highlights.
 
-The Lite preset is selected explicitly in [Presets/lite-manifest.json](Presets/lite-manifest.json). This is a baseline inventory, not a claim that every baseline rule originated in Unclaimable. No additional Unclaimable identifier rules or datasets were imported for this edition.
+The TextInspector preset is selected explicitly in [Presets/preset-manifest.json](Presets/preset-manifest.json). This is a baseline inventory, not a claim that every baseline rule originated in Unclaimable. No additional Unclaimable identifier rules or datasets were imported for this edition.
 
-**[Practical Lite examples](docs/EXAMPLES.md)** · **[Lite → Pro migration guide](docs/MIGRATION_LITE_TO_PRO.md)**
+**[Practical TextInspector examples](docs/EXAMPLES.md)** · **[TextInspector → Pro migration guide](docs/MIGRATION_TO_PRO.md)**
 
 ## Quick start
 
 ```bash
-dotnet add package TextInspector.Lite --version 1.0.0
+dotnet add package TextInspector --version 1.0.0
 ```
 
 ```csharp
@@ -30,11 +30,11 @@ Console.WriteLine(report.RiskAssessment.TotalRiskPoints); // 0
 Console.WriteLine(report.RequiresReview);           // false
 ```
 
-An ordinary email address is supporting evidence, not a risk verdict. DetectionScore is an independent deterministic 1..100 rule signal, not a probability. Severity and risk contribution remain separate. The risk score describes the evidence supported by the Lite preset; additional Pro rules and policies can produce different findings for the same input.
+An ordinary email address is supporting evidence, not a risk verdict. DetectionScore is an independent deterministic 1..100 rule signal, not a probability. Severity and risk contribution remain separate. The risk score describes the evidence supported by the TextInspector preset; additional Pro rules and policies can produce different findings for the same input.
 
-## Lite and Pro
+## TextInspector and Pro
 
-| Capability | Lite | Pro |
+| Capability | TextInspector (free) | TextInspector Pro |
 | --- | --- | --- |
 | Original imported baseline rules | Yes | Yes |
 | Basic email, IBAN, Discord, Signal, Instagram and bulk-DM signals | Yes | Yes |
@@ -52,12 +52,12 @@ An ordinary email address is supporting evidence, not a risk verdict. DetectionS
 
 Pro also provides configuration, rule, context, and policy builders, JSON configuration helpers, and validated ASP.NET Core registration. See [TextInspector Pro](https://github.com/Perry3Dnl/TextInspectorPro) for the extended paid edition.
 
-Lite has no artificial inspection-count or text-length quota. It keeps correct scoring and exact evidence for the rules it includes. Shipped context gates and normalization remain in Lite to preserve calibration and avoid false positives. Basic URL/domain **regex detection** is included; it does not perform Pro URL intelligence.
+TextInspector has no artificial inspection-count or text-length quota. It keeps correct scoring and exact evidence for the rules it includes. Shipped context gates and normalization remain in TextInspector to preserve calibration and avoid false positives. Basic URL/domain **regex detection** is included; it does not perform Pro URL intelligence.
 
 ## Fixed rules, small configuration surface
 
 ```csharp
-var inspector = TextInspectorEngine.Create(new TextInspectorLiteOptions
+var inspector = TextInspectorEngine.Create(new TextInspectorOptions
 {
     DisabledRuleKeys = new[] { "PII_Email_Address" },
     DisabledCategories = new[] { TextInspectorRuleCategory.ExternalContact },
@@ -65,11 +65,11 @@ var inspector = TextInspectorEngine.Create(new TextInspectorLiteOptions
     MaskCharacter = '*'
 });
 
-foreach(var rule in TextInspectorLite.Rules)
+foreach(var rule in TextInspectorDefaults.Rules)
     Console.WriteLine($"{rule.Key}: {rule.Category}");
 ```
 
-Options are consumed when the engine is created. Changing them afterwards does not mutate the engine. Rule metadata is read-only. Lite has no supported API for adding/replacing regexes, creating context conditions, importing JSON rules, or compiling a custom preset. The internal matcher stays maintainable in source; modifying source is a separate route from the supported Lite API.
+Options are consumed when the engine is created. Changing them afterwards does not mutate the engine. Rule metadata is read-only. TextInspector has no supported API for adding/replacing regexes, creating context conditions, importing JSON rules, or compiling a custom preset. The internal matcher stays maintainable in source; modifying source is a separate route from the supported TextInspector API.
 
 Basic masking replaces every detected evidence span and preserves UTF-16 length and offsets. Category/tag/rule-key masking filters belong to Pro. HTML output encodes inspected text; renderer-neutral evidence and highlight spans are also available.
 
@@ -93,12 +93,12 @@ var rawHit = inspector.HasMatch(input);
 var rawSpans = inspector.FindMatches(input);
 ```
 
-HasMatch and FindMatches are raw primary-rule checks: they skip contextual scoring. Use Inspect or CreateReport when deciding risk. Reports group scored evidence by category, retaining supporting non-scoring evidence separately. Policy and URL output DTOs remain for schema continuity; Lite always returns empty PolicyMatches / UrlObservations and zero policy score. No policy evaluator, domain analyzer or persistence implementation ships in Lite.
+HasMatch and FindMatches are raw primary-rule checks: they skip contextual scoring. Use Inspect or CreateReport when deciding risk. Reports group scored evidence by category, retaining supporting non-scoring evidence separately. Policy and URL output DTOs remain for schema continuity; TextInspector always returns empty PolicyMatches / UrlObservations and zero policy score. No policy evaluator, domain analyzer or persistence implementation ships in TextInspector.
 
 ## ASP.NET Core
 
 ```bash
-dotnet add package TextInspector.Lite.AspNetCore --version 1.0.0
+dotnet add package TextInspector.AspNetCore --version 1.0.0
 ```
 
 ```csharp
@@ -110,15 +110,15 @@ Resolve ITextInspectorService, ITextInspectorDetectionService or ITextInspectorR
 
 ## Packages and upgrade
 
-Core and DI packages target netstandard2.0, net8.0 and net10.0. Lite uses distinct NuGet package IDs while preserving the TextInspector namespace and assembly names. Replace the Lite package references when upgrading; do not reference both editions in one application. Shared result/report DTOs ease UI migration; the Pro initialization API and scores can differ.
+Core and DI packages target netstandard2.0, net8.0 and net10.0. TextInspector uses distinct NuGet package IDs while preserving the TextInspector namespace and assembly names. Replace the TextInspector package references when upgrading; do not reference both editions in one application. Shared result/report DTOs ease UI migration; the Pro initialization API and scores can differ.
 
-This repository contains the complete Lite edition on `main`; the extended paid edition is maintained separately in [TextInspectorPro](https://github.com/Perry3Dnl/TextInspectorPro). Repository names do not change the established NuGet package IDs, namespaces, or assembly names.
+This repository contains the complete TextInspector edition on `main`; the extended paid edition is maintained separately in [TextInspectorPro](https://github.com/Perry3Dnl/TextInspectorPro). The free NuGet packages are `TextInspector` and `TextInspector.AspNetCore`; the paid packages use the `TextInspector.Pro` prefix. Both editions retain the `TextInspector` namespaces and assembly names, so replace package references when upgrading.
 
 The release target is **1.0** (`1.0.0` in NuGet metadata). The installation commands apply once that version is published; this repository migration does not publish packages to NuGet.
 
 ## Development and maintenance
 
-Build, test, and package Lite independently from this repository. CI runs on pushes and pull requests to `main` and supports manual runs. It does not require the original repository or a sibling Pro branch. When changing shared engine behavior or report contracts, review the corresponding Pro implementation and port applicable fixes between repositories.
+Build, test, and package TextInspector independently from this repository. CI runs on pushes and pull requests to `main` and supports manual runs. It does not require the original repository or a sibling Pro branch. When changing shared engine behavior or report contracts, review the corresponding Pro implementation and port applicable fixes between repositories.
 
 ## Verification
 
@@ -129,4 +129,4 @@ dotnet run --project tests/TextInspector.AspNetCore.SmokeTests -c Release
 dotnet pack TextInspector.csproj -c Release
 ```
 
-CI verifies .NET 8/10 tests, all target builds, both smoke tests, packed consumer installation and the public Lite API boundary. Full-edition accuracy and benchmark figures are not reused as Lite measurements.
+CI verifies .NET 8/10 tests, all target builds, both smoke tests, packed consumer installation and the public TextInspector API boundary. Full-edition accuracy and benchmark figures are not reused as TextInspector measurements.

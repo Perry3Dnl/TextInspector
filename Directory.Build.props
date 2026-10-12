@@ -3,13 +3,13 @@
     <Version>1.0.0</Version>
     <Authors>Perry3Dnl</Authors>
     <Copyright>Copyright © 2026 Perry3Dnl</Copyright>
-    <PackageProjectUrl>https://github.com/Perry3Dnl/TextInspectorLite</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Perry3Dnl/TextInspectorLite.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Perry3Dnl/TextInspector</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/Perry3Dnl/TextInspector.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
-    <PackageReleaseNotes>TextInspector Lite 1.0.0 stable release. See CHANGELOG.md for release details.</PackageReleaseNotes>
+    <PackageReleaseNotes>TextInspector 1.0.0 stable release. See CHANGELOG.md for release details.</PackageReleaseNotes>
   </PropertyGroup>
 </Project>

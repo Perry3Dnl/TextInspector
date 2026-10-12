@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 namespace TextInspector;
 
 /// <summary>
-/// Immutable, thread-safe inspector for the fixed TextInspector Lite rule set.
+/// Immutable, thread-safe inspector for the fixed TextInspector rule set.
 /// </summary>
 public sealed partial class TextInspectorEngine
 {
@@ -14,7 +14,7 @@ public sealed partial class TextInspectorEngine
     public IReadOnlyList<TextInspectorDiagnostic> CompilationDiagnostics { get; }
     public int CompiledRuleCount => _rules.Length;
     public int CompiledPrefilteredRuleCount => _rules.Count(static rule => rule.PrefilterTerms.Length > 0);
-    /// <summary>Lite does not evaluate composite policies.</summary>
+    /// <summary>TextInspector does not evaluate composite policies.</summary>
     public int CompiledPolicyCount => 0;
 
     private readonly RuntimeRule[] _rules;

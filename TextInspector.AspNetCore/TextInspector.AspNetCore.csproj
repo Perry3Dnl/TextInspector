@@ -9,9 +9,9 @@
     <AssemblyName>TextInspector.AspNetCore</AssemblyName>
 
     <IsPackable>true</IsPackable>
-    <PackageId>TextInspector.Lite.AspNetCore</PackageId>
-    <Title>TextInspector Lite ASP.NET Core integration</Title>
-    <Description>TextInspector Lite: fixed built-in text detection with exact evidence, explainable risk scoring and UI-ready reports.</Description>
+    <PackageId>TextInspector.AspNetCore</PackageId>
+    <Title>TextInspector ASP.NET Core integration</Title>
+    <Description>TextInspector: fixed built-in text detection with exact evidence, explainable risk scoring and UI-ready reports.</Description>
     <PackageTags>textinspector;aspnetcore;dependency-injection;moderation</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>

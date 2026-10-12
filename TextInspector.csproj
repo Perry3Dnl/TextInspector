@@ -9,9 +9,9 @@
     <AssemblyName>TextInspector</AssemblyName>
 
     <IsPackable>true</IsPackable>
-    <PackageId>TextInspector.Lite</PackageId>
-    <Title>TextInspector Lite</Title>
-    <Description>TextInspector Lite: fixed built-in text detection with exact evidence, explainable risk scoring and UI-ready reports.</Description>
+    <PackageId>TextInspector</PackageId>
+    <Title>TextInspector</Title>
+    <Description>TextInspector: fixed built-in text detection with exact evidence, explainable risk scoring and UI-ready reports.</Description>
     <PackageTags>text;inspection;regex;detection;highlighting;scoring;moderation;content-safety;lite;netstandard</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
@@ -29,7 +29,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Presets/options.json" />
     <EmbeddedResource Include="Presets/rules.json" />
-    <None Update="Presets/lite-manifest.json" Pack="true" PackagePath="" />
+    <None Update="Presets/preset-manifest.json" Pack="true" PackagePath="" />
     <None Include="LICENSE" Pack="true" PackagePath="" />
     <None Remove="README.md" />
     <None Include="README.md" Pack="true" PackagePath="" />

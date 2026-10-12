@@ -8,10 +8,10 @@ namespace TextInspector;
 // Engine component extracted without changing its existing algorithm or public signatures.
 public sealed partial class TextInspectorEngine
 {
-    /// <summary>Creates a Lite engine from its fixed embedded rule set.</summary>
-    public static TextInspectorEngine Create(TextInspectorLiteOptions? options = null)
+    /// <summary>Creates a TextInspector engine from its fixed embedded rule set.</summary>
+    public static TextInspectorEngine Create(TextInspectorOptions? options = null)
     {
-        options ??= new TextInspectorLiteOptions();
+        options ??= new TextInspectorOptions();
         options.Validate();
         var scoring = TextInspectorPresets.LoadOptions();
         scoring.Masking.Enabled = options.EnableMasking;

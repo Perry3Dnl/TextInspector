@@ -1,9 +1,9 @@
 namespace TextInspector;
 
-/// <summary>Read-only information about the fixed embedded Lite preset.</summary>
-public static class TextInspectorLite
+/// <summary>Read-only information about the fixed embedded TextInspector preset.</summary>
+public static class TextInspectorDefaults
 {
-    public const string Edition = "Lite";
+    public const string Edition = "TextInspector";
     public static IReadOnlyList<TextInspectorRuleInfo> Rules { get; } = Array.AsReadOnly(
         TextInspectorPresets.LoadRules().Select(rule => new TextInspectorRuleInfo(
             rule.Key, rule.Category, rule.Description)).ToArray());

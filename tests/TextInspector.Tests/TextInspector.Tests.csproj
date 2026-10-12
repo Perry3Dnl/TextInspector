@@ -22,6 +22,6 @@
 
   <ItemGroup>
     <ProjectReference Include="../../TextInspector.csproj" />
-    <None Include="../../Presets/lite-manifest.json" Link="lite-manifest.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="../../Presets/preset-manifest.json" Link="preset-manifest.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

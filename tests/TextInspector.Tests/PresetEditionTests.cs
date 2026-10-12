@@ -4,13 +4,13 @@ using TextInspector;
 
 namespace TextInspector.Tests;
 
-public sealed class LiteEditionTests
+public sealed class PresetEditionTests
 {
     [Fact]
     public void ShippedPresetPreservesEveryBaselineAndBasicRule()
     {
-        var rules = TextInspectorLite.Rules.Select(rule => rule.Key).ToArray();
-        using var manifest = JsonDocument.Parse(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "lite-manifest.json")));
+        var rules = TextInspectorDefaults.Rules.Select(rule => rule.Key).ToArray();
+        using var manifest = JsonDocument.Parse(File.ReadAllText(Path.Combine(AppContext.BaseDirectory, "preset-manifest.json")));
         var expected = manifest.RootElement.GetProperty("baselineRuleKeys").EnumerateArray()
             .Concat(manifest.RootElement.GetProperty("basicRuleKeys").EnumerateArray()).Select(value => value.GetString()).ToArray();
         Assert.Equal(70, manifest.RootElement.GetProperty("baselineRuleKeys").GetArrayLength());
@@ -71,7 +71,7 @@ public sealed class LiteEditionTests
     [Fact]
     public void DisableExistingRulesAndSnapshotOptionsAtCreation()
     {
-        var options = new TextInspectorLiteOptions { DisabledRuleKeys = new[] { "PII_Email_Address" } };
+        var options = new TextInspectorOptions { DisabledRuleKeys = new[] { "PII_Email_Address" } };
         var engine = TextInspectorEngine.Create(options);
         options.DisabledRuleKeys[0] = "Threat_Violence";
         var result = engine.Inspect("hello@example.com");
@@ -83,7 +83,7 @@ public sealed class LiteEditionTests
     [Fact]
     public void DisableCategoryKeepsUnrelatedDetection()
     {
-        var engine = TextInspectorEngine.Create(new TextInspectorLiteOptions { DisabledCategories = new[] { TextInspectorRuleCategory.ExternalContact } });
+        var engine = TextInspectorEngine.Create(new TextInspectorOptions { DisabledCategories = new[] { TextInspectorRuleCategory.ExternalContact } });
         Assert.DoesNotContain(engine.Inspect("Contact hello@example.com on WhatsApp").Evidence, evidence => evidence.Category == TextInspectorRuleCategory.ExternalContact);
         Assert.True(engine.HasMatch("I'm going to kill you."));
     }
@@ -93,7 +93,7 @@ public sealed class LiteEditionTests
     {
         const string text = "Contact hello@example.com.";
         var plain = TextInspectorEngine.Create().Inspect(text);
-        var masked = TextInspectorEngine.Create(new TextInspectorLiteOptions { EnableMasking = true }).Inspect(text);
+        var masked = TextInspectorEngine.Create(new TextInspectorOptions { EnableMasking = true }).Inspect(text);
         Assert.NotNull(masked.MaskedText);
         Assert.Equal(text.Length, masked.MaskedText!.Length);
         Assert.DoesNotContain("hello@example.com", masked.MaskedText);
@@ -102,12 +102,12 @@ public sealed class LiteEditionTests
     }
 
     [Fact]
-    public void LiteConfigurationRejectsUnknownRulesAndInvalidMaskCharacters()
+    public void ConfigurationRejectsUnknownRulesAndInvalidMaskCharacters()
     {
-        Assert.Throws<ArgumentException>(() => TextInspectorEngine.Create(new TextInspectorLiteOptions { DisabledRuleKeys = new[] { "custom-rule" } }));
-        Assert.Throws<ArgumentException>(() => TextInspectorEngine.Create(new TextInspectorLiteOptions { DisabledCategories = new[] { (TextInspectorRuleCategory)999 } }));
-        Assert.Throws<ArgumentException>(() => TextInspectorEngine.Create(new TextInspectorLiteOptions { MaskCharacter = '\n' }));
-        Assert.Throws<ArgumentException>(() => TextInspectorEngine.Create(new TextInspectorLiteOptions { MaskCharacter = '\ud800' }));
+        Assert.Throws<ArgumentException>(() => TextInspectorEngine.Create(new TextInspectorOptions { DisabledRuleKeys = new[] { "custom-rule" } }));
+        Assert.Throws<ArgumentException>(() => TextInspectorEngine.Create(new TextInspectorOptions { DisabledCategories = new[] { (TextInspectorRuleCategory)999 } }));
+        Assert.Throws<ArgumentException>(() => TextInspectorEngine.Create(new TextInspectorOptions { MaskCharacter = '\n' }));
+        Assert.Throws<ArgumentException>(() => TextInspectorEngine.Create(new TextInspectorOptions { MaskCharacter = '\ud800' }));
     }
 
     [Fact]

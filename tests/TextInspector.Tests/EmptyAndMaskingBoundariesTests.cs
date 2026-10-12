@@ -2,12 +2,12 @@ using TextInspector;
 
 namespace TextInspector.Tests;
 
-public sealed class LiteEmptyAndMaskingBoundariesTests
+public sealed class EmptyAndMaskingBoundariesTests
 {
     [Fact]
     public void EmptyInputReturnsUnchangedMaskedTextAndSafeHtml()
     {
-        var engine = TextInspectorEngine.Create(new TextInspectorLiteOptions { EnableMasking = true });
+        var engine = TextInspectorEngine.Create(new TextInspectorOptions { EnableMasking = true });
         var empty = engine.Inspect("", includeMarkedHtml: true);
         Assert.Equal("", empty.MarkedHtml);
         Assert.Equal("", empty.MaskedText);

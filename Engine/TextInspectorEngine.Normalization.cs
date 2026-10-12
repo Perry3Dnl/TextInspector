@@ -5,7 +5,7 @@ using System.Text.RegularExpressions;
 
 namespace TextInspector;
 
-// Shared, behavior-preserving engine component. Keep this file identical across Lite and Pro.
+// Shared, behavior-preserving engine component. Keep this file identical across TextInspector and Pro.
 public sealed partial class TextInspectorEngine
 {
     private string NormalizeForMatchOnly(string text)
