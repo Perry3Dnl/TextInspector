@@ -1,5 +1,10 @@
 <Project>
+  <PropertyGroup Condition="'$(IsPackable)' == 'true'">
+    <PackageIcon>assets/logo.png</PackageIcon>
+  </PropertyGroup>
   <ItemGroup Condition="'$(IsPackable)' == 'true'">
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.401" PrivateAssets="All" />
+    <None Remove="$(MSBuildThisFileDirectory)assets/logo.png" />
+    <None Include="$(MSBuildThisFileDirectory)assets/logo.png" Pack="true" PackagePath="assets/" Visible="false" />
   </ItemGroup>
 </Project>

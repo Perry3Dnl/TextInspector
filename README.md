@@ -1,5 +1,7 @@
 # TextInspector
 
+<img src="assets/logo.png" alt="TextInspector logo" width="240" />
+
 **Version 1.0** · Complete standalone package · Free distribution on NuGet
 
 **License:** Free for personal use and genuinely free, non-monetized products — including free apps published by businesses. Monetized products, paid services, or internal revenue-generating tools require a licensed Pro edition. See [LICENSE](LICENSE). This is not an OSI open-source license.
