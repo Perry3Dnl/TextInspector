@@ -1,0 +1,101 @@
+name: Publish TextInspector to NuGet
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: publish-textinspector-v1.0.0
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify release tag
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag_sha="$(gh api repos/${{ github.repository }}/git/ref/tags/v1.0.0 --jq '.object.sha')"
+          test "$tag_sha" = "d90070b7ff003df394ebe10027974524cd429e2e" || {
+            echo "::error::v1.0.0 does not point to the verified release commit."
+            exit 1
+          }
+          gh api repos/${{ github.repository }}/releases/tags/v1.0.0 >/dev/null
+
+      - uses: actions/checkout@v4
+        with:
+          ref: d90070b7ff003df394ebe10027974524cd429e2e
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Restore and build
+        run: |
+          dotnet restore TextInspector.sln
+          dotnet build TextInspector.sln -c Release --no-restore
+
+      - name: Unit tests and line coverage (.NET 8)
+        run: dotnet test tests/TextInspector.Tests/TextInspector.Tests.csproj -c Release -f net8.0 --no-build --no-restore --collect:"XPlat Code Coverage"
+
+      - name: Enforce 95% line coverage
+        run: python3 tools/check_coverage.py tests/TextInspector.Tests/TestResults --threshold 95
+
+      - name: Unit tests (.NET 10)
+        run: dotnet test tests/TextInspector.Tests/TextInspector.Tests.csproj -c Release -f net10.0 --no-build --no-restore
+
+      - name: Smoke tests
+        run: |
+          dotnet run --project tests/TextInspector.SmokeTests -c Release --no-build --no-restore
+          dotnet run --project tests/TextInspector.AspNetCore.SmokeTests -c Release --no-build --no-restore
+
+      - name: Pack verified release commit
+        run: |
+          mkdir -p artifacts
+          dotnet pack TextInspector.csproj -c Release --no-build --no-restore -o artifacts
+          dotnet pack TextInspector.AspNetCore/TextInspector.AspNetCore.csproj -c Release --no-build --no-restore -o artifacts
+          test -f artifacts/TextInspector.1.0.0.nupkg
+          test -f artifacts/TextInspector.AspNetCore.1.0.0.nupkg
+
+      - name: Upload packages to GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload v1.0.0 artifacts/*.nupkg artifacts/*.snupkg --clobber
+
+      - name: Ensure NuGet API key exists
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        shell: bash
+        run: |
+          if [ -z "$NUGET_API_KEY" ]; then
+            echo "::error::Add a repository Actions secret named NUGET_API_KEY to publish to NuGet.org."
+            exit 1
+          fi
+
+      - name: Publish core package to NuGet.org
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          dotnet nuget push artifacts/TextInspector.1.0.0.nupkg \
+            --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+      - name: Publish ASP.NET Core package to NuGet.org
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+        run: |
+          dotnet nuget push artifacts/TextInspector.AspNetCore.1.0.0.nupkg \
+            --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+
+      - name: Upload build artifacts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: textinspector-1.0.0-packages
+          path: artifacts/*.nupkg
