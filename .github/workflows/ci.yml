@@ -48,7 +48,7 @@ jobs:
           mkdir -p /tmp/textinspector-consumer
           cd /tmp/textinspector-consumer
           dotnet new console --framework net8.0
-          dotnet add package TextInspector --version 1.0.0 --source "$GITHUB_WORKSPACE/artifacts"
+          dotnet add package TextInspector --version 1.0.1 --source "$GITHUB_WORKSPACE/artifacts"
           cat > Program.cs <<'EOF'
           using TextInspector;
           var engine = TextInspectorEngine.Create();
