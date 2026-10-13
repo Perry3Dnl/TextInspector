@@ -85,7 +85,7 @@ jobs:
                   assert len(nuspecs) == 1, f"Expected one nuspec in {path}"
                   root = ET.fromstring(archive.read(nuspecs[0]))
                   def get(tag):
-                      node = root.find(f".//{tag}")
+                      node = root.find(f".//{{*}}{tag}")
                       assert node is not None and node.text, f"Missing {tag} in {path}"
                       return node.text
                   assert get("id") == package_id, f"Wrong package ID in {path}"
