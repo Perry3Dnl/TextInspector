@@ -1,104 +1,150 @@
 name: Publish TextInspector to NuGet
 
 on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/publish-nuget.yml'
+      - 'Directory.Build.props'
+      - 'TextInspector.csproj'
+      - 'TextInspector.AspNetCore/**'
+      - 'docs/NUGET_README.md'
   workflow_dispatch:
-    inputs:
-      nuget_username:
-        description: 'NuGet.org username (profile name, not email)'
-        required: true
-        type: string
 
 permissions:
-  contents: write
-  id-token: write
+  contents: read
 
 concurrency:
-  group: publish-textinspector-v1.0.1
+  group: textinspector-release-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
-  publish:
+  build-and-validate:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     steps:
-      - name: Verify v1.0.1 release tag
-        env:
-          GH_TOKEN: ${{ github.token }}
-        shell: bash
-        run: |
-          set -euo pipefail
-          release_sha="d4bd345b8bc9a803df8b2edb8b1a221a55f606ff"
-          actual_sha="$(gh api "repos/${{ github.repository }}/git/ref/tags/v1.0.1" --jq '.object.sha')"
-          if [ "$actual_sha" != "$release_sha" ]; then
-            echo "::error::v1.0.1 tag must point to the tested commit $release_sha"
-            exit 1
-          fi
-          gh release view v1.0.1 >/dev/null
-
       - uses: actions/checkout@v4
         with:
-          ref: v1.0.1
-
+          fetch-depth: 0
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: |
             8.0.x
             10.0.x
-
+      - name: Check version and tag
+        id: version
+        shell: bash
+        run: |
+          set -euo pipefail
+          version="$(sed -n 's/.*<Version>\([^<]*\)<\/Version>.*/\1/p' Directory.Build.props | head -n1)"
+          test -n "$version"
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          if [ "$GITHUB_REF_TYPE" = tag ]; then
+            test "$GITHUB_REF_NAME" = "v$version"
+            git fetch origin main --quiet
+            test "$GITHUB_SHA" = "$(git rev-parse origin/main)" || {
+              echo "::error::Release tag must match current main."
+              exit 1
+            }
+          fi
       - name: Restore and build
         run: |
           dotnet restore TextInspector.sln
           dotnet build TextInspector.sln -c Release --no-restore
-
-      - name: Unit tests and line coverage (.NET 8)
+      - name: Unit tests (.NET 8)
         run: dotnet test tests/TextInspector.Tests/TextInspector.Tests.csproj -c Release -f net8.0 --no-build --no-restore --collect:"XPlat Code Coverage"
-
-      - name: Enforce 95% line coverage
+      - name: Enforce 95% core line coverage
         run: python3 tools/check_coverage.py tests/TextInspector.Tests/TestResults --threshold 95
-
       - name: Unit tests (.NET 10)
         run: dotnet test tests/TextInspector.Tests/TextInspector.Tests.csproj -c Release -f net10.0 --no-build --no-restore
-
       - name: Smoke tests
         run: |
           dotnet run --project tests/TextInspector.SmokeTests -c Release --no-build --no-restore
           dotnet run --project tests/TextInspector.AspNetCore.SmokeTests -c Release --no-build --no-restore
-
-      - name: Pack verified release commit
+      - name: Pack both free editions
         run: |
           mkdir -p artifacts
           dotnet pack TextInspector.csproj -c Release --no-build --no-restore -o artifacts
           dotnet pack TextInspector.AspNetCore/TextInspector.AspNetCore.csproj -c Release --no-build --no-restore -o artifacts
-          test -f artifacts/TextInspector.1.0.1.nupkg
-          test -f artifacts/TextInspector.AspNetCore.1.0.1.nupkg
-
-      - name: Upload packages to GitHub release
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: gh release upload v1.0.1 artifacts/*.nupkg artifacts/*.snupkg --clobber
-
-      - name: Authenticate to NuGet.org using Trusted Publishing (OIDC)
-        id: nuget_login
-        uses: NuGet/login@v1
-        with:
-          user: ${{ inputs.nuget_username || vars.NUGET_USERNAME || github.repository_owner }}
-
-      - name: Publish core package to NuGet.org
-        env:
-          NUGET_API_KEY: ${{ steps.nuget_login.outputs.NUGET_API_KEY }}
-        run: |
-          dotnet nuget push artifacts/TextInspector.1.0.1.nupkg \
-            --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
-
-      - name: Publish ASP.NET Core package to NuGet.org
-        env:
-          NUGET_API_KEY: ${{ steps.nuget_login.outputs.NUGET_API_KEY }}
-        run: |
-          dotnet nuget push artifacts/TextInspector.AspNetCore.1.0.1.nupkg \
-            --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
-
-      - name: Upload build artifacts
-        if: always()
+          test -f "artifacts/TextInspector.${{ steps.version.outputs.version }}.nupkg"
+          test -f "artifacts/TextInspector.AspNetCore.${{ steps.version.outputs.version }}.nupkg"
+      - name: Upload release packages
         uses: actions/upload-artifact@v4
         with:
-          name: textinspector-1.0.1-packages
-          path: artifacts/*.nupkg
+          name: textinspector-release-packages
+          path: |
+            artifacts/*.nupkg
+            artifacts/*.snupkg
+          if-no-files-found: error
+
+  dispatch-tagged-release:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main' && startsWith(github.event.head_commit.message, 'Release v')
+    needs: build-and-validate
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      contents: write
+    steps:
+      - name: Create tag and dispatch tagged release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.build-and-validate.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="v$VERSION"
+          if existing="$(gh api "repos/$GITHUB_REPOSITORY/git/ref/tags/$tag" --jq '.object.sha' 2>/dev/null)"; then
+            test "$existing" = "$GITHUB_SHA" || {
+              echo "::error::$tag already points at another commit."
+              exit 1
+            }
+          else
+            gh api --method POST "repos/$GITHUB_REPOSITORY/git/refs" \
+              -f ref="refs/tags/$tag" -f sha="$GITHUB_SHA" >/dev/null
+          fi
+          gh api --method POST "repos/$GITHUB_REPOSITORY/actions/workflows/publish-nuget.yml/dispatches" -f ref="$tag"
+
+  publish:
+    if: github.event_name == 'workflow_dispatch' && startsWith(github.ref, 'refs/tags/v')
+    needs: build-and-validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 10.0.x
+      - uses: actions/download-artifact@v4
+        with:
+          name: textinspector-release-packages
+          path: artifacts
+      - name: Authenticate with NuGet Trusted Publishing
+        id: login
+        uses: NuGet/login@v1
+        with:
+          user: ${{ vars.NUGET_USERNAME || github.repository_owner }}
+      - name: Publish TextInspector
+        env:
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
+          VERSION: ${{ needs.build-and-validate.outputs.version }}
+        run: dotnet nuget push "artifacts/TextInspector.$VERSION.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+      - name: Publish TextInspector.AspNetCore
+        env:
+          NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
+          VERSION: ${{ needs.build-and-validate.outputs.version }}
+        run: dotnet nuget push "artifacts/TextInspector.AspNetCore.$VERSION.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+      - name: Create GitHub release and attach packages
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ needs.build-and-validate.outputs.version }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="v$VERSION"
+          if ! gh release view "$tag" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create "$tag" --repo "$GITHUB_REPOSITORY" \
+              --title "TextInspector $VERSION" --generate-notes --verify-tag --latest
+          fi
+          gh release upload "$tag" artifacts/*.nupkg artifacts/*.snupkg --repo "$GITHUB_REPOSITORY" --clobber
