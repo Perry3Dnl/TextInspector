@@ -13,7 +13,7 @@
     <Title>TextInspector ASP.NET Core integration</Title>
     <Description>TextInspector: fixed built-in text detection with exact evidence, explainable risk scoring and UI-ready reports.</Description>
     <PackageTags>textinspector;aspnetcore;dependency-injection;moderation</PackageTags>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile>NUGET_README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
@@ -25,7 +25,7 @@
     <ProjectReference Include="../TextInspector.csproj" />
     <None Include="../LICENSE" Pack="true" PackagePath="" Link="LICENSE" />
     <None Remove="README.md" />
-    <None Include="README.md" Pack="true" PackagePath="" />
+    <None Include="NUGET_README.md" Pack="true" PackagePath="" />
     <None Include="../CHANGELOG.md" Pack="true" PackagePath="" Link="CHANGELOG.md" />
   </ItemGroup>
 
