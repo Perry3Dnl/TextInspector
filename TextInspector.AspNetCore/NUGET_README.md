@@ -7,7 +7,7 @@ This optional companion package registers TextInspector inspection, detection an
 ## Install
 
 ```bash
-dotnet add package TextInspector.AspNetCore --version 1.0.1
+dotnet add package TextInspector.AspNetCore --version 1.0.2
 ```
 
 ## Register services
@@ -27,8 +27,8 @@ Resolve `ITextInspectorService`, `ITextInspectorDetectionService` or `ITextInspe
 
 ## Documentation and licensing
 
-[TextInspector documentation](https://github.com/Perry3Dnl/TextInspector) · [Full license](https://github.com/Perry3Dnl/TextInspector/blob/v1.0.1/LICENSE)
+[TextInspector documentation](https://github.com/Perry3Dnl/TextInspector) · [Full license](https://github.com/Perry3Dnl/TextInspector/blob/v1.0.2/LICENSE)
 
 Free for genuinely free, non-monetized products; monetized products and revenue-generating internal tools require separate commercial licensing. Not an OSI-approved open-source license.
 
-**Version 1.0.1:** Package documentation update; no inspection behavior changes.
+**Version 1.0.2:** Version synchronized with TextInspector, including updated documentation. No inspection behavior changes.
