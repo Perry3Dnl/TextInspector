@@ -13,7 +13,7 @@
     <Title>TextInspector</Title>
     <Description>TextInspector: fixed built-in text detection with exact evidence, explainable risk scoring and UI-ready reports.</Description>
     <PackageTags>text;inspection;regex;detection;highlighting;scoring;moderation;content-safety;netstandard</PackageTags>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <PackageReadmeFile>NUGET_README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <IncludeSymbols>true</IncludeSymbols>
@@ -32,7 +32,7 @@
     <None Update="Presets/preset-manifest.json" Pack="true" PackagePath="" />
     <None Include="LICENSE" Pack="true" PackagePath="" />
     <None Remove="README.md" />
-    <None Include="README.md" Pack="true" PackagePath="" />
+    <None Include="docs/NUGET_README.md" Pack="true" PackagePath="" Link="NUGET_README.md" />
     <None Remove="CHANGELOG.md" />
     <None Include="CHANGELOG.md" Pack="true" PackagePath="" />
   </ItemGroup>
