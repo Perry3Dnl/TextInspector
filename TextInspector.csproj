@@ -12,7 +12,7 @@
     <PackageId>TextInspector</PackageId>
     <Title>TextInspector</Title>
     <Description>TextInspector: fixed built-in text detection with exact evidence, explainable risk scoring and UI-ready reports.</Description>
-    <PackageTags>text;inspection;regex;detection;highlighting;scoring;moderation;content-safety;lite;netstandard</PackageTags>
+    <PackageTags>text;inspection;regex;detection;highlighting;scoring;moderation;content-safety;netstandard</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
