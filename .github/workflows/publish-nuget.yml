@@ -69,6 +69,37 @@ jobs:
           dotnet pack TextInspector.AspNetCore/TextInspector.AspNetCore.csproj -c Release --no-build --no-restore -o artifacts
           test -f "artifacts/TextInspector.${{ steps.version.outputs.version }}.nupkg"
           test -f "artifacts/TextInspector.AspNetCore.${{ steps.version.outputs.version }}.nupkg"
+      - name: Validate both NuGet packages have the same version and correct README
+        env:
+          RELEASE_VERSION: ${{ steps.version.outputs.version }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import os, pathlib, zipfile, xml.etree.ElementTree as ET
+          v = os.environ["RELEASE_VERSION"]
+          for package_id in ("TextInspector", "TextInspector.AspNetCore"):
+              path = pathlib.Path("artifacts") / f"{package_id}.{v}.nupkg"
+              assert path.exists(), f"Missing package: {path}"
+              with zipfile.ZipFile(path) as archive:
+                  nuspecs = [name for name in archive.namelist() if name.endswith(".nuspec")]
+                  assert len(nuspecs) == 1, f"Expected one nuspec in {path}"
+                  root = ET.fromstring(archive.read(nuspecs[0]))
+                  def get(tag):
+                      node = root.find(f".//{tag}")
+                      assert node is not None and node.text, f"Missing {tag} in {path}"
+                      return node.text
+                  assert get("id") == package_id, f"Wrong package ID in {path}"
+                  assert get("version") == v, f"Wrong package version in {path}"
+                  readme = get("readme")
+                  assert readme == "NUGET_README.md", f"Wrong readme in {path}: {readme}"
+                  assert readme in archive.namelist(), f"Missing packed README in {path}"
+                  body = archive.read(readme).decode("utf-8")
+                  assert f"--version {v}" in body, f"README version out of sync: {path}"
+                  if package_id == "TextInspector.AspNetCore":
+                      deps = root.findall(".//{*}dependency")
+                      assert any(d.attrib.get("id") == "TextInspector" and v in d.attrib.get("version", "") for d in deps), "ASP.NET Core must depend on matching core version"
+              print(f"Verified {package_id} {v}: ID, version, README, dependencies")
+          PY
       - name: Upload release packages
         uses: actions/upload-artifact@v4
         with:
@@ -135,6 +166,30 @@ jobs:
           NUGET_API_KEY: ${{ steps.login.outputs.NUGET_API_KEY }}
           VERSION: ${{ needs.build-and-validate.outputs.version }}
         run: dotnet nuget push "artifacts/TextInspector.AspNetCore.$VERSION.nupkg" --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
+      - name: Confirm both versions are indexed by NuGet.org
+        env:
+          VERSION: ${{ needs.build-and-validate.outputs.version }}
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json, os, time, urllib.request
+          version = os.environ["VERSION"]
+          for package_id in ("textinspector", "textinspector.aspnetcore"):
+              url = f"https://api.nuget.org/v3-flatcontainer/{package_id}/index.json"
+              for attempt in range(20):
+                  try:
+                      req = urllib.request.Request(url, headers={"Cache-Control": "no-cache"})
+                      with urllib.request.urlopen(req, timeout=20) as response:
+                          versions = json.load(response).get("versions", [])
+                      if version in versions:
+                          print(f"NuGet.org confirmed {package_id} {version}")
+                          break
+                  except Exception as exc:
+                      print(f"NuGet index check: {exc}")
+                  if attempt == 19:
+                      raise SystemExit(f"Package {package_id} {version} not visible in NuGet.org after polling")
+                  time.sleep(15)
+          PY
       - name: Create GitHub release and attach packages
         env:
           GH_TOKEN: ${{ github.token }}
