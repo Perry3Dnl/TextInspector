@@ -1,18 +1,27 @@
-# TextInspector ASP.NET Core
+# TextInspector.AspNetCore
 
-The free TextInspector integration package is `TextInspector.AspNetCore`, version **1.0** (`1.0.0`). It is included in the complete TextInspector edition and uses the [TextInspector license](../LICENSE).
+**ASP.NET Core dependency injection for the complete TextInspector text inspection library.**
+
+TextInspector is a fully functional standalone library. This optional adapter makes its existing inspection and reporting services easy to use with ASP.NET Core. No database or additional edition is required.
+
+## Install
 
 ```bash
-dotnet add package TextInspector.AspNetCore --version 1.0.0
+dotnet add package TextInspector.AspNetCore --version 1.0.1
 ```
 
-Install this package after version 1.0.0 is published on NuGet. It registers one immutable, local TextInspector service without Entity Framework, files or live rule management.
+## Register
 
 ```csharp
 using TextInspector.AspNetCore;
+
 builder.Services.AddTextInspector(options => options.EnableMasking = true);
 ```
 
-Resolve ITextInspectorService, ITextInspectorDetectionService or ITextInspectorReportService. Configuration uses TextInspectorOptions: disable shipped rule keys/categories or enable basic masking. Custom regexes, policies, database persistence and refresh helpers belong to Pro.
+Resolve `ITextInspectorService`, `ITextInspectorDetectionService` or `ITextInspectorReportService` from your dependency-injection container. The service uses the included built-in rules, supports rule/category exclusions and basic masking, and performs inspection locally.
 
-See the [TextInspector README](../README.md) for reports and package compatibility, or [TextInspector Pro](https://github.com/Perry3Dnl/TextInspectorPro) for the extended paid edition.
+For usage examples and the inspection/reporting model, see the [TextInspector README](../README.md).
+
+## Licensing
+
+Free for personal use and genuinely free, non-monetized products. Paid and monetized uses require separate commercial licensing. See the [TextInspector license](../LICENSE). This is not an OSI-approved open-source license.
