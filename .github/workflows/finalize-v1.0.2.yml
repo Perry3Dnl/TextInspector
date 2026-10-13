@@ -1,9 +1,6 @@
 name: Finalize TextInspector v1.0.2 GitHub Release
 
 on:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/finalize-v1.0.2.yml']
   workflow_dispatch:
 
 permissions:
