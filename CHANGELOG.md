@@ -1,5 +1,13 @@
 # TextInspector changelog
 
+## 1.0.1 — 2026-10-13
+
+- Publish separate GitHub and NuGet READMEs for both the core and ASP.NET Core packages.
+- Correct image rendering in NuGet with an absolute, versioned image URL.
+- Present TextInspector as a fully functional standalone product; remove premature Pro comparison and promotion from package documentation.
+- Update package version and documentation examples to 1.0.1 without changing inspection behavior, public APIs or the 76-rule preset.
+
+
 ## 1.0.0 — 2026-10-10
 
 - Rename the free product to TextInspector and use distinct TextInspector / TextInspector.Pro NuGet package identities; preserve namespaces, assemblies, presets, and scoring.
