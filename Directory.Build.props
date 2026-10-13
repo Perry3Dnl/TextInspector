@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
     <Authors>Perry3Dnl</Authors>
     <Copyright>Copyright © 2026 Perry3Dnl</Copyright>
     <PackageProjectUrl>https://github.com/Perry3Dnl/TextInspector</PackageProjectUrl>
@@ -10,6 +10,6 @@
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <Deterministic>true</Deterministic>
     <ContinuousIntegrationBuild Condition="'$(GITHUB_ACTIONS)' == 'true'">true</ContinuousIntegrationBuild>
-    <PackageReleaseNotes>TextInspector 1.0.1 documentation patch release. See CHANGELOG.md for release details.</PackageReleaseNotes>
+    <PackageReleaseNotes>TextInspector 1.0.2 paired-package version synchronization and documentation patch release. See CHANGELOG.md for release details.</PackageReleaseNotes>
   </PropertyGroup>
 </Project>
