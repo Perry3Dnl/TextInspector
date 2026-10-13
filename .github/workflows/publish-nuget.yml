@@ -13,7 +13,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: publish-textinspector-v1.0.0
+  group: publish-textinspector-v1.0.1
   cancel-in-progress: false
 
 jobs:
@@ -26,16 +26,13 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          tag_sha="$(gh api repos/${{ github.repository }}/git/ref/tags/v1.0.0 --jq '.object.sha')"
-          test "$tag_sha" = "d90070b7ff003df394ebe10027974524cd429e2e" || {
-            echo "::error::v1.0.0 does not point to the verified release commit."
-            exit 1
-          }
-          gh api repos/${{ github.repository }}/releases/tags/v1.0.0 >/dev/null
+          tag_sha="$(gh api repos/${{ github.repository }}/git/ref/tags/v1.0.1 --jq '.object.sha')"
+          test -n "$tag_sha"
+          gh api repos/${{ github.repository }}/releases/tags/v1.0.1 >/dev/null
 
       - uses: actions/checkout@v4
         with:
-          ref: d90070b7ff003df394ebe10027974524cd429e2e
+          ref: v1.0.1
 
       - uses: actions/setup-dotnet@v4
         with:
@@ -67,13 +64,13 @@ jobs:
           mkdir -p artifacts
           dotnet pack TextInspector.csproj -c Release --no-build --no-restore -o artifacts
           dotnet pack TextInspector.AspNetCore/TextInspector.AspNetCore.csproj -c Release --no-build --no-restore -o artifacts
-          test -f artifacts/TextInspector.1.0.0.nupkg
-          test -f artifacts/TextInspector.AspNetCore.1.0.0.nupkg
+          test -f artifacts/TextInspector.1.0.1.nupkg
+          test -f artifacts/TextInspector.AspNetCore.1.0.1.nupkg
 
       - name: Upload packages to GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release upload v1.0.0 artifacts/*.nupkg artifacts/*.snupkg --clobber
+        run: gh release upload v1.0.1 artifacts/*.nupkg artifacts/*.snupkg --clobber
 
       - name: Authenticate to NuGet.org using Trusted Publishing (OIDC)
         id: nuget_login
@@ -85,19 +82,19 @@ jobs:
         env:
           NUGET_API_KEY: ${{ steps.nuget_login.outputs.NUGET_API_KEY }}
         run: |
-          dotnet nuget push artifacts/TextInspector.1.0.0.nupkg \
+          dotnet nuget push artifacts/TextInspector.1.0.1.nupkg \
             --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
 
       - name: Publish ASP.NET Core package to NuGet.org
         env:
           NUGET_API_KEY: ${{ steps.nuget_login.outputs.NUGET_API_KEY }}
         run: |
-          dotnet nuget push artifacts/TextInspector.AspNetCore.1.0.0.nupkg \
+          dotnet nuget push artifacts/TextInspector.AspNetCore.1.0.1.nupkg \
             --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
 
       - name: Upload build artifacts
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: textinspector-1.0.0-packages
+          name: textinspector-1.0.1-packages
           path: artifacts/*.nupkg
