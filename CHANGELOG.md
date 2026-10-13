@@ -1,5 +1,13 @@
 # TextInspector changelog
 
+## 1.0.2 — 2026-10-13
+
+- Release TextInspector and TextInspector.AspNetCore at matching version 1.0.2.
+- Refresh both NuGet READMEs and installation examples.
+- Add release-time package identity/version and NuGet publication verification so a partial release cannot report success.
+- No changes to detection, scoring, public APIs or the 76-rule preset.
+
+
 ## 1.0.1 — 2026-10-13
 
 - Publish separate GitHub and NuGet READMEs for both the core and ASP.NET Core packages.
