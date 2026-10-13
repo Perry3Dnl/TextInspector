@@ -1,6 +1,9 @@
 name: Publish TextInspector to NuGet
 
 on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/publish-nuget.yml']
   workflow_dispatch:
     inputs:
       nuget_username:
@@ -20,15 +23,28 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Verify release tag
+      - name: Create v1.0.1 tag and release from tested commit
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
-          tag_sha="$(gh api repos/${{ github.repository }}/git/ref/tags/v1.0.1 --jq '.object.sha')"
-          test -n "$tag_sha"
-          gh api repos/${{ github.repository }}/releases/tags/v1.0.1 >/dev/null
+          verified_sha="d4bd345b8bc9a803df8b2edb8b1a221a55f606ff"
+          existing_tag="$(gh api repos/${{ github.repository }}/git/ref/tags/v1.0.1 --jq '.object.sha' 2>/dev/null || true)"
+          if [ -n "$existing_tag" ] && [ "$existing_tag" != "$verified_sha" ]; then
+            echo "::error::Existing v1.0.1 tag does not point to the approved CI commit."
+            exit 1
+          fi
+          if [ -z "$existing_tag" ]; then
+            gh api --method POST "repos/${{ github.repository }}/git/refs" \
+              -f ref="refs/tags/v1.0.1" -f sha="$verified_sha"
+          fi
+          if ! gh release view v1.0.1 >/dev/null 2>&1; then
+            gh release create v1.0.1 --target "$verified_sha" \
+              --title "TextInspector v1.0.1 — Documentation Update" \
+              --notes "Documentation-only patch: separate GitHub and NuGet READMEs, corrected NuGet image rendering, and clear positioning of TextInspector as a complete standalone library. No detection, scoring, public API, or 76-rule preset changes." \
+              --latest
+          fi
 
       - uses: actions/checkout@v4
         with:
@@ -76,7 +92,7 @@ jobs:
         id: nuget_login
         uses: NuGet/login@v1
         with:
-          user: ${{ inputs.nuget_username }}
+          user: ${{ inputs.nuget_username || vars.NUGET_USERNAME || github.repository_owner }}
 
       - name: Publish core package to NuGet.org
         env:
