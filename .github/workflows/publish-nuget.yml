@@ -2,9 +2,15 @@ name: Publish TextInspector to NuGet
 
 on:
   workflow_dispatch:
+    inputs:
+      nuget_username:
+        description: 'NuGet.org username (profile name, not email)'
+        required: true
+        type: string
 
 permissions:
   contents: write
+  id-token: write
 
 concurrency:
   group: publish-textinspector-v1.0.0
@@ -69,26 +75,22 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: gh release upload v1.0.0 artifacts/*.nupkg artifacts/*.snupkg --clobber
 
-      - name: Ensure NuGet API key exists
-        env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
-        shell: bash
-        run: |
-          if [ -z "$NUGET_API_KEY" ]; then
-            echo "::error::Add a repository Actions secret named NUGET_API_KEY to publish to NuGet.org."
-            exit 1
-          fi
+      - name: Authenticate to NuGet.org using Trusted Publishing (OIDC)
+        id: nuget_login
+        uses: NuGet/login@v1
+        with:
+          user: ${{ inputs.nuget_username }}
 
       - name: Publish core package to NuGet.org
         env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+          NUGET_API_KEY: ${{ steps.nuget_login.outputs.NUGET_API_KEY }}
         run: |
           dotnet nuget push artifacts/TextInspector.1.0.0.nupkg \
             --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
 
       - name: Publish ASP.NET Core package to NuGet.org
         env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
+          NUGET_API_KEY: ${{ steps.nuget_login.outputs.NUGET_API_KEY }}
         run: |
           dotnet nuget push artifacts/TextInspector.AspNetCore.1.0.0.nupkg \
             --api-key "$NUGET_API_KEY" --source https://api.nuget.org/v3/index.json --skip-duplicate
