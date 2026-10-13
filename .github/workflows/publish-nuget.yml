@@ -30,7 +30,13 @@ jobs:
         run: |
           set -euo pipefail
           verified_sha="d4bd345b8bc9a803df8b2edb8b1a221a55f606ff"
-          existing_tag="$(gh api repos/${{ github.repository }}/git/ref/tags/v1.0.1 --jq '.object.sha' 2>/dev/null || true)"
+          existing_tag=""
+          if gh api "repos/${{ github.repository }}/git/ref/tags/v1.0.1" --jq '.object.sha' > /tmp/textinspector-tag-sha 2>/dev/null; then
+            existing_tag="$(cat /tmp/textinspector-tag-sha)"
+          fi
+          if [ "$existing_tag" = "null" ]; then
+            existing_tag=""
+          fi
           if [ -n "$existing_tag" ] && [ "$existing_tag" != "$verified_sha" ]; then
             echo "::error::Existing v1.0.1 tag does not point to the approved CI commit."
             exit 1
