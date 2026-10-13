@@ -1,0 +1,57 @@
+name: Finalize TextInspector v1.0.2 GitHub Release
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/workflows/finalize-v1.0.2.yml']
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: write
+
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify release tag and trusted build
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag_sha="$(gh api repos/$GITHUB_REPOSITORY/git/ref/tags/v1.0.2 --jq '.object.sha')"
+          test "$tag_sha" = "8ae945bc14f322f33e9abedc78797736b8dc8d77" || {
+            echo "::error::Unexpected v1.0.2 tag SHA."
+            exit 1
+          }
+          run_conclusion="$(gh api repos/$GITHUB_REPOSITORY/actions/runs/38366179900 --jq '.conclusion')"
+          test "$run_conclusion" = failure || test "$run_conclusion" = success
+      - name: Download the validated v1.0.2 artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh run download 38366179900 --repo "$GITHUB_REPOSITORY" \
+            --name textinspector-release-packages --dir artifacts
+      - name: Verify exact package set
+        shell: bash
+        run: |
+          set -euo pipefail
+          for filename in TextInspector.1.0.2.nupkg TextInspector.AspNetCore.1.0.2.nupkg TextInspector.1.0.2.snupkg TextInspector.AspNetCore.1.0.2.snupkg; do
+            test -s "artifacts/$filename" || { echo "::error::Missing $filename"; exit 1; }
+          done
+          test "$(find artifacts -maxdepth 1 -name '*.nupkg' | wc -l)" -eq 2
+      - name: Create GitHub release and upload both packages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! gh release view v1.0.2 --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1; then
+            gh release create v1.0.2 --repo "$GITHUB_REPOSITORY" \
+              --title "TextInspector 1.0.2 — Synchronized Packages" \
+              --notes "TextInspector and TextInspector.AspNetCore version 1.0.2. Both NuGet READMEs updated and package-version validation enforced. No inspection engine or API changes." \
+              --verify-tag --latest
+          fi
+          gh release upload v1.0.2 --repo "$GITHUB_REPOSITORY" \
+            artifacts/*.nupkg artifacts/*.snupkg --clobber
