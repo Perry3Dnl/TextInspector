@@ -1,9 +1,6 @@
 name: Publish TextInspector to NuGet
 
 on:
-  push:
-    branches: [main]
-    paths: ['.github/workflows/publish-nuget.yml']
   workflow_dispatch:
     inputs:
       nuget_username:
@@ -23,34 +20,19 @@ jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Create v1.0.1 tag and release from tested commit
+      - name: Verify v1.0.1 release tag
         env:
           GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
           set -euo pipefail
-          verified_sha="d4bd345b8bc9a803df8b2edb8b1a221a55f606ff"
-          existing_tag=""
-          if gh api "repos/${{ github.repository }}/git/ref/tags/v1.0.1" --jq '.object.sha' > /tmp/textinspector-tag-sha 2>/dev/null; then
-            existing_tag="$(cat /tmp/textinspector-tag-sha)"
-          fi
-          if [ "$existing_tag" = "null" ]; then
-            existing_tag=""
-          fi
-          if [ -n "$existing_tag" ] && [ "$existing_tag" != "$verified_sha" ]; then
-            echo "::error::Existing v1.0.1 tag does not point to the approved CI commit."
+          release_sha="d4bd345b8bc9a803df8b2edb8b1a221a55f606ff"
+          actual_sha="$(gh api "repos/${{ github.repository }}/git/ref/tags/v1.0.1" --jq '.object.sha')"
+          if [ "$actual_sha" != "$release_sha" ]; then
+            echo "::error::v1.0.1 tag must point to the tested commit $release_sha"
             exit 1
           fi
-          if [ -z "$existing_tag" ]; then
-            gh api --method POST "repos/${{ github.repository }}/git/refs" \
-              -f ref="refs/tags/v1.0.1" -f sha="$verified_sha"
-          fi
-          if ! gh release view v1.0.1 >/dev/null 2>&1; then
-            gh release create v1.0.1 --target "$verified_sha" \
-              --title "TextInspector v1.0.1 — Documentation Update" \
-              --notes "Documentation-only patch: separate GitHub and NuGet READMEs, corrected NuGet image rendering, and clear positioning of TextInspector as a complete standalone library. No detection, scoring, public API, or 76-rule preset changes." \
-              --latest
-          fi
+          gh release view v1.0.1 >/dev/null
 
       - uses: actions/checkout@v4
         with:
