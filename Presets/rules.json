@@ -1226,7 +1226,7 @@
       "lang:en",
       "unclaimable-0.8.5-curated"
     ],
-    "Category": "HateSpeech",
+    "Category": "AbusiveLanguage",
     "DetectionScore": 60,
     "SeverityScore": 1,
     "RuleWeight": 0,
@@ -1244,7 +1244,7 @@
       "lang:nl",
       "unclaimable-0.8.5-curated"
     ],
-    "Category": "HateSpeech",
+    "Category": "AbusiveLanguage",
     "DetectionScore": 60,
     "SeverityScore": 1,
     "RuleWeight": 0,
