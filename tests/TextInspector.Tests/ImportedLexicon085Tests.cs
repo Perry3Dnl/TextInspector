@@ -78,7 +78,7 @@ public sealed class ImportedLexicon085Tests
     [Fact]
     public void ImportedLexiconOnlyDetectionDoesNotCreateRisk()
     {
-        var result = Engine.Value.Inspect("airhead", new TextInspectionOptions { IncludeNonScoringEvidence = true });
+        var result = Engine.Value.Inspect("prefix airhead suffix", new TextInspectionOptions { IncludeNonScoringEvidence = true });
         Assert.Contains(result.Evidence, hit => hit.RuleKey == "Lexicon_Profanity_EN");
         Assert.Equal(0, result.RiskAssessment.RuleRiskPoints);
         Assert.Equal(0, result.RiskAssessment.TotalRiskPoints);
