@@ -13,7 +13,7 @@ public sealed class ImportedLexicon085Tests
         var inspector = TextInspectorEngine.Create();
         Assert.Contains(inspector.FindMatches(input), match => match.RuleKey == expectedRule);
         var result = inspector.Inspect(input);
-        Assert.Contains(result.Evidence, hit => hit.RuleKey == expectedRule && !hit.CountsForScoring);
+        Assert.Contains(result.Evidence, hit => hit.RuleKey == expectedRule && !hit.ContributesToRisk);
     }
 
     [Fact]
