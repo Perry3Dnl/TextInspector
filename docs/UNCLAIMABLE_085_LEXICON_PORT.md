@@ -1,24 +1,43 @@
-# Unclaimable 0.8.5 lexical evidence adaptation (review candidate)
+# Unclaimable 0.8.5 lexical data adaptation for TextInspector
 
-This is a **TextInspector-specific adaptation**, not a copy of Unclaimable's identifier rejection pipeline. Source vocabulary was taken from the Unclaimable v0.8.5 language JSON datasets, then filtered to a small initial, reproducible subset (terms containing at least five UTF-16 code units, first 45 per language entries in source order). This is a deliberately incomplete initial import, not a claim of full 0.8.5 dataset coverage.
+## Scope and provenance
 
-Original source: https://github.com/Perry3Dnl/Unclaimable
+This adapts **v0.8.5 vocabulary data**, not Unclaimable's reserved-name blocking/matching engine. TextInspector remains an evidence-producing inspection system with original text spans, contextual gating, explainable scoring and UI-ready reports.
 
-## Edition boundary
+Source vocabulary: `Perry3Dnl/Unclaimable` at v0.8.5, `platforms/dotnet/src/Unclaimable.Extended/Data/slangprofanity-*.json` and `hatespeech.json`. All imported source entries are captured in the checked-in test fixture `tests/TextInspector.Tests/lexicon-085-fixtures.json` for reproducibility.
 
-- TextInspector: English and Dutch evidence-only vocabulary.
-- TextInspector Pro: the same English/Dutch vocabulary, plus 13 additional language groups (DE, FR, ES, IT, PT, PL, TR, ID, CS, VI, HU, SV, RO).
-- Both retain their existing scoring and report machinery. A lexical match has `MaxCountForScoring: 0`, so it contributes no risk points by itself.
-- New `AbusiveLanguage = 21` is an additive category; do **not** mix generic swearing into `HateSpeech`.
+## Edition split
 
-## Review gates before merging
+| Dimension | TextInspector | TextInspector Pro |
+| --- | --- | --- |
+| Original preset rules and scoring | Retained | Retained and extended |
+| English slang/profanity lexical terms | 300 | 300 |
+| Dutch slang/profanity lexical terms | 302 | 302 |
+| Other slang/profanity languages | None | 13 extra; 3,433 terms |
+| Supplementary hateful expressions | Curated 20 phrase subset | Full 112 expressions |
+| Imported lexical evidence scoring | Evidence-only | Evidence-only |
+| Existing custom rules and composite policies | No | Yes |
 
-1. Verify dataset provenance and redistribution rights in both package licenses.
-2. Build/test all supported frameworks and run packaged-consumer smoke tests.
-3. Run category/score regression tests against ordinary multilingual prose, names, quotations, and safe false-positive controls.
-4. Benchmark cold-start, allocation, compiled regex construction, common no-match throughput, and peak working set.
-5. Evaluate a dedicated literal lexicon matcher before expanding beyond this small candidate set; do not insert tens of thousands of literals into regex or silently change the core engine.
-6. Preserve source spans and report highlighting across every imported language; test Unicode and multiword terms.
-7. Synchronize the common rules and public category enum across both editions. Publish only with a separately approved matching version policy.
+The 15 Pro languages: EN, NL, DE, FR, ES, IT, PT, PL, TR, ID, CS, VI, HU, SV, RO.
 
-These are feature branches pending CI and design review, **not release-ready changes**.
+The imported profanity lexicons use `AbusiveLanguage`, a new category with stable numeric enum value 21. Hateful expressions use `HateSpeech`. Merely detecting ordinary profanity is *not* equivalent to hateful content, a threat, or policy breach.
+
+The entries are part of the **existing fixed rule/evidence pipeline**, stored in `Presets/rules.json` with stable keys and GUIDs. We do not import Unclaimable's false-positive sensitivity API or partial-username indexing. The lexical rules are explicitly `MaxCountForScoring: 0` and `RuleWeight: 0`; they cannot add risk points directly.
+
+The expression boundary `(?<![\\p{L}\\p{N}_])` / `(?![\\p{L}\\p{N}_])` avoids triggering on the interior of ordinary Unicode identifiers. Terms are sorted longest-first before generating regex alternatives. The existing normalization-to-original-text mapping remains responsible for exact highlighting and offsets.
+
+## Test coverage and safe rollout
+
+- Per-edition fixture audit exercises **every imported source entry** against the compiled expression and checks the expected rule, category, and non-scoring contract.
+- Smoke tests verify full inspection, source offsets, highlight spans, no-risk semantics and an embedded-identifier negative case.
+- Existing category and rule manifest tests are updated, without deleting the baseline rule contract.
+- CI must pass on net8.0 and net10.0, and packages must build for netstandard2.0, net8.0 and net10.0.
+- Benchmark cold startup, warm engine creation, allocations, throughput for no-match and multilingual inputs, and regex timeout incidence before approving this feature.
+- Run a separate calibration against benign multilingual content and quotation/research contexts; lexical evidence should not falsely be interpreted as automatic enforcement.
+- Verify cross-project free baseline parity and redistribution/license compliance before merge or NuGet publication.
+
+## Follow-on architecture
+
+The current import intentionally reuses TextInspector's regex-based rule interface. This is a complete **data port for the selected categories**, but it is not an optimized indexed lexicon engine. A dedicated literal matcher may be justified by profiling, but should only be integrated if it preserves raw matching, exact UTF-16 source spans, normalized-source mapping, first-match fast paths, score accounting, context and reports. It must not be implemented by copying Unclaimable's checker.
+
+**Status:** draft PR, not production release approval.
