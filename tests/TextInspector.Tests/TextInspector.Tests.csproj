@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="../../TextInspector.csproj" />
+    <None Update="lexicon-085-fixtures.json" CopyToOutputDirectory="PreserveNewest" />
     <None Include="../../Presets/preset-manifest.json" Link="preset-manifest.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>
