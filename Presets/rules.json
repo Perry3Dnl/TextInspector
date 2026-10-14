@@ -1216,5 +1216,41 @@
       "message",
       "mass"
     ]
+  },
+  {
+    "TextInspectorRuleId": "f0850000-0000-4000-8000-000000000001",
+    "Key": "Lexicon_Profanity_EN",
+    "Description": "Versioned en slang/profanity lexical evidence. Does not imply risk by itself.",
+    "Tags": [
+      "lexicon",
+      "lang:en",
+      "unclaimable-0.8.5-curated"
+    ],
+    "Category": "HateSpeech",
+    "DetectionScore": 60,
+    "SeverityScore": 1,
+    "RuleWeight": 0,
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "RegexPattern": "(?<![\\p{L}\\p{N}_])(?:airhead|airheads|arsebrain|arsebrains|arseface|arsefaces|arsehat|arsehats|arsehole|arseholes|arses|arsewipe|arsewipes|arsey|assbag|assbags|assclown|assface|assfaces|asshat|asshats|asshead|assheads|asshole|assholes|asskisser|asskissers|asswipe|asswipes|bastard|bastards|bellend|bellends|berks|birdbrain|birdbrains|bitch|bitches|blithering|blockhead|blockheads|bloody|bollockbrain|bollocking|bollockings)(?![\\p{L}\\p{N}_])",
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "f0850000-0000-4000-8000-000000000002",
+    "Key": "Lexicon_Profanity_NL",
+    "Description": "Versioned nl slang/profanity lexical evidence. Does not imply risk by itself.",
+    "Tags": [
+      "lexicon",
+      "lang:nl",
+      "unclaimable-0.8.5-curated"
+    ],
+    "Category": "HateSpeech",
+    "DetectionScore": 60,
+    "SeverityScore": 1,
+    "RuleWeight": 0,
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "RegexPattern": "(?<![\\p{L}\\p{N}_])(?:achterlijk|achterlijke|achterlijkerd|achterlijkerds|bakhannes|bakhannessen|beklul|beklullen|blaaskaak|blaaskaken|botterik|botteriken|doerak|doerakken|domkop|domkoppen|domoor|domoren|dondersteen|donderstenen|droeftoeter|droeftoeters|eikel|eikels|ellendeling|ellendelingen|etter|etterbak|etterbakken|etterbuil|etterbuilen|etterkop|etterkoppen|etters|ettertje|ettertjes|fielt|fielten|flapdrol|flapdrollen|flapuit|flapuiten|flikker|flikkers|galbak)(?![\\p{L}\\p{N}_])",
+    "IsEnabled": true
   }
 ]
