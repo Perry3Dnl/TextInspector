@@ -18,7 +18,7 @@ public sealed class ImportedLexicon085Tests
             IncludeHighlightSpans = true,
             IncludeSourceLocations = true
         });
-        var evidence = Assert.Single(result.Evidence.Where(e => e.RuleKey == ruleKey));
+        var evidence = Assert.Single(result.Evidence, e => e.RuleKey == ruleKey);
         Assert.Equal(text, evidence.MatchedText);
         Assert.Equal(7, evidence.Start);
         Assert.Equal(text.Length, evidence.Length);
