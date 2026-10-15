@@ -1,6 +1,6 @@
 # TextInspector
 
-![TextInspector logo](https://raw.githubusercontent.com/Perry3Dnl/TextInspector/v1.0.2/assets/logo.png)
+![TextInspector logo](https://raw.githubusercontent.com/Perry3Dnl/TextInspector/v1.1.0/assets/logo.png)
 
 **TextInspector separates what was detected from what is actually risky.**
 
@@ -8,9 +8,9 @@
 
 ## Features
 
-- **76 rules in the published 1.0.2 package**. The next release candidate adds three evidence-only lexical rules, for 79 total.
+- **79 built-in rules** in 1.1.0, including three evidence-only lexical rules added to the 76-rule 1.0 baseline.
 - **Separate detection and risk:** recognized signals do not automatically become violations.
-- **Next release candidate:** 602 English/Dutch lexical slang/profanity terms and a limited additional hate-speech phrase set, classified as supporting evidence.
+- **Lexical evidence:** 602 English/Dutch lexical slang/profanity terms and a limited additional hate-speech phrase set, classified as supporting evidence.
 - **Explainable risk reports** with category findings, reasons and supporting evidence.
 - **Source-accurate highlights** linked to the original text and report findings.
 - **Built-in masking**, rule/category exclusions, raw-match helpers and sequential batches.
@@ -20,7 +20,7 @@
 ## Install
 
 ```bash
-dotnet add package TextInspector --version 1.0.2
+dotnet add package TextInspector --version 1.1.0
 ```
 
 ## Quick start
@@ -56,7 +56,7 @@ For source-linked highlights and positions, use `Inspect` with `TextInspectionOp
 Install the optional [TextInspector.AspNetCore](https://www.nuget.org/packages/TextInspector.AspNetCore) companion package:
 
 ```bash
-dotnet add package TextInspector.AspNetCore --version 1.0.2
+dotnet add package TextInspector.AspNetCore --version 1.1.0
 ```
 
 ```csharp
@@ -69,8 +69,8 @@ builder.Services.AddTextInspector(options => options.EnableMasking = true);
 
 Free for personal use and genuinely free, non-monetized products, including products released by businesses. Commercial use in monetized products, paid services and revenue-generating internal systems requires a separate commercial license. This is a **source-available license, not an OSI-approved open-source license**.
 
-[Full license](https://github.com/Perry3Dnl/TextInspector/blob/v1.0.2/LICENSE) · [Documentation and examples](https://github.com/Perry3Dnl/TextInspector)
+[Full license](https://github.com/Perry3Dnl/TextInspector/blob/v1.1.0/LICENSE) · [Documentation and examples](https://github.com/Perry3Dnl/TextInspector)
 
 ---
 
-**Version 1.0.2:** Synchronized core and ASP.NET Core package versions and updated package documentation. No inspection behavior changes. No changes to the inspection engine, public API or 76-rule preset.
+**Version 1.1.0:** Adds the multilingual lexical evidence update, calibrated rule-scoped false-positive exclusions, local negation and attributed-context handling, and expanded adversarial/multilingual regression coverage. Core and ASP.NET Core package versions remain synchronized.
