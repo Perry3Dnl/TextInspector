@@ -37,6 +37,12 @@ internal class TextInspectorScoringOptions
     public bool DeduplicateExactMatchesForScoring { get; init; } = true;
 
     /// <summary>
+    /// Optional exact-match exclusions for known benign matches, scoped to a rule key.
+    /// The default is empty; this does not implement broad substring filtering.
+    /// </summary>
+    public TextInspectorFalsePositiveExclusion[] FalsePositiveExclusions { get; set; } = Array.Empty<TextInspectorFalsePositiveExclusion>();
+
+    /// <summary>
     /// Optional local masking/redaction output. Detection masking is independent from risk scoring:
     /// evidence-only matches can be masked without contributing risk points.
     /// </summary>
@@ -116,6 +122,9 @@ internal class TextInspectorScoringOptions
             throw new InvalidOperationException("RegexTimeoutMilliseconds must be > 0.");
         if(MaxInputLength < 0)
             throw new InvalidOperationException("MaxInputLength cannot be negative.");
+        if(FalsePositiveExclusions is null || FalsePositiveExclusions.Any(item =>
+            item is null || string.IsNullOrWhiteSpace(item.RuleKey) || string.IsNullOrWhiteSpace(item.MatchedText)))
+            throw new InvalidOperationException("FalsePositiveExclusions must contain nonblank rule keys and matched text.");
         if(EvidenceSnippetPad < 0)
             throw new InvalidOperationException("EvidenceSnippetPad cannot be negative.");
         if(DefaultMaxEvidenceSnippets < 0)
