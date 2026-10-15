@@ -14,6 +14,10 @@ public sealed partial class TextInspectorEngine
         options ??= new TextInspectorOptions();
         options.Validate();
         var scoring = TextInspectorPresets.LoadOptions();
+        scoring.FalsePositiveExclusions = options.FalsePositiveExclusions.Select(item => new TextInspectorFalsePositiveExclusion
+        {
+            RuleKey = item.RuleKey, MatchedText = item.MatchedText
+        }).ToArray();
         scoring.Masking.Enabled = options.EnableMasking;
         scoring.Masking.MaskCharacter = options.MaskCharacter;
         var disabledKeys = new HashSet<string>(options.DisabledRuleKeys, StringComparer.OrdinalIgnoreCase);
