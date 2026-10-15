@@ -14,14 +14,14 @@ public sealed class FalsePositiveExclusionTests
             {
                 TextInspectorRuleId = Guid.Parse("ba51f0b0-7777-4444-8888-000000000001"),
                 Key = "Example_Word", Category = TextInspectorRuleCategory.Fraud,
-                RegexPattern = @"\\b(?:foo|bar)\\b",
+                RegexPattern = @"\b(?:foo|bar)\b",
                 DetectionScore = 80, SeverityScore = 5, RuleWeight = 10
             },
             new TextInspectorRulePattern
             {
                 TextInspectorRuleId = Guid.Parse("ba51f0b0-7777-4444-8888-000000000002"),
                 Key = "Other_Word", Category = TextInspectorRuleCategory.Fraud,
-                RegexPattern = @"\\bfoo\\b",
+                RegexPattern = @"\bfoo\b",
                 DetectionScore = 80, SeverityScore = 5, RuleWeight = 10
             }
         };
