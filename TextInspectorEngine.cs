@@ -263,6 +263,16 @@ public sealed partial class TextInspectorEngine
         int origEndExclusive = normalized.EndMap[normEndExclusive - 1];
         if(origStart < 0 || origStart >= originalLength || origEndExclusive <= origStart || origEndExclusive > originalLength)
             return false;
+        // Only a precise, rule-scoped known benign match is excluded. The remaining
+        // evidence from this and other rules must continue through the engine.
+        foreach(var exclusion in Options.FalsePositiveExclusions)
+        {
+            if(string.Equals(exclusion.RuleKey,rule.Key,StringComparison.OrdinalIgnoreCase)
+               && exclusion.MatchedText.Length == origEndExclusive - origStart
+               && string.Compare(originalText,origStart,exclusion.MatchedText,0,
+                   exclusion.MatchedText.Length,StringComparison.OrdinalIgnoreCase) == 0)
+                return false;
+        }
 
         result = CreateRuleMatch(rule,origStart,origEndExclusive - origStart);
         return true;
@@ -309,7 +319,7 @@ public sealed partial class TextInspectorEngine
                 {
                     if(TryGetFirstEvidenceCapture(rule,match,out var capture))
                     {
-                        TryAddEvidenceHit(evidence,rule,capture,originalText.Length,normalized);
+                        TryAddEvidenceHit(evidence,rule,capture,originalText,normalized);
                     }
                 }
             }
@@ -331,13 +341,14 @@ public sealed partial class TextInspectorEngine
         return evidence;
     }
 
-    private static bool TryAddEvidenceHit(
+    private bool TryAddEvidenceHit(
         List<EvidenceHit> evidence,
         RuntimeRule rule,
         Capture capture,
-        int originalLength,
+        string originalText,
         NormalizedText normalized)
     {
+        int originalLength = originalText.Length;
         int normStart = capture.Index;
         int normEndExclusive = capture.Index + capture.Length;
         if(capture.Length <= 0 || normStart < 0 || normEndExclusive > normalized.Text.Length)
