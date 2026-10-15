@@ -1,3 +1,12 @@
+# Changelog
+
+## 1.1.0 — 2026-10-15
+
+- Add exact, rule-scoped false-positive exclusions for scored inspection without changing raw matching behavior.
+- Add calibrated handling for locally negated credential requests and attributed/quoted threat examples.
+- Add adversarial, false-positive, context, and multilingual regression corpora to protect precision as the detector evolves.
+- Keep TextInspector and TextInspector.AspNetCore on the same 1.1.0 package version and shared engine line.
+
 # TextInspector changelog
 
 ## 1.0.2 — 2026-10-13
