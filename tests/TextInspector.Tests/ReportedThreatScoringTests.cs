@@ -22,6 +22,24 @@ public sealed class ReportedThreatScoringTests
         Assert.Contains(b.HighlightSpans,s => s.Length > 0);
     }
 
+    [Fact]
+    public void UnattributedQuotationIsNotAutomaticallyExcused()
+    {
+        var result = Engine.Value.Inspect("He shouted \"I'm going to kill you.\"");
+        Assert.Contains(result.Evidence,e => e.RuleKey == "Threat_Violence" && e.ContributesToRisk);
+    }
+
+    [Fact]
+    public void AttributedQuoteDoesNotHideSeparateDirectThreat()
+    {
+        var result = Engine.Value.Inspect(
+            "The transcript says: \"I'm going to kill you.\" Later, I am going to harm you.");
+        var threats = result.Evidence.Where(e => e.RuleKey == "Threat_Violence").ToArray();
+        Assert.Equal(2,threats.Length);
+        Assert.Contains(threats,e => e.ContributesToRisk);
+        Assert.Contains(threats,e => !e.ContributesToRisk);
+    }
+
     [Theory]
     [InlineData("I'm going to kill you.")]
     [InlineData("I'm gonna hurt you.")]
