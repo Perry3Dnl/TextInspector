@@ -6,13 +6,13 @@
 
 **TextInspector is a complete, fully functional standalone .NET library.** It provides everything needed to detect and inspect text, assess risk, mask evidence and build reports or UI highlights. It is not a trial, restricted demo or incomplete edition.
 
-**Version 1.0.2** · .NET Standard 2.0, .NET 8 and .NET 10
+**Version 1.1.0** · .NET Standard 2.0, .NET 8 and .NET 10
 
 ## What it does
 
-- **76 released built-in rules**, with 3 additional evidence-only lexical rules prepared for the next release (79 total on this branch).
+- **79 built-in rules**, including 3 evidence-only lexical rules added on top of the 76-rule 1.0 baseline.
 - **Detection separate from risk:** evidence can be recognized without automatically generating a warning.
-- **Upcoming lexical evidence:** complete English/Dutch v0.8.5-derived slang/profanity term sets (602 entries) and a carefully scoped hate-speech phrase supplement. These are evidence-only, not an automatic moderation verdict.
+- **Lexical evidence:** complete English/Dutch v0.8.5-derived slang/profanity term sets (602 entries) and a carefully scoped hate-speech phrase supplement. These are evidence-only, not an automatic moderation verdict.
 - **Explainable reports:** category findings, readable reasons, risk assessment and supporting signals.
 - **Exact source evidence:** source offsets and UI-ready highlights tied to findings.
 - **Basic masking**, built-in rule/category opt-outs, raw matching and sequential batch inspection.
@@ -22,13 +22,13 @@
 ## Install
 
 ```bash
-dotnet add package TextInspector --version 1.0.2
+dotnet add package TextInspector --version 1.1.0
 ```
 
 Optional ASP.NET Core integration:
 
 ```bash
-dotnet add package TextInspector.AspNetCore --version 1.0.2
+dotnet add package TextInspector.AspNetCore --version 1.1.0
 ```
 
 ## Quick start
