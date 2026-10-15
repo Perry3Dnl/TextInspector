@@ -40,3 +40,11 @@ Replace illustrative rule keys with keys in your actual installed preset. A rule
 **Scope:** This first implementation filters evidence returned by full `Inspect`, `CreateReport`, and their scoring/highlighting pipeline. Fast raw `HasMatch`, `FindFirstMatch`, and `FindMatches` deliberately report primary regex hits without this post-match filtering; they have always skipped full inspection scoring/context. Use `Inspect` for filtered decisions, not raw matching shortcuts.
 
 Both editions implement the same shared matching change. The free public `TextInspectorOptions` exposes exclusions while Pro also supports its existing scoring-options configuration. No language sensitivity switch or substantial engine rewrite is introduced.
+
+## Attributed quotation scoring (TDD follow-up)
+
+The shared context-scoring pipeline now distinguishes a **direct threat** from a threat reproduced in an explicitly attributed quotation. A bounded nearby attribution cue (e.g., a report, transcript, fictional script, moderator record, or similar documentation) must introduce the opening quotation mark, and the matched span must end at the closing quotation mark. Only the quoted threat evidence is marked context-excluded for scoring.
+
+The evidence and source offsets remain available in `Inspect` and highlighting; a separate direct threat in the same message remains scored. A quotation alone, without an attribution cue, is **not** treated as innocent. This is a deliberately narrow heuristic, not a general classifier of intent or a blanket suppression of harmful text. Applications should not equate suppressed scoring with a safety guarantee.
+
+The TDD cases are in `tests/TextInspector.Tests/ReportedThreatScoringTests.cs`: three previously failing direct-versus-reported comparisons, direct threat controls, unattributed quotation, and simultaneous reported/direct threats. The fix is shared between Free and Pro.
