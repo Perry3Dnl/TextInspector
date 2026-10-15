@@ -12,10 +12,16 @@ public sealed class LanguageLexiconBoundaryTests
         yield return new object[] { "EN", "scatterbrains" };
         yield return new object[] { "EN", "bollockbrain" };
         yield return new object[] { "EN", "chowderheads" };
+        yield return new object[] { "EN", "arse" };
+        yield return new object[] { "EN", "berk" };
+        yield return new object[] { "EN", "clod" };
         yield return new object[] { "NL", "achterlijkerds" };
         yield return new object[] { "NL", "schijtlijsters" };
         yield return new object[] { "NL", "achterlijkerd" };
         yield return new object[] { "NL", "ellendelingen" };
+        yield return new object[] { "NL", "kak" };
+        yield return new object[] { "NL", "kut" };
+        yield return new object[] { "NL", "lul" };
     }
 
     [Theory]
