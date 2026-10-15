@@ -7,7 +7,7 @@ TextInspector is a fully functional standalone library. This optional adapter ma
 ## Install
 
 ```bash
-dotnet add package TextInspector.AspNetCore --version 1.0.2
+dotnet add package TextInspector.AspNetCore --version 1.1.0
 ```
 
 ## Register
