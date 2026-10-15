@@ -17,6 +17,7 @@ public sealed class MultilingualAccuracyCorpusTests
         public string Split { get; set; } = "";
         public string Text { get; set; } = "";
         public string RuleKey { get; set; } = "";
+        public string TargetTerm { get; set; } = "";
         public bool ExpectedDetection { get; set; }
         public bool ExpectedScoring { get; set; }
         public string? ExpectedEvidence { get; set; }
@@ -54,6 +55,7 @@ public sealed class MultilingualAccuracyCorpusTests
             Assert.Equal("synthetic-boundary",x.Origin);
             Assert.Equal("unreviewed",x.ReviewStatus);
             Assert.True(x.ExpectedDetection == (x.ExpectedEvidence is not null));
+            Assert.False(string.IsNullOrWhiteSpace(x.TargetTerm));
         });
     }
 
@@ -64,9 +66,9 @@ public sealed class MultilingualAccuracyCorpusTests
         var result = Engine.Value.Inspect(item.Text,
             new TextInspectionOptions { IncludeNonScoringEvidence = true });
         var hits = result.Evidence.Where(e => e.RuleKey == item.RuleKey).ToArray();
-        var matching = hits.Where(e => item.ExpectedEvidence is not null &&
-            string.Equals(e.MatchedText,item.ExpectedEvidence,StringComparison.Ordinal)).ToArray();
-        Assert.True(item.ExpectedDetection ? matching.Length > 0 : hits.Length == 0,
+        var matching = hits.Where(e =>
+            string.Equals(e.MatchedText,item.TargetTerm,StringComparison.Ordinal)).ToArray();
+        Assert.True(item.ExpectedDetection ? matching.Length > 0 : matching.Length == 0,
             $"{item.Id} ({item.Language}/{item.Split}) expected={item.ExpectedDetection}; hits={string.Join(",",hits.Select(x => x.MatchedText))}");
         foreach(var hit in matching)
         {
