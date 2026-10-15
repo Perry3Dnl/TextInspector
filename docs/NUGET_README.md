@@ -1,6 +1,6 @@
 # TextInspector
 
-![TextInspector logo](https://raw.githubusercontent.com/Perry3Dnl/TextInspector/v1.0.2/assets/logo.png)
+![TextInspector logo](https://raw.githubusercontent.com/Perry3Dnl/TextInspector/v1.1.0/assets/logo.png)
 
 **TextInspector separates what was detected from what is actually risky.**
 
@@ -19,7 +19,7 @@
 ## Install
 
 ```bash
-dotnet add package TextInspector --version 1.0.2
+dotnet add package TextInspector --version 1.1.0
 ```
 
 ## Quick start
@@ -55,7 +55,7 @@ For source-linked highlights and positions, use `Inspect` with `TextInspectionOp
 Install the optional [TextInspector.AspNetCore](https://www.nuget.org/packages/TextInspector.AspNetCore) companion package:
 
 ```bash
-dotnet add package TextInspector.AspNetCore --version 1.0.2
+dotnet add package TextInspector.AspNetCore --version 1.1.0
 ```
 
 ```csharp
@@ -68,8 +68,8 @@ builder.Services.AddTextInspector(options => options.EnableMasking = true);
 
 Free for personal use and genuinely free, non-monetized products, including products released by businesses. Commercial use in monetized products, paid services and revenue-generating internal systems requires a separate commercial license. This is a **source-available license, not an OSI-approved open-source license**.
 
-[Full license](https://github.com/Perry3Dnl/TextInspector/blob/v1.0.2/LICENSE) · [Documentation and examples](https://github.com/Perry3Dnl/TextInspector)
+[Full license](https://github.com/Perry3Dnl/TextInspector/blob/v1.1.0/LICENSE) · [Documentation and examples](https://github.com/Perry3Dnl/TextInspector)
 
 ---
 
-**Version 1.0.2:** Synchronized core and ASP.NET Core package versions and updated package documentation. No inspection behavior changes. No changes to the inspection engine, public API or 76-rule preset.
+**Version 1.1.0:** Adds calibrated rule-scoped false-positive exclusions, local negation and attributed-context handling, and expanded adversarial/multilingual regression coverage. Core and ASP.NET Core package versions remain synchronized.
