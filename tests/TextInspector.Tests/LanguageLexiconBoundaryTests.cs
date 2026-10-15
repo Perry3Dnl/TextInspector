@@ -9,7 +9,13 @@ public sealed class LanguageLexiconBoundaryTests
     public static IEnumerable<object[]> Languages()
     {
         yield return new object[] { "EN", "featherbrains" };
+        yield return new object[] { "EN", "scatterbrains" };
+        yield return new object[] { "EN", "bollockbrain" };
+        yield return new object[] { "EN", "chowderheads" };
         yield return new object[] { "NL", "achterlijkerds" };
+        yield return new object[] { "NL", "schijtlijsters" };
+        yield return new object[] { "NL", "achterlijkerd" };
+        yield return new object[] { "NL", "ellendelingen" };
     }
 
     [Theory]
