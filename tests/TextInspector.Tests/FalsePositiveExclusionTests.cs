@@ -50,6 +50,21 @@ public sealed class FalsePositiveExclusionTests
     }
 
     [Fact]
+    public void PublicOptionsCanConfigureExclusions()
+    {
+        var key = TextInspectorPresets.LoadRules().First().Key;
+        var inspector = TextInspectorEngine.Create(new TextInspectorOptions
+        {
+            FalsePositiveExclusions = new[] {
+                new TextInspectorFalsePositiveExclusion {
+                    RuleKey = key, MatchedText = "innocent-case"
+                }
+            }
+        });
+        Assert.True(inspector.CompiledRuleCount > 0);
+    }
+
+    [Fact]
     public void NoSubstringExclusionsAndInvalidConfigurationsRejected()
     {
         var engine = Build(new TextInspectorFalsePositiveExclusion
