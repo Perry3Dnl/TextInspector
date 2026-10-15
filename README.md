@@ -6,7 +6,7 @@
 
 **TextInspector is a complete, fully functional standalone .NET library.** It provides everything needed to detect and inspect text, assess risk, mask evidence and build reports or UI highlights. It is not a trial, restricted demo or incomplete edition.
 
-**Version 1.0.2** · .NET Standard 2.0, .NET 8 and .NET 10
+**Version 1.1.0** · .NET Standard 2.0, .NET 8 and .NET 10
 
 ## What it does
 
@@ -21,13 +21,13 @@
 ## Install
 
 ```bash
-dotnet add package TextInspector --version 1.0.2
+dotnet add package TextInspector --version 1.1.0
 ```
 
 Optional ASP.NET Core integration:
 
 ```bash
-dotnet add package TextInspector.AspNetCore --version 1.0.2
+dotnet add package TextInspector.AspNetCore --version 1.1.0
 ```
 
 ## Quick start
