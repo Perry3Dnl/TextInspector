@@ -392,6 +392,16 @@ public sealed partial class TextInspectorEngine
         for(int i = 0;i < evidence.Count;i++)
         {
             var hit = evidence[i];
+            // Scope an explicit grammatical negation to this one credential request.
+            // Detection evidence survives; only its risk contribution is suppressed.
+            if(hit.RuleKey.StartsWith("Credential_",StringComparison.OrdinalIgnoreCase)
+               && IsLocallyNegatedCredentialRequest(hit,normalizedText))
+            {
+                output.Add(new ContextualEvidenceHit(
+                    hit,false,TextEvidenceScoringDisposition.ExcludedByContext,null));
+                continue;
+            }
+
             // Attribution is scoped to the matched quoted span, not the whole message.
             // Preserve the evidence while preventing a documented quotation from
             // contributing the same risk as a direct threat.
@@ -487,6 +497,20 @@ public sealed partial class TextInspectorEngine
         }
 
         return output;
+    }
+
+    private static bool IsLocallyNegatedCredentialRequest(EvidenceHit hit,string text)
+    {
+        int start = hit.NormalizedStart;
+        if(start <= 0 || start > text.Length) return false;
+        int from = Math.Max(0,start - 40);
+        string before = text.Substring(from,start - from);
+        // No general keyword allowlist: the negation must grammatically
+        // precede this occurrence with at most one common intensifier.
+        return Regex.IsMatch(before,
+            @"\b(?:do\s+not|don't|never|should\s+not|must\s+not)\s+(?:ever\s+)?$",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant,
+            TimeSpan.FromMilliseconds(50));
     }
 
     private static bool IsAttributedQuotedEvidence(EvidenceHit hit,string text)
