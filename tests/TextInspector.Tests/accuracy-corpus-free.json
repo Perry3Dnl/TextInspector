@@ -9,7 +9,8 @@
   "expectedScoring": false,
   "expectedEvidence": "featherbrains",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "featherbrains"
  },
  {
   "id": "EN-002",
@@ -21,7 +22,8 @@
   "expectedScoring": false,
   "expectedEvidence": "scatterbrains",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "scatterbrains"
  },
  {
   "id": "EN-003",
@@ -33,7 +35,8 @@
   "expectedScoring": false,
   "expectedEvidence": "bollockbrain",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "bollockbrain"
  },
  {
   "id": "EN-004",
@@ -45,7 +48,8 @@
   "expectedScoring": false,
   "expectedEvidence": "chowderheads",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chowderheads"
  },
  {
   "id": "EN-005",
@@ -57,7 +61,8 @@
   "expectedScoring": false,
   "expectedEvidence": "chuckleheads",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chuckleheads"
  },
  {
   "id": "EN-006",
@@ -69,7 +74,8 @@
   "expectedScoring": false,
   "expectedEvidence": "arse",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "arse"
  },
  {
   "id": "EN-007",
@@ -81,7 +87,8 @@
   "expectedScoring": false,
   "expectedEvidence": "berk",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "berk"
  },
  {
   "id": "EN-008",
@@ -93,7 +100,8 @@
   "expectedScoring": false,
   "expectedEvidence": "clod",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "clod"
  },
  {
   "id": "EN-009",
@@ -105,7 +113,8 @@
   "expectedScoring": false,
   "expectedEvidence": "dolt",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dolt"
  },
  {
   "id": "EN-010",
@@ -117,7 +126,8 @@
   "expectedScoring": false,
   "expectedEvidence": "dork",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dork"
  },
  {
   "id": "EN-011",
@@ -129,7 +139,8 @@
   "expectedScoring": false,
   "expectedEvidence": "featherbrains",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "featherbrains"
  },
  {
   "id": "EN-012",
@@ -141,7 +152,8 @@
   "expectedScoring": false,
   "expectedEvidence": "scatterbrains",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "scatterbrains"
  },
  {
   "id": "EN-013",
@@ -153,7 +165,8 @@
   "expectedScoring": false,
   "expectedEvidence": "bollockbrain",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "bollockbrain"
  },
  {
   "id": "EN-014",
@@ -165,7 +178,8 @@
   "expectedScoring": false,
   "expectedEvidence": "chowderheads",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chowderheads"
  },
  {
   "id": "EN-015",
@@ -177,7 +191,8 @@
   "expectedScoring": false,
   "expectedEvidence": "chuckleheads",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chuckleheads"
  },
  {
   "id": "EN-016",
@@ -189,7 +204,8 @@
   "expectedScoring": false,
   "expectedEvidence": "arse",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "arse"
  },
  {
   "id": "EN-017",
@@ -201,7 +217,8 @@
   "expectedScoring": false,
   "expectedEvidence": "berk",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "berk"
  },
  {
   "id": "EN-018",
@@ -213,7 +230,8 @@
   "expectedScoring": false,
   "expectedEvidence": "clod",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "clod"
  },
  {
   "id": "EN-019",
@@ -225,7 +243,8 @@
   "expectedScoring": false,
   "expectedEvidence": "dolt",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dolt"
  },
  {
   "id": "EN-020",
@@ -237,7 +256,8 @@
   "expectedScoring": false,
   "expectedEvidence": "dork",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dork"
  },
  {
   "id": "EN-021",
@@ -249,7 +269,8 @@
   "expectedScoring": false,
   "expectedEvidence": "featherbrains",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "featherbrains"
  },
  {
   "id": "EN-022",
@@ -261,7 +282,8 @@
   "expectedScoring": false,
   "expectedEvidence": "scatterbrains",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "scatterbrains"
  },
  {
   "id": "EN-023",
@@ -273,7 +295,8 @@
   "expectedScoring": false,
   "expectedEvidence": "bollockbrain",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "bollockbrain"
  },
  {
   "id": "EN-024",
@@ -285,7 +308,8 @@
   "expectedScoring": false,
   "expectedEvidence": "chowderheads",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chowderheads"
  },
  {
   "id": "EN-025",
@@ -297,7 +321,8 @@
   "expectedScoring": false,
   "expectedEvidence": "chuckleheads",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chuckleheads"
  },
  {
   "id": "EN-026",
@@ -309,7 +334,8 @@
   "expectedScoring": false,
   "expectedEvidence": "arse",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "arse"
  },
  {
   "id": "EN-027",
@@ -321,7 +347,8 @@
   "expectedScoring": false,
   "expectedEvidence": "berk",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "berk"
  },
  {
   "id": "EN-028",
@@ -333,7 +360,8 @@
   "expectedScoring": false,
   "expectedEvidence": "clod",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "clod"
  },
  {
   "id": "EN-029",
@@ -345,7 +373,8 @@
   "expectedScoring": false,
   "expectedEvidence": "dolt",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dolt"
  },
  {
   "id": "EN-030",
@@ -357,7 +386,8 @@
   "expectedScoring": false,
   "expectedEvidence": "dork",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dork"
  },
  {
   "id": "EN-031",
@@ -369,7 +399,8 @@
   "expectedScoring": false,
   "expectedEvidence": "featherbrains",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "featherbrains"
  },
  {
   "id": "EN-032",
@@ -381,7 +412,8 @@
   "expectedScoring": false,
   "expectedEvidence": "scatterbrains",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "scatterbrains"
  },
  {
   "id": "EN-033",
@@ -393,7 +425,8 @@
   "expectedScoring": false,
   "expectedEvidence": "bollockbrain",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "bollockbrain"
  },
  {
   "id": "EN-034",
@@ -405,7 +438,8 @@
   "expectedScoring": false,
   "expectedEvidence": "chowderheads",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chowderheads"
  },
  {
   "id": "EN-035",
@@ -417,7 +451,8 @@
   "expectedScoring": false,
   "expectedEvidence": "chuckleheads",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chuckleheads"
  },
  {
   "id": "EN-036",
@@ -429,7 +464,8 @@
   "expectedScoring": false,
   "expectedEvidence": "arse",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "arse"
  },
  {
   "id": "EN-037",
@@ -441,7 +477,8 @@
   "expectedScoring": false,
   "expectedEvidence": "berk",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "berk"
  },
  {
   "id": "EN-038",
@@ -453,7 +490,8 @@
   "expectedScoring": false,
   "expectedEvidence": "clod",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "clod"
  },
  {
   "id": "EN-039",
@@ -465,7 +503,8 @@
   "expectedScoring": false,
   "expectedEvidence": "dolt",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dolt"
  },
  {
   "id": "EN-040",
@@ -477,7 +516,8 @@
   "expectedScoring": false,
   "expectedEvidence": "dork",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dork"
  },
  {
   "id": "EN-041",
@@ -489,7 +529,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "featherbrains"
  },
  {
   "id": "EN-042",
@@ -501,7 +542,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "scatterbrains"
  },
  {
   "id": "EN-043",
@@ -513,7 +555,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "bollockbrain"
  },
  {
   "id": "EN-044",
@@ -525,7 +568,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chowderheads"
  },
  {
   "id": "EN-045",
@@ -537,7 +581,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chuckleheads"
  },
  {
   "id": "EN-046",
@@ -549,7 +594,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "arse"
  },
  {
   "id": "EN-047",
@@ -561,7 +607,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "berk"
  },
  {
   "id": "EN-048",
@@ -573,7 +620,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "clod"
  },
  {
   "id": "EN-049",
@@ -585,7 +633,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dolt"
  },
  {
   "id": "EN-050",
@@ -597,7 +646,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dork"
  },
  {
   "id": "EN-051",
@@ -609,7 +659,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "featherbrains"
  },
  {
   "id": "EN-052",
@@ -621,7 +672,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "scatterbrains"
  },
  {
   "id": "EN-053",
@@ -633,7 +685,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "bollockbrain"
  },
  {
   "id": "EN-054",
@@ -645,7 +698,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chowderheads"
  },
  {
   "id": "EN-055",
@@ -657,7 +711,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chuckleheads"
  },
  {
   "id": "EN-056",
@@ -669,7 +724,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "arse"
  },
  {
   "id": "EN-057",
@@ -681,7 +737,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "berk"
  },
  {
   "id": "EN-058",
@@ -693,7 +750,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "clod"
  },
  {
   "id": "EN-059",
@@ -705,7 +763,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dolt"
  },
  {
   "id": "EN-060",
@@ -717,7 +776,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dork"
  },
  {
   "id": "EN-061",
@@ -729,7 +789,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "featherbrains"
  },
  {
   "id": "EN-062",
@@ -741,7 +802,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "scatterbrains"
  },
  {
   "id": "EN-063",
@@ -753,7 +815,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "bollockbrain"
  },
  {
   "id": "EN-064",
@@ -765,7 +828,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chowderheads"
  },
  {
   "id": "EN-065",
@@ -777,7 +841,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chuckleheads"
  },
  {
   "id": "EN-066",
@@ -789,7 +854,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "arse"
  },
  {
   "id": "EN-067",
@@ -801,7 +867,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "berk"
  },
  {
   "id": "EN-068",
@@ -813,7 +880,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "clod"
  },
  {
   "id": "EN-069",
@@ -825,7 +893,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dolt"
  },
  {
   "id": "EN-070",
@@ -837,7 +906,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dork"
  },
  {
   "id": "EN-071",
@@ -849,7 +919,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "featherbrains"
  },
  {
   "id": "EN-072",
@@ -861,7 +932,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "scatterbrains"
  },
  {
   "id": "EN-073",
@@ -873,7 +945,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "bollockbrain"
  },
  {
   "id": "EN-074",
@@ -885,7 +958,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chowderheads"
  },
  {
   "id": "EN-075",
@@ -897,7 +971,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chuckleheads"
  },
  {
   "id": "EN-076",
@@ -909,7 +984,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "arse"
  },
  {
   "id": "EN-077",
@@ -921,7 +997,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "berk"
  },
  {
   "id": "EN-078",
@@ -933,7 +1010,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "clod"
  },
  {
   "id": "EN-079",
@@ -945,7 +1023,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dolt"
  },
  {
   "id": "EN-080",
@@ -957,7 +1036,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dork"
  },
  {
   "id": "EN-081",
@@ -969,7 +1049,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "featherbrains"
  },
  {
   "id": "EN-082",
@@ -981,7 +1062,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "scatterbrains"
  },
  {
   "id": "EN-083",
@@ -993,7 +1075,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "bollockbrain"
  },
  {
   "id": "EN-084",
@@ -1005,7 +1088,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chowderheads"
  },
  {
   "id": "EN-085",
@@ -1017,7 +1101,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chuckleheads"
  },
  {
   "id": "EN-086",
@@ -1029,7 +1114,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "arse"
  },
  {
   "id": "EN-087",
@@ -1041,7 +1127,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "berk"
  },
  {
   "id": "EN-088",
@@ -1053,7 +1140,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "clod"
  },
  {
   "id": "EN-089",
@@ -1065,7 +1153,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dolt"
  },
  {
   "id": "EN-090",
@@ -1077,7 +1166,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dork"
  },
  {
   "id": "EN-091",
@@ -1089,7 +1179,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "featherbrains"
  },
  {
   "id": "EN-092",
@@ -1101,7 +1192,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "scatterbrains"
  },
  {
   "id": "EN-093",
@@ -1113,7 +1205,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "bollockbrain"
  },
  {
   "id": "EN-094",
@@ -1125,7 +1218,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chowderheads"
  },
  {
   "id": "EN-095",
@@ -1137,7 +1231,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "chuckleheads"
  },
  {
   "id": "EN-096",
@@ -1149,7 +1244,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "arse"
  },
  {
   "id": "EN-097",
@@ -1161,7 +1257,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "berk"
  },
  {
   "id": "EN-098",
@@ -1173,7 +1270,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "clod"
  },
  {
   "id": "EN-099",
@@ -1185,7 +1283,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dolt"
  },
  {
   "id": "EN-100",
@@ -1197,7 +1296,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "dork"
  },
  {
   "id": "NL-001",
@@ -1209,7 +1309,8 @@
   "expectedScoring": false,
   "expectedEvidence": "achterlijkerds",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerds"
  },
  {
   "id": "NL-002",
@@ -1221,7 +1322,8 @@
   "expectedScoring": false,
   "expectedEvidence": "schijtlijsters",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "schijtlijsters"
  },
  {
   "id": "NL-003",
@@ -1233,7 +1335,8 @@
   "expectedScoring": false,
   "expectedEvidence": "achterlijkerd",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerd"
  },
  {
   "id": "NL-004",
@@ -1245,7 +1348,8 @@
   "expectedScoring": false,
   "expectedEvidence": "ellendelingen",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "ellendelingen"
  },
  {
   "id": "NL-005",
@@ -1257,7 +1361,8 @@
   "expectedScoring": false,
   "expectedEvidence": "mierenneukers",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "mierenneukers"
  },
  {
   "id": "NL-006",
@@ -1269,7 +1374,8 @@
   "expectedScoring": false,
   "expectedEvidence": "kak",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kak"
  },
  {
   "id": "NL-007",
@@ -1281,7 +1387,8 @@
   "expectedScoring": false,
   "expectedEvidence": "kut",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kut"
  },
  {
   "id": "NL-008",
@@ -1293,7 +1400,8 @@
   "expectedScoring": false,
   "expectedEvidence": "lul",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "lul"
  },
  {
   "id": "NL-009",
@@ -1305,7 +1413,8 @@
   "expectedScoring": false,
   "expectedEvidence": "galg",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "galg"
  },
  {
   "id": "NL-010",
@@ -1317,7 +1426,8 @@
   "expectedScoring": false,
   "expectedEvidence": "hork",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "hork"
  },
  {
   "id": "NL-011",
@@ -1329,7 +1439,8 @@
   "expectedScoring": false,
   "expectedEvidence": "achterlijkerds",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerds"
  },
  {
   "id": "NL-012",
@@ -1341,7 +1452,8 @@
   "expectedScoring": false,
   "expectedEvidence": "schijtlijsters",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "schijtlijsters"
  },
  {
   "id": "NL-013",
@@ -1353,7 +1465,8 @@
   "expectedScoring": false,
   "expectedEvidence": "achterlijkerd",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerd"
  },
  {
   "id": "NL-014",
@@ -1365,7 +1478,8 @@
   "expectedScoring": false,
   "expectedEvidence": "ellendelingen",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "ellendelingen"
  },
  {
   "id": "NL-015",
@@ -1377,7 +1491,8 @@
   "expectedScoring": false,
   "expectedEvidence": "mierenneukers",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "mierenneukers"
  },
  {
   "id": "NL-016",
@@ -1389,7 +1504,8 @@
   "expectedScoring": false,
   "expectedEvidence": "kak",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kak"
  },
  {
   "id": "NL-017",
@@ -1401,7 +1517,8 @@
   "expectedScoring": false,
   "expectedEvidence": "kut",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kut"
  },
  {
   "id": "NL-018",
@@ -1413,7 +1530,8 @@
   "expectedScoring": false,
   "expectedEvidence": "lul",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "lul"
  },
  {
   "id": "NL-019",
@@ -1425,7 +1543,8 @@
   "expectedScoring": false,
   "expectedEvidence": "galg",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "galg"
  },
  {
   "id": "NL-020",
@@ -1437,7 +1556,8 @@
   "expectedScoring": false,
   "expectedEvidence": "hork",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "hork"
  },
  {
   "id": "NL-021",
@@ -1449,7 +1569,8 @@
   "expectedScoring": false,
   "expectedEvidence": "achterlijkerds",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerds"
  },
  {
   "id": "NL-022",
@@ -1461,7 +1582,8 @@
   "expectedScoring": false,
   "expectedEvidence": "schijtlijsters",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "schijtlijsters"
  },
  {
   "id": "NL-023",
@@ -1473,7 +1595,8 @@
   "expectedScoring": false,
   "expectedEvidence": "achterlijkerd",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerd"
  },
  {
   "id": "NL-024",
@@ -1485,7 +1608,8 @@
   "expectedScoring": false,
   "expectedEvidence": "ellendelingen",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "ellendelingen"
  },
  {
   "id": "NL-025",
@@ -1497,7 +1621,8 @@
   "expectedScoring": false,
   "expectedEvidence": "mierenneukers",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "mierenneukers"
  },
  {
   "id": "NL-026",
@@ -1509,7 +1634,8 @@
   "expectedScoring": false,
   "expectedEvidence": "kak",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kak"
  },
  {
   "id": "NL-027",
@@ -1521,7 +1647,8 @@
   "expectedScoring": false,
   "expectedEvidence": "kut",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kut"
  },
  {
   "id": "NL-028",
@@ -1533,7 +1660,8 @@
   "expectedScoring": false,
   "expectedEvidence": "lul",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "lul"
  },
  {
   "id": "NL-029",
@@ -1545,7 +1673,8 @@
   "expectedScoring": false,
   "expectedEvidence": "galg",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "galg"
  },
  {
   "id": "NL-030",
@@ -1557,7 +1686,8 @@
   "expectedScoring": false,
   "expectedEvidence": "hork",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "hork"
  },
  {
   "id": "NL-031",
@@ -1569,7 +1699,8 @@
   "expectedScoring": false,
   "expectedEvidence": "achterlijkerds",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerds"
  },
  {
   "id": "NL-032",
@@ -1581,7 +1712,8 @@
   "expectedScoring": false,
   "expectedEvidence": "schijtlijsters",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "schijtlijsters"
  },
  {
   "id": "NL-033",
@@ -1593,7 +1725,8 @@
   "expectedScoring": false,
   "expectedEvidence": "achterlijkerd",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerd"
  },
  {
   "id": "NL-034",
@@ -1605,7 +1738,8 @@
   "expectedScoring": false,
   "expectedEvidence": "ellendelingen",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "ellendelingen"
  },
  {
   "id": "NL-035",
@@ -1617,7 +1751,8 @@
   "expectedScoring": false,
   "expectedEvidence": "mierenneukers",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "mierenneukers"
  },
  {
   "id": "NL-036",
@@ -1629,7 +1764,8 @@
   "expectedScoring": false,
   "expectedEvidence": "kak",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kak"
  },
  {
   "id": "NL-037",
@@ -1641,7 +1777,8 @@
   "expectedScoring": false,
   "expectedEvidence": "kut",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kut"
  },
  {
   "id": "NL-038",
@@ -1653,7 +1790,8 @@
   "expectedScoring": false,
   "expectedEvidence": "lul",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "lul"
  },
  {
   "id": "NL-039",
@@ -1665,7 +1803,8 @@
   "expectedScoring": false,
   "expectedEvidence": "galg",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "galg"
  },
  {
   "id": "NL-040",
@@ -1677,7 +1816,8 @@
   "expectedScoring": false,
   "expectedEvidence": "hork",
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "hork"
  },
  {
   "id": "NL-041",
@@ -1689,7 +1829,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerds"
  },
  {
   "id": "NL-042",
@@ -1701,7 +1842,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "schijtlijsters"
  },
  {
   "id": "NL-043",
@@ -1713,7 +1855,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerd"
  },
  {
   "id": "NL-044",
@@ -1725,7 +1868,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "ellendelingen"
  },
  {
   "id": "NL-045",
@@ -1737,7 +1881,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "mierenneukers"
  },
  {
   "id": "NL-046",
@@ -1749,7 +1894,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kak"
  },
  {
   "id": "NL-047",
@@ -1761,7 +1907,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kut"
  },
  {
   "id": "NL-048",
@@ -1773,7 +1920,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "lul"
  },
  {
   "id": "NL-049",
@@ -1785,7 +1933,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "galg"
  },
  {
   "id": "NL-050",
@@ -1797,7 +1946,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "hork"
  },
  {
   "id": "NL-051",
@@ -1809,7 +1959,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerds"
  },
  {
   "id": "NL-052",
@@ -1821,7 +1972,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "schijtlijsters"
  },
  {
   "id": "NL-053",
@@ -1833,7 +1985,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerd"
  },
  {
   "id": "NL-054",
@@ -1845,7 +1998,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "ellendelingen"
  },
  {
   "id": "NL-055",
@@ -1857,7 +2011,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "mierenneukers"
  },
  {
   "id": "NL-056",
@@ -1869,7 +2024,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kak"
  },
  {
   "id": "NL-057",
@@ -1881,7 +2037,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kut"
  },
  {
   "id": "NL-058",
@@ -1893,7 +2050,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "lul"
  },
  {
   "id": "NL-059",
@@ -1905,7 +2063,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "galg"
  },
  {
   "id": "NL-060",
@@ -1917,7 +2076,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "hork"
  },
  {
   "id": "NL-061",
@@ -1929,7 +2089,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerds"
  },
  {
   "id": "NL-062",
@@ -1941,7 +2102,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "schijtlijsters"
  },
  {
   "id": "NL-063",
@@ -1953,7 +2115,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerd"
  },
  {
   "id": "NL-064",
@@ -1965,7 +2128,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "ellendelingen"
  },
  {
   "id": "NL-065",
@@ -1977,7 +2141,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "mierenneukers"
  },
  {
   "id": "NL-066",
@@ -1989,7 +2154,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kak"
  },
  {
   "id": "NL-067",
@@ -2001,7 +2167,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kut"
  },
  {
   "id": "NL-068",
@@ -2013,7 +2180,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "lul"
  },
  {
   "id": "NL-069",
@@ -2025,7 +2193,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "galg"
  },
  {
   "id": "NL-070",
@@ -2037,7 +2206,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "hork"
  },
  {
   "id": "NL-071",
@@ -2049,7 +2219,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerds"
  },
  {
   "id": "NL-072",
@@ -2061,7 +2232,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "schijtlijsters"
  },
  {
   "id": "NL-073",
@@ -2073,7 +2245,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerd"
  },
  {
   "id": "NL-074",
@@ -2085,7 +2258,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "ellendelingen"
  },
  {
   "id": "NL-075",
@@ -2097,7 +2271,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "mierenneukers"
  },
  {
   "id": "NL-076",
@@ -2109,7 +2284,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kak"
  },
  {
   "id": "NL-077",
@@ -2121,7 +2297,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kut"
  },
  {
   "id": "NL-078",
@@ -2133,7 +2310,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "lul"
  },
  {
   "id": "NL-079",
@@ -2145,7 +2323,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "galg"
  },
  {
   "id": "NL-080",
@@ -2157,7 +2336,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "hork"
  },
  {
   "id": "NL-081",
@@ -2169,7 +2349,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerds"
  },
  {
   "id": "NL-082",
@@ -2181,7 +2362,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "schijtlijsters"
  },
  {
   "id": "NL-083",
@@ -2193,7 +2375,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerd"
  },
  {
   "id": "NL-084",
@@ -2205,7 +2388,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "ellendelingen"
  },
  {
   "id": "NL-085",
@@ -2217,7 +2401,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "mierenneukers"
  },
  {
   "id": "NL-086",
@@ -2229,7 +2414,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kak"
  },
  {
   "id": "NL-087",
@@ -2241,7 +2427,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kut"
  },
  {
   "id": "NL-088",
@@ -2253,7 +2440,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "lul"
  },
  {
   "id": "NL-089",
@@ -2265,7 +2453,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "galg"
  },
  {
   "id": "NL-090",
@@ -2277,7 +2466,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "hork"
  },
  {
   "id": "NL-091",
@@ -2289,7 +2479,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerds"
  },
  {
   "id": "NL-092",
@@ -2301,7 +2492,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "schijtlijsters"
  },
  {
   "id": "NL-093",
@@ -2313,7 +2505,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "achterlijkerd"
  },
  {
   "id": "NL-094",
@@ -2325,7 +2518,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "ellendelingen"
  },
  {
   "id": "NL-095",
@@ -2337,7 +2531,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "mierenneukers"
  },
  {
   "id": "NL-096",
@@ -2349,7 +2544,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kak"
  },
  {
   "id": "NL-097",
@@ -2361,7 +2557,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "kut"
  },
  {
   "id": "NL-098",
@@ -2373,7 +2570,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "lul"
  },
  {
   "id": "NL-099",
@@ -2385,7 +2583,8 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "galg"
  },
  {
   "id": "NL-100",
@@ -2397,6 +2596,7 @@
   "expectedScoring": false,
   "expectedEvidence": null,
   "origin": "synthetic-boundary",
-  "reviewStatus": "unreviewed"
+  "reviewStatus": "unreviewed",
+  "targetTerm": "hork"
  }
 ]
