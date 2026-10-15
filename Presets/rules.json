@@ -1216,5 +1216,60 @@
       "message",
       "mass"
     ]
+  },
+  {
+    "TextInspectorRuleId": "f0850000-0000-4000-8000-000000000001",
+    "Key": "Lexicon_Profanity_EN",
+    "Description": "Unclaimable 0.8.5-derived en profanity and abusive-language lexical evidence (whole terms, no standalone risk).",
+    "Tags": [
+      "lexicon",
+      "lang:en",
+      "unclaimable-0.8.5-curated"
+    ],
+    "Category": "AbusiveLanguage",
+    "DetectionScore": 60,
+    "SeverityScore": 1,
+    "RuleWeight": 0,
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "RegexPattern": "(?<![\\p{L}\\p{N}_])(?:featherbrains|scatterbrains|bollockbrain|chowderheads|chuckleheads|fartknockers|featherbrain|knuckleheads|scatterbrain|bollockings|bubbleheads|buttmunches|chowderhead|chucklehead|cockwombles|dunderheads|fartknocker|ignoramuses|knucklehead|muttonheads|shitheadery|twatwaffles|woodenheads|arsebrains|asskissers|birdbrains|blithering|blockheads|bollocking|bubblehead|cockwomble|dickbrains|douchebags|dunderhead|lamebrains|muttonhead|numbskulls|pissbrains|shitbrains|shitbreath|shitehawks|shitmouths|simpletons|sleazebags|slimeballs|twatwaffle|wankstains|woodenhead|arsebrain|arsefaces|arseholes|arsewipes|asskisser|birdbrain|blockhead|boneheads|buttheads|buttmunch|clodpolls|crapheads|dickbrain|dickfaces|dickheads|dickholes|dicknoses|douchebag|dumbasses|dumbheads|fuckfaces|fuckheads|gobshites|ignoramus|imbeciles|jackasses|knobheads|lamebrain|lunkheads|meatheads|numbskull|numskulls|peabrains|pissbrain|pissheads|shitasses|shitbirds|shitbrain|shitehawk|shitfaced|shitheads|shitheels|shitmouth|shitshows|shitstain|shitstorm|simpleton|sleazebag|slimeball|snotnoses|turdfaces|wankfaces|wankstain|airheads|arseface|arsehats|arsehole|arsewipe|assclown|assfaces|assheads|assholes|asswipes|bastards|bellends|bollocks|bonehead|buffoons|buggered|bullshit|butthead|clodpoll|craphead|dickbags|dickface|dickhead|dickhole|dickless|dicknose|dickwads|dickweed|dingbats|dipshits|dirtbags|doofuses|dullards|dumbhead|fatheads|fuckface|fuckhead|fucknuts|fuckwads|fuckwits|gobshite|halfwits|imbecile|jackoffs|jerkoffs|knobbers|knobends|knobhead|lowlifes|lowlives|lunkhead|meathead|numpties|numskull|peabrain|pinheads|pisshead|pisspots|sapheads|schmucks|scumbags|shitbags|shitbird|shithead|shitheel|shitshow|snotnose|tosspots|turdface|wankface|wazzocks|airhead|arsehat|assbags|assface|asshats|asshead|asshole|asswipe|bastard|bellend|bitches|buffoon|buggers|buggery|cretins|dickbag|dickish|dickwad|dimwits|dingbat|dipshit|dirtbag|douches|dullard|dumbass|fathead|fuckers|fuckery|fucknut|fuckups|fuckwad|fuckwit|halfwit|jackass|jackoff|jerkoff|knobber|knobend|lowlife|mingers|muppets|ninnies|nitwits|pinhead|pissing|pisspot|ratbags|saphead|schmuck|scumbag|shitass|shitbag|thickos|tossers|tosspot|wankers|wanking|wazzock|assbag|asshat|bloody|bugger|chumps|crappy|creeps|cretin|dimwit|doofus|douche|dunces|dweebs|eejits|fucker|fuckup|idiots|losers|minger|morons|muppet|nitwit|numpty|pricks|putzes|ratbag|shitty|thicko|tosser|twerps|wanked|wanker|arses|arsey|berks|bitch|chump|clods|creep|dolts|dorks|dunce|dweeb|eejit|fools|idiot|jerks|knobs|loser|moron|ninny|prick|shite|sluts|turds|twats|twerp|twits|arse|berk|clod|dolt|dork|fool|jerk|knob|putz|turd|twat|twit)(?![\\p{L}\\p{N}_])",
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "f0850000-0000-4000-8000-000000000002",
+    "Key": "Lexicon_Profanity_NL",
+    "Description": "Unclaimable 0.8.5-derived nl profanity and abusive-language lexical evidence (whole terms, no standalone risk).",
+    "Tags": [
+      "lexicon",
+      "lang:nl",
+      "unclaimable-0.8.5-curated"
+    ],
+    "Category": "AbusiveLanguage",
+    "DetectionScore": 60,
+    "SeverityScore": 1,
+    "RuleWeight": 0,
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "RegexPattern": "(?<![\\p{L}\\p{N}_])(?:achterlijkerds|schijtlijsters|achterlijkerd|ellendelingen|mierenneukers|pleurislijers|schijtlijster|schobbejakken|teringlijders|zakkenwassers|bakhannessen|donderstenen|droeftoeters|hoerenjongen|hoerenlopers|kankerhoeren|klootmongool|kuttenkoppen|mierenneuker|pleurislijer|schijtkoppen|schijtluizen|strontkoppen|teringwijven|truttekoppen|tyfuslijders|zakkenwasser|achterlijke|dondersteen|droeftoeter|ellendeling|etterbakken|etterbuilen|etterkoppen|flapdrollen|gemeneriken|hersenlozen|hoerenloper|hoerenzonen|kakmadammen|klootviools|klootzakjes|klootzakken|klotejongen|klotekerels|labbekakken|lamzakkerig|lulhannesen|lulverhalen|nietsnutten|schlemielen|smeerlappen|smeerpijpen|stinkzakken|stommeriken|teringlijer|uilskuikens|zeikstralen|zielenpoten|achterlijk|blaaskaken|botteriken|goorlingen|goorpijpen|hersenloos|hoerenjong|hoerenzoon|kankerhoer|klaplopers|klootviool|klootzakje|klotekerel|kutstreken|lomperiken|lulverhaal|mallootjes|naarlingen|onverlaten|pestkoppen|pisnichten|schijterds|schijtluis|schobbejak|smeerkezen|snotjochen|snotneuzen|stomkoppen|teringwijf|tyfuslijer|uilskuiken|uitvreters|viespeuken|viespoezen|viezeriken|zeikerdjes|zeikstraal|zeurkousen|zeurpieten|zielenpoot|bakhannes|beklullen|blaaskaak|doerakken|domkoppen|etterbuil|ettertjes|flapuiten|galbakken|gemenerik|kankerzak|klaploper|klerezooi|klotejong|kutlullen|kutstreek|kuttenkop|kutventen|kutwijven|lamlullen|lamzakken|luilakken|lulhannes|mafketels|mallootje|minkukels|mispunten|onverlaat|pisbakken|rotjochen|rotkoppen|rotventen|rotwijven|rotzakken|schijterd|schijters|schijtkop|schlemiel|schoeljes|smeerkees|smeerpijp|smiechten|stinkerds|stommerik|strontkop|strontzak|sufkoppen|truttekop|uitvreter|vuilakken|zeikerdje|botterik|etterbak|etterkop|ettertje|flapdrol|flikkers|goorling|goorpijp|hoertjes|horkerig|hufterig|kakmadam|klootzak|kloterig|labbekak|lomperik|mafketel|mafkezen|malloten|minkukel|mongolen|naarling|nietsnut|pisnicht|ploerten|proleten|schijten|schijter|schoelje|schoften|schurken|sloeries|smeerlap|snotapen|snotjoch|snotneus|stinkerd|stinkzak|stumpers|sufkezen|viespeuk|viespoes|viezerik|zeikerds|zeurkous|zeurpiet|domoren|fielten|flapuit|flikker|gekkies|hoertje|hufters|idioten|kinkels|klunzen|krengen|kuthond|kutvent|kutwijf|kutzooi|loeders|lomperd|lulkoek|lummels|mafkees|malloot|mispunt|mongool|nitwits|patsers|pestkop|pleuris|proleet|pummels|rotjoch|rotvent|rotwijf|sloerie|smiecht|snotaap|stomkop|stumper|sufkees|sufmuts|sukkels|trutjes|trutten|vlegels|zeikerd|beklul|doerak|domkop|domoor|eikels|etters|galbak|gekkie|gezeik|hoeren|hoerig|horken|hufter|idioot|kakken|kinkel|kloten|kutjes|kutkop|kutlul|lamlul|lamzak|loeder|luilak|lullen|lummel|nitwit|patser|pisbak|pummel|rotkop|rotzak|schijt|schoft|schurk|stront|sufkop|sukkel|tering|trutje|vlegel|zeiken|eikel|etter|fielt|klere|klojo|kloot|klote|kluns|kreng|kutje|oenen|tyfus|galg|hork|trut|zeik|kak|kut|lul|oen)(?![\\p{L}\\p{N}_])",
+    "IsEnabled": true
+  },
+  {
+    "TextInspectorRuleId": "f0850000-0000-4000-8000-000000000099",
+    "Key": "Lexicon_HateSpeech_Expanded",
+    "Description": "Supplementary hateful expression indicators; classification requires contextual review and is not automatic risk scoring.",
+    "Tags": [
+      "lexicon",
+      "hate-speech",
+      "free-curated-phrases",
+      "unclaimable-0.8.5"
+    ],
+    "Category": "HateSpeech",
+    "DetectionScore": 70,
+    "SeverityScore": 3,
+    "RuleWeight": 0,
+    "MaxCountForScoring": 0,
+    "MaxEvidenceSnippets": 3,
+    "RegexPattern": "(?<![\\p{L}\\p{N}_])(?:eliminate all trans people|eliminate all immigrants|eliminate all lesbians|eliminate all migrants|eliminate all refugees|eliminate all muslims|ethnic extermination|exterminate all gays|death to foreigners|death to immigrants|eliminate all gays|eliminate all jews|ethnic superiority|death to migrants|death to refugees|death to muslims|ethnic supremacy|death to gays|ethnic purity|death tojews)(?![\\p{L}\\p{N}_])",
+    "IsEnabled": true
   }
 ]

@@ -53,7 +53,7 @@ jobs:
           using TextInspector;
           var engine = TextInspectorEngine.Create();
           var report = engine.CreateReport("Contact us at hello@example.com.");
-          if(engine.CompiledRuleCount != 76 || !report.HasDetections || report.RequiresReview || report.RiskAssessment.TotalRiskPoints != 0)
+          if(engine.CompiledRuleCount != 79 || !report.HasDetections || report.RequiresReview || report.RiskAssessment.TotalRiskPoints != 0)
               throw new Exception("Packed TextInspector consumer failed.");
           if(typeof(TextInspectorEngine).GetMethods().Any(method => method.Name == "Compile"))
               throw new Exception("Custom rule compilation must not be public in TextInspector.");

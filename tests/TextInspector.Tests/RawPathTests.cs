@@ -113,7 +113,7 @@ public sealed class RawPathTests
         var engine = TextInspectorEngine.Create();
         Assert.Equal(0, engine.CompiledPolicyCount);
         Assert.NotEmpty(engine.CompilationDiagnostics is null ? Array.Empty<TextInspectorDiagnostic>() : TextInspectorDefaults.Rules);
-        Assert.Equal(76, TextInspectorDefaults.Rules.Count);
+        Assert.Equal(79, TextInspectorDefaults.Rules.Count);
         var metadata = TextInspectorDefaults.Rules[0];
         Assert.False(string.IsNullOrWhiteSpace(metadata.Key));
         Assert.True(Enum.IsDefined(typeof(TextInspectorRuleCategory), metadata.Category));

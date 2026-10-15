@@ -8,8 +8,9 @@
 
 ## Features
 
-- **76 included detection rules**, with context-aware evaluation.
+- **76 rules in the published 1.0.2 package**. The next release candidate adds three evidence-only lexical rules, for 79 total.
 - **Separate detection and risk:** recognized signals do not automatically become violations.
+- **Next release candidate:** 602 English/Dutch lexical slang/profanity terms and a limited additional hate-speech phrase set, classified as supporting evidence.
 - **Explainable risk reports** with category findings, reasons and supporting evidence.
 - **Source-accurate highlights** linked to the original text and report findings.
 - **Built-in masking**, rule/category exclusions, raw-match helpers and sequential batches.

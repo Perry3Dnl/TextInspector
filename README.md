@@ -10,8 +10,9 @@
 
 ## What it does
 
-- **76 built-in rules** with contextual handling and calibrated scoring.
+- **76 released built-in rules**, with 3 additional evidence-only lexical rules prepared for the next release (79 total on this branch).
 - **Detection separate from risk:** evidence can be recognized without automatically generating a warning.
+- **Upcoming lexical evidence:** complete English/Dutch v0.8.5-derived slang/profanity term sets (602 entries) and a carefully scoped hate-speech phrase supplement. These are evidence-only, not an automatic moderation verdict.
 - **Explainable reports:** category findings, readable reasons, risk assessment and supporting signals.
 - **Exact source evidence:** source offsets and UI-ready highlights tied to findings.
 - **Basic masking**, built-in rule/category opt-outs, raw matching and sequential batch inspection.

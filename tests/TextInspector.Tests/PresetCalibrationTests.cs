@@ -153,6 +153,7 @@ public sealed class PresetCalibrationTests
             .ToArray();
         var calibrated = new[]
         {
+            "AbusiveLanguage",
             "AdultContent",
             "ChildMinor",
             "Csam",

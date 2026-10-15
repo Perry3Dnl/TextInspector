@@ -131,9 +131,16 @@ public sealed partial class TextInspectorEngine
 
             try
             {
+                // Large, data-generated lexical alternatives can produce disproportionate
+                // startup/JIT allocations when RegexOptions.Compiled is used. Keep the
+                // established compilation behavior for every non-lexical rule.
+                var regexOptions = RegexOptions.IgnoreCase | RegexOptions.CultureInvariant;
+                if(rule.Tags is null || !rule.Tags.Contains("lexicon",StringComparer.OrdinalIgnoreCase))
+                    regexOptions |= RegexOptions.Compiled;
+
                 var regex = new Regex(
                     rule.RegexPattern!,
-                    RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.CultureInvariant,
+                    regexOptions,
                     TimeSpan.FromMilliseconds(options.RegexTimeoutMilliseconds));
 
                 var configuredEvidenceGroup = rule.EvidenceGroup;

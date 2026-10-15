@@ -21,5 +21,6 @@ public enum TextInspectorRuleCategory
     UnderageContext = 17,
     ExternalContact = 18,
     IllegalServices = 19,
-    AdultContent = 20
+    AdultContent = 20,
+    AbusiveLanguage = 21
 }

@@ -14,8 +14,11 @@ public sealed class PresetEditionTests
         var expected = manifest.RootElement.GetProperty("baselineRuleKeys").EnumerateArray()
             .Concat(manifest.RootElement.GetProperty("basicRuleKeys").EnumerateArray()).Select(value => value.GetString()).ToArray();
         Assert.Equal(70, manifest.RootElement.GetProperty("baselineRuleKeys").GetArrayLength());
-        Assert.Equal(76, rules.Length);
-        Assert.Equal(expected.OrderBy(key => key), rules.OrderBy(key => key));
+        Assert.Equal(79, rules.Length);
+        Assert.Equal(expected.OrderBy(key => key), rules.Where(key => !key.StartsWith("Lexicon_", StringComparison.Ordinal)).OrderBy(key => key));
+        Assert.Contains("Lexicon_Profanity_EN", rules);
+        Assert.Contains("Lexicon_Profanity_NL", rules);
+        Assert.Contains("Lexicon_HateSpeech_Expanded", rules);
         Assert.DoesNotContain("Credential_SeedPhrase_Request", rules);
         Assert.DoesNotContain("Secret_AWS_AccessKey", rules);
     }
@@ -76,7 +79,7 @@ public sealed class PresetEditionTests
         options.DisabledRuleKeys[0] = "Threat_Violence";
         var result = engine.Inspect("hello@example.com");
         Assert.DoesNotContain(result.Evidence, evidence => evidence.RuleKey == "PII_Email_Address");
-        Assert.Equal(75, engine.CompiledRuleCount);
+        Assert.Equal(78, engine.CompiledRuleCount);
         Assert.Contains(engine.Inspect("I'm going to kill you.").Evidence, evidence => evidence.RuleKey == "Threat_Violence");
     }
 
