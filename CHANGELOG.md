@@ -1,3 +1,13 @@
+# Changelog
+
+## 1.1.0 — 2026-10-15
+
+- Add the English/Dutch lexical evidence port from the validated v0.8.5 source set, bringing the built-in preset to 79 rules while keeping imported lexical signals evidence-only.
+- Add exact, rule-scoped false-positive exclusions for scored inspection without changing raw matching behavior.
+- Add calibrated handling for locally negated credential requests and attributed/quoted threat examples.
+- Add adversarial, context, multilingual-boundary, and frozen lexical regression corpora to protect precision as the detector evolves.
+- Keep TextInspector and TextInspector.AspNetCore on the same 1.1.0 package version and shared engine line.
+
 # TextInspector changelog
 
 ## 1.0.2 — 2026-10-13
