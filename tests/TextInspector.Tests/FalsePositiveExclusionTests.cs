@@ -65,6 +65,18 @@ public sealed class FalsePositiveExclusionTests
     }
 
     [Fact]
+    public void SuppressedMatchesDoNotAffectRiskOrHighlights()
+    {
+        var engine = Build(
+            new TextInspectorFalsePositiveExclusion { RuleKey = "Example_Word", MatchedText = "foo" },
+            new TextInspectorFalsePositiveExclusion { RuleKey = "Other_Word", MatchedText = "foo" });
+        var result = engine.Inspect("foo",new TextInspectionOptions { IncludeHighlightSpans = true });
+        Assert.Empty(result.Evidence);
+        Assert.Empty(result.HighlightSpans);
+        Assert.Equal(0,result.RiskAssessment.TotalRiskPoints);
+    }
+
+    [Fact]
     public void NoSubstringExclusionsAndInvalidConfigurationsRejected()
     {
         var engine = Build(new TextInspectorFalsePositiveExclusion
