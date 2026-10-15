@@ -309,7 +309,7 @@ public sealed partial class TextInspectorEngine
                 {
                     if(TryGetFirstEvidenceCapture(rule,match,out var capture))
                     {
-                        TryAddEvidenceHit(evidence,rule,capture,originalText.Length,normalized);
+                        TryAddEvidenceHit(evidence,rule,capture,originalText,normalized);
                     }
                 }
             }
@@ -331,13 +331,14 @@ public sealed partial class TextInspectorEngine
         return evidence;
     }
 
-    private static bool TryAddEvidenceHit(
+    private bool TryAddEvidenceHit(
         List<EvidenceHit> evidence,
         RuntimeRule rule,
         Capture capture,
-        int originalLength,
+        string originalText,
         NormalizedText normalized)
     {
+        int originalLength = originalText.Length;
         int normStart = capture.Index;
         int normEndExclusive = capture.Index + capture.Length;
         if(capture.Length <= 0 || normStart < 0 || normEndExclusive > normalized.Text.Length)
@@ -347,6 +348,17 @@ public sealed partial class TextInspectorEngine
         int origEndExclusive = normalized.EndMap[normEndExclusive - 1];
         if(origStart < 0 || origStart >= originalLength || origEndExclusive <= origStart || origEndExclusive > originalLength)
             return false;
+        // Only a precise, rule-scoped known benign match is excluded. The remaining
+        // evidence from this and other rules must continue through the engine.
+        foreach(var exclusion in Options.FalsePositiveExclusions)
+        {
+            if(string.Equals(exclusion.RuleKey,rule.Key,StringComparison.OrdinalIgnoreCase)
+               && exclusion.MatchedText.Length == origEndExclusive - origStart
+               && string.Compare(originalText,origStart,exclusion.MatchedText,0,
+                   exclusion.MatchedText.Length,StringComparison.OrdinalIgnoreCase) == 0)
+                return false;
+        }
+
 
         evidence.Add(new EvidenceHit(
             RuleId: rule.RuleId,
@@ -380,6 +392,26 @@ public sealed partial class TextInspectorEngine
         for(int i = 0;i < evidence.Count;i++)
         {
             var hit = evidence[i];
+            // Scope an explicit grammatical negation to this one credential request.
+            // Detection evidence survives; only its risk contribution is suppressed.
+            if(hit.RuleKey.StartsWith("Credential_",StringComparison.OrdinalIgnoreCase)
+               && IsLocallyNegatedCredentialRequest(hit,normalizedText))
+            {
+                output.Add(new ContextualEvidenceHit(
+                    hit,false,TextEvidenceScoringDisposition.ExcludedByContext,null));
+                continue;
+            }
+
+            // Attribution is scoped to the matched quoted span, not the whole message.
+            // Preserve the evidence while preventing a documented quotation from
+            // contributing the same risk as a direct threat.
+            if(hit.Category == TextInspectorRuleCategory.Threats &&
+               IsAttributedQuotedEvidence(hit,normalizedText))
+            {
+                output.Add(new ContextualEvidenceHit(
+                    hit,false,TextEvidenceScoringDisposition.ExcludedByContext,null));
+                continue;
+            }
             if(!rulesById.TryGetValue(hit.RuleId,out var rule) || rule.Context is null)
             {
                 output.Add(new ContextualEvidenceHit(hit,true,null,null));
@@ -465,6 +497,51 @@ public sealed partial class TextInspectorEngine
         }
 
         return output;
+    }
+
+    private static bool IsLocallyNegatedCredentialRequest(EvidenceHit hit,string text)
+    {
+        int start = hit.NormalizedStart;
+        if(start <= 0 || start > text.Length) return false;
+        int from = Math.Max(0,start - 40);
+        string before = text.Substring(from,start - from);
+        // No general keyword allowlist: the negation must grammatically
+        // precede this occurrence with at most one common intensifier.
+        return Regex.IsMatch(before,
+            @"\b(?:do\s+not|don't|never|should\s+not|must\s+not)\s+(?:ever\s+)?$",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant,
+            TimeSpan.FromMilliseconds(50));
+    }
+
+    private static bool IsAttributedQuotedEvidence(EvidenceHit hit,string text)
+    {
+        int start = hit.NormalizedStart;
+        int end = start + hit.NormalizedLength;
+        if(start < 0 || end > text.Length || end >= text.Length)
+            return false;
+
+        // Require matching quotation punctuation next to the exact hit, permitting
+        // sentence punctuation just before the closing quote.
+        int close = end;
+        while(close < text.Length && (text[close] == '.' || text[close] == '!' ||
+              text[close] == '?' || char.IsWhiteSpace(text[close])))
+            close++;
+        if(close >= text.Length || (text[close] != '"' && text[close] != '”'))
+            return false;
+
+        int opening = start - 1;
+        while(opening >= 0 && char.IsWhiteSpace(text[opening])) opening--;
+        if(opening < 0 || (text[opening] != '"' && text[opening] != '“'))
+            return false;
+
+        int prefixStart = Math.Max(0,opening - 100);
+        var prefix = text.Substring(prefixStart,opening - prefixStart);
+        // Cues must directly introduce the quote. An unrelated word 'report'
+        // elsewhere in the message cannot suppress a direct threat.
+        return Regex.IsMatch(prefix,
+            @"\b(?:report|transcript|script|moderator|fictional|documented|quoted|archived|citation|example)\b[^\r\n:]{0,65}:\s*$",
+            RegexOptions.IgnoreCase | RegexOptions.CultureInvariant,
+            TimeSpan.FromMilliseconds(50));
     }
 
     private List<EvidenceHitWithCounts> ApplyCountsForScoring(List<ContextualEvidenceHit> evidence)
