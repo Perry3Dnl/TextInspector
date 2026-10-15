@@ -263,16 +263,6 @@ public sealed partial class TextInspectorEngine
         int origEndExclusive = normalized.EndMap[normEndExclusive - 1];
         if(origStart < 0 || origStart >= originalLength || origEndExclusive <= origStart || origEndExclusive > originalLength)
             return false;
-        // Only a precise, rule-scoped known benign match is excluded. The remaining
-        // evidence from this and other rules must continue through the engine.
-        foreach(var exclusion in Options.FalsePositiveExclusions)
-        {
-            if(string.Equals(exclusion.RuleKey,rule.Key,StringComparison.OrdinalIgnoreCase)
-               && exclusion.MatchedText.Length == origEndExclusive - origStart
-               && string.Compare(originalText,origStart,exclusion.MatchedText,0,
-                   exclusion.MatchedText.Length,StringComparison.OrdinalIgnoreCase) == 0)
-                return false;
-        }
 
         result = CreateRuleMatch(rule,origStart,origEndExclusive - origStart);
         return true;
@@ -358,6 +348,17 @@ public sealed partial class TextInspectorEngine
         int origEndExclusive = normalized.EndMap[normEndExclusive - 1];
         if(origStart < 0 || origStart >= originalLength || origEndExclusive <= origStart || origEndExclusive > originalLength)
             return false;
+        // Only a precise, rule-scoped known benign match is excluded. The remaining
+        // evidence from this and other rules must continue through the engine.
+        foreach(var exclusion in Options.FalsePositiveExclusions)
+        {
+            if(string.Equals(exclusion.RuleKey,rule.Key,StringComparison.OrdinalIgnoreCase)
+               && exclusion.MatchedText.Length == origEndExclusive - origStart
+               && string.Compare(originalText,origStart,exclusion.MatchedText,0,
+                   exclusion.MatchedText.Length,StringComparison.OrdinalIgnoreCase) == 0)
+                return false;
+        }
+
 
         evidence.Add(new EvidenceHit(
             RuleId: rule.RuleId,
