@@ -22,6 +22,9 @@ internal class TextInspectorRulePattern
     public int SeverityScore { get; set; }
     public string RegexPattern { get; set; } = "";
 
+    /// <summary>All numeric conditions must hold for the same regex match. Empty preserves regex-only matching.</summary>
+    public TextInspectorNumericCondition[] NumericConditions { get; set; } = Array.Empty<TextInspectorNumericCondition>();
+
     /// <summary>
     /// Optional named or numbered regex capture group to use as the exact evidence/highlight span.
     /// The full regex still controls detection. Empty/null uses the complete match.

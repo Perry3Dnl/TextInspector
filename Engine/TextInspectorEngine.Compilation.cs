@@ -158,6 +158,9 @@ public sealed partial class TextInspectorEngine
                     continue;
                 }
 
+                if(!TryCompileNumericConditions(rule,regex,diagnostics,out var numericConditions))
+                    continue;
+
                 if(!TryCompileContext(rule,options,diagnostics,out var context))
                     continue;
 
@@ -180,6 +183,7 @@ public sealed partial class TextInspectorEngine
                     Priority: rule.Priority,
                     SourceOrder: ruleSourceOrder,
                     Regex: regex,
+                    NumericConditions: numericConditions,
                     EvidenceGroup: evidenceGroup,
                     PrefilterTerms: prefilterTerms,
                     PrefilterMode: rule.PrefilterMode,

@@ -115,9 +115,9 @@ public sealed partial class TextInspectorEngine
     }
 
     /// <summary>
-    /// Fast raw-rule pre-screen. Returns true on the first primary regex/evidence-group hit.
+    /// Fast raw-rule pre-screen. Returns true on the first regex/evidence-group hit satisfying numeric conditions.
     /// Context gates, scoring, snippets, and category aggregation are intentionally skipped.
-    /// Regex timeouts are treated as no match for the timed-out rule.
+    /// Regex timeouts and invalid numeric captures are skipped; use Inspect for runtime diagnostics.
     /// </summary>
 
     public bool HasMatch(string? text)
@@ -141,6 +141,9 @@ public sealed partial class TextInspectorEngine
             {
                 for(var match = rule.Regex.Match(normalized);match.Success;match = match.NextMatch())
                 {
+                    if(!PassesNumericConditions(rule,match))
+                        continue;
+
                     if(rule.EvidenceGroup is null)
                     {
                         if(match.Length > 0)
@@ -165,7 +168,7 @@ public sealed partial class TextInspectorEngine
 
     /// <summary>
     /// Returns raw matches in priority/compile order with exact original-text spans.
-    /// This skips contextual scoring.
+    /// Numeric conditions apply; contextual scoring is skipped.
     /// </summary>
 
     public IReadOnlyList<TextRuleMatch> FindMatches(string? text,int maxMatches = int.MaxValue)
@@ -193,6 +196,9 @@ public sealed partial class TextInspectorEngine
             {
                 for(var match = rule.Regex.Match(normalized.Text);match.Success;match = match.NextMatch())
                 {
+                    if(!PassesNumericConditions(rule,match))
+                        continue;
+
                     if(TryGetFirstEvidenceCapture(rule,match,out var capture)
                             && TryCreateRuleMatch(rule,capture,normalized,text.Length,out var captured))
                     {
@@ -307,6 +313,9 @@ public sealed partial class TextInspectorEngine
             {
                 for(var match = rule.Regex.Match(normalized.Text);match.Success;match = match.NextMatch())
                 {
+                    if(!PassesNumericConditions(rule,match,runtimeDiagnostics))
+                        continue;
+
                     if(TryGetFirstEvidenceCapture(rule,match,out var capture))
                     {
                         TryAddEvidenceHit(evidence,rule,capture,originalText,normalized);
@@ -898,6 +907,7 @@ public sealed partial class TextInspectorEngine
         int Priority,
         int SourceOrder,
         Regex Regex,
+        RuntimeNumericCondition[] NumericConditions,
         string? EvidenceGroup,
         string[] PrefilterTerms,
         TextInspectorPrefilterMode PrefilterMode,
