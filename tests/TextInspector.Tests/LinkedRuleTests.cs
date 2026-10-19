@@ -249,4 +249,19 @@ public sealed class LinkedRuleTests
         Assert.Equal(100, result.RiskAssessment.RiskScore);
         Assert.All(result.Evidence, item => Assert.Equal(int.MaxValue, item.EffectiveRiskPoints));
     }
+    [Fact]
+    public void LegacyTextSafetyInfoConstructorSignatureRemainsAvailable()
+    {
+        var originalParameterTypes = Enumerable.Repeat(typeof(int), 18).ToArray();
+        var constructor = typeof(TextSafetyInfo).GetConstructor(originalParameterTypes);
+        Assert.NotNull(constructor);
+        var legacy = (TextSafetyInfo)constructor!.Invoke(new object[]
+        {
+            10, 2, 1, 4, 50, 100, 90, 10, 3, 2, 1, 2, 5, 5, 0, 0, 0, 80
+        });
+        Assert.Equal(10, legacy.RiskScore);
+        Assert.Equal(0, legacy.LinkedRuleRiskPoints);
+        Assert.Equal(0, legacy.TriggeredLinkedRuleCount);
+    }
+
 }
