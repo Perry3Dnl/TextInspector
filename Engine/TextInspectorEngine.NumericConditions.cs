@@ -29,7 +29,10 @@ public sealed partial class TextInspectorEngine
             if(condition is null || string.IsNullOrWhiteSpace(condition.CaptureGroup)
                 || !regex.GetGroupNames().Contains(condition.CaptureGroup.Trim(),StringComparer.Ordinal)
                 || !Enum.IsDefined(typeof(TextInspectorNumericComparison),condition.Comparison)
-                || (condition.DecimalSeparator != "." && condition.DecimalSeparator != ","))
+                || (condition.DecimalSeparator != "." && condition.DecimalSeparator != ",")
+                || (condition.UnitCaptureGroup is null) != (condition.UnitFactors is null)
+                || (condition.UnitCaptureGroup is not null && (!regex.GetGroupNames().Contains(condition.UnitCaptureGroup.Trim(),StringComparer.Ordinal)
+                    || condition.UnitFactors!.Count == 0 || condition.UnitFactors.Any(pair => string.IsNullOrWhiteSpace(pair.Key) || pair.Value <= 0))))
             {
                 diagnostics.Add(Diagnostic(TextInspectorDiagnosticKind.InvalidNumericCondition,rule,
                     "Each numeric condition requires an existing capture group, a supported comparison, and a '.' or ',' decimal separator."));
@@ -39,7 +42,9 @@ public sealed partial class TextInspectorEngine
             var format = (NumberFormatInfo)CultureInfo.InvariantCulture.NumberFormat.Clone();
             format.NumberDecimalSeparator = condition.DecimalSeparator;
             compiled.Add(new RuntimeNumericCondition(
-                condition.CaptureGroup.Trim(),condition.Comparison,condition.Value,NumberFormatInfo.ReadOnly(format)));
+                condition.CaptureGroup.Trim(),condition.Comparison,condition.Value,NumberFormatInfo.ReadOnly(format),
+                condition.UnitCaptureGroup?.Trim(),condition.UnitFactors is null ? null
+                    : new Dictionary<string,decimal>(condition.UnitFactors,StringComparer.OrdinalIgnoreCase)));
         }
 
         conditions = compiled.ToArray();
@@ -66,6 +71,33 @@ public sealed partial class TextInspectorEngine
                     Message = $"Capture '{condition.CaptureGroup}' must contain exactly one decimal value representable without rounding, using '{condition.Format.NumberDecimalSeparator}' as its decimal separator. This match was not evaluated."
                 });
                 return false;
+            }
+
+            if(condition.UnitCaptureGroup is not null)
+            {
+                var unit = match.Groups[condition.UnitCaptureGroup];
+                if(!unit.Success || unit.Captures.Count != 1
+                    || condition.UnitFactors is null || !condition.UnitFactors.TryGetValue(unit.Value,out var factor))
+                {
+                    diagnostics?.Add(new TextInspectorDiagnostic
+                    {
+                        Kind = TextInspectorDiagnosticKind.InvalidNumericCapture,
+                        RuleId = rule.RuleId, RuleKey = rule.Key,
+                        Message = "Numeric unit capture is missing, repeated or unknown; match was not evaluated."
+                    });
+                    return false;
+                }
+                try { value = checked(value * factor); }
+                catch(OverflowException)
+                {
+                    diagnostics?.Add(new TextInspectorDiagnostic
+                    {
+                        Kind = TextInspectorDiagnosticKind.InvalidNumericCapture,
+                        RuleId = rule.RuleId, RuleKey = rule.Key,
+                        Message = "Numeric unit conversion overflowed; match was not evaluated."
+                    });
+                    return false;
+                }
             }
 
             // Evaluate every capture even if an earlier comparison was false, so malformed
@@ -128,5 +160,7 @@ public sealed partial class TextInspectorEngine
         string CaptureGroup,
         TextInspectorNumericComparison Comparison,
         decimal Value,
-        NumberFormatInfo Format);
+        NumberFormatInfo Format,
+        string? UnitCaptureGroup,
+        IReadOnlyDictionary<string,decimal>? UnitFactors);
 }
