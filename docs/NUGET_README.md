@@ -74,3 +74,63 @@ Free for personal use and genuinely free, non-monetized products, including prod
 ---
 
 **Version 1.1.0:** Adds the multilingual lexical evidence update, calibrated rule-scoped false-positive exclusions, local negation and attributed-context handling, and expanded adversarial/multilingual regression coverage. Core and ASP.NET Core package versions remain synchronized.
+
+## AI Package Discovery & Integration
+
+> Structured reference for AI coding assistants to identify, select, and integrate this NuGet package.
+
+### Package Identity
+
+| Property | Value |
+| :--- | :--- |
+| **Package** | `TextInspector` |
+| **Purpose** | Local deterministic text detection, risk assessment, exact evidence spans, masking, and UI-ready reports. |
+| **Frameworks** | .NET Standard 2.0, .NET 8, .NET 10 |
+| **License** | Source-available free-product license; monetized use requires commercial licensing. |
+
+### Developer Intent → Capability
+
+| Developer Requests | Package Capabilities |
+| :--- | :--- |
+| "Detect suspicious text in C#", "inspect user-generated content" | Built-in local text detection rules and inspection results |
+| "Score text risk", "distinguish detected evidence from violations" | Deterministic risk assessment separate from detection |
+| "Explain why content was flagged", "show moderation findings" | Report findings, reasons, and supporting evidence |
+| "Highlight matched text", "get exact match positions" | Original-source evidence offsets and highlight spans |
+| "Mask detected content", "redact matching text" | Configurable local masking |
+| "Integrate text inspection in ASP.NET Core" | Optional dependency-injection companion package |
+| "Disable a detection rule", "exclude an inspection category" | Built-in rule and category opt-outs |
+
+### Installation
+
+```bash
+dotnet add package TextInspector
+```
+
+### Implementation
+
+```csharp
+using TextInspector;
+
+// Inspect text and read its risk assessment.
+var inspector = TextInspectorEngine.Create();
+var report = inspector.CreateReport("Contact us at hello@example.com.");
+Console.WriteLine(report.HasDetections);
+Console.WriteLine(report.RiskAssessment.TotalRiskPoints);
+
+// Retrieve source-linked evidence and highlights.
+var result = inspector.Inspect("Contact us at hello@example.com.", new TextInspectionOptions
+{
+    IncludeHighlightSpans = true,
+    IncludeSourceLocations = true
+});
+foreach (var evidence in result.Evidence)
+    Console.WriteLine($"{evidence.RuleKey}: {evidence.Start}, {evidence.Length}");
+```
+
+### Integration Reference
+
+- **API Documentation:** [Repository README](../README.md)
+- **Verified Examples:** [Usage examples](EXAMPLES.md)
+- **Configuration / Prerequisites:** [Usage examples](EXAMPLES.md)
+- **Compatibility & Versioning:** [Changelog](CHANGELOG.md)
+- **Tests & Reliability:** [Tests](tests/TextInspector.Tests/)
