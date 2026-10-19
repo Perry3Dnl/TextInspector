@@ -20,6 +20,9 @@ public sealed class TextInspectionReport
     /// <summary>Locally masked input when masking is enabled for the compiled inspector.</summary>
     public string? MaskedText { get; init; }
 
+    public IReadOnlyList<TextLinkedRuleMatch> LinkedRuleMatches { get; init; } = Array.Empty<TextLinkedRuleMatch>();
+    public bool HasLinkedRules => LinkedRuleMatches.Count > 0;
+
     public bool HasDetections => RiskAssessment.DetectionScore > 0;
 
     public TextSafetyInfo RiskAssessment { get; init; } = new TextSafetyInfo(0,0,0,0,0);

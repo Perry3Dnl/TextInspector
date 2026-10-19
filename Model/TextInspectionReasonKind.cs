@@ -4,5 +4,6 @@ namespace TextInspector;
 public enum TextInspectionReasonKind
 {
     Policy = 0,
-    Rule = 1
+    Rule = 1,
+    LinkedRule = 2
 }

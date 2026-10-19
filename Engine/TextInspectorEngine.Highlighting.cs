@@ -76,7 +76,10 @@ public sealed partial class TextInspectorEngine
 
         int maxSeverity = active.Max(index => evidence[index].SeverityScore);
         int detectionScore = active.Max(index => evidence[index].DetectionScore);
-        int highlightScore = NormalizeSeverity(maxSeverity);
+        int effectiveSeverity = active.Max(index => evidence[index].EffectiveSeverity);
+        int highlightScore = NormalizeSeverity(effectiveSeverity);
+        var linkedKeys = active.SelectMany(index => evidence[index].LinkedRuleKeys).Distinct(StringComparer.Ordinal)
+            .OrderBy(key => key, StringComparer.Ordinal).ToArray();
         bool hasScoringEvidence = active.Any(index => evidence[index].ContributesToRisk);
         var ruleKeys = active.Select(index => evidence[index].RuleKey)
             .Distinct(StringComparer.Ordinal)
@@ -93,6 +96,8 @@ public sealed partial class TextInspectorEngine
             if(previous.EndExclusive == start
                 && previous.DetectionScore == detectionScore
                 && previous.HighlightIntensity == highlightScore
+                && previous.EffectiveSeverity == effectiveSeverity
+                && previous.LinkedRuleKeys.SequenceEqual(linkedKeys, StringComparer.Ordinal)
                 && previous.HighestDetectedSeverity == maxSeverity
                 && previous.HasScoringEvidence == hasScoringEvidence
                 && previous.RuleKeys.SequenceEqual(ruleKeys,StringComparer.Ordinal)
@@ -104,6 +109,8 @@ public sealed partial class TextInspectorEngine
                     Length = previous.Length + length,
                     DetectionScore = detectionScore,
                     HighlightIntensity = highlightScore,
+                    EffectiveSeverity = effectiveSeverity,
+                    LinkedRuleKeys = linkedKeys,
                     HighestDetectedSeverity = maxSeverity,
                     HasScoringEvidence = hasScoringEvidence,
                     RuleKeys = ruleKeys,
@@ -119,6 +126,8 @@ public sealed partial class TextInspectorEngine
             Length = length,
             DetectionScore = detectionScore,
             HighlightIntensity = highlightScore,
+            EffectiveSeverity = effectiveSeverity,
+            LinkedRuleKeys = linkedKeys,
             HighestDetectedSeverity = maxSeverity,
             HasScoringEvidence = hasScoringEvidence,
             RuleKeys = ruleKeys,

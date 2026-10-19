@@ -28,6 +28,8 @@ public sealed class TextInspectionFinding
 
     public IReadOnlyList<string> Tags { get; init; } = Array.Empty<string>();
     public IReadOnlyList<string> RuleKeys { get; init; } = Array.Empty<string>();
+    public string? LinkedRuleKey { get; init; }
+    public bool IsLinkedRule => LinkedRuleKey is not null;
     public string? PolicyKey { get; init; }
 
     /// <summary>Exact original-text evidence correlated into this finding.</summary>

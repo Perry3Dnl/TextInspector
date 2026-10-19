@@ -10,6 +10,7 @@ public sealed partial class TextInspectorEngine
 {
     private SummaryResult Summarize(
         List<EvidenceHitWithCounts> evidence,
+        List<RuntimeLinkedRuleMatch> linkedMatches,
         int originalLength)
     {
         if(evidence.Count == 0)
@@ -55,8 +56,12 @@ public sealed partial class TextInspectorEngine
         int policyRawScore = 0;
         int maxPolicySeverity = 0;
         int bonusRawScore = builtInBonusRawScore;
+        var linkedContributions = LinkedRuleContributions(linkedMatches);
+        int linkedPoints = linkedContributions.Aggregate(0, (sum, item) => AddRaw(sum, item.RiskPoints));
+        bonusRawScore = AddRaw(bonusRawScore, linkedPoints);
         int rawScore = AddRaw(baseRawScore,bonusRawScore);
         int effectiveSeverity = maxScoredSeverity;
+        effectiveSeverity = Math.Max(effectiveSeverity, evidence.Where(hit => hit.ContributesToRisk).Select(hit => hit.EffectiveSeverity).DefaultIfEmpty(0).Max());
         int obfuscationCount = GetScoredCount(categories,TextInspectorRuleCategory.Obfuscation);
         if(Options.ObfSeverityFloorAt > 0 && obfuscationCount >= Options.ObfSeverityFloorAt)
             effectiveSeverity = Math.Max(effectiveSeverity,Options.HighSeverityThreshold);
@@ -82,7 +87,7 @@ public sealed partial class TextInspectorEngine
             })
             .ToArray();
 
-        var contributions = builtInContributions.ToArray();
+        var contributions = builtInContributions.Concat(linkedContributions).ToArray();
 
         return new SummaryResult(
             new TextSafetyInfo(
@@ -103,7 +108,9 @@ public sealed partial class TextInspectorEngine
                 0,
                 scoredPolicyCount,
                 maxPolicySeverity,
-                detectionScore),
+                detectionScore,
+                linkedPoints,
+                linkedMatches.Count),
             categorySummaries,
             contributions);
     }

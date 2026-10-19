@@ -8,6 +8,9 @@ internal class TextInspectorRulePattern
     public TextInspectorRulePattern() { }
     public Guid TextInspectorRuleId { get; set; }
     public string Key { get; set; } = "";
+    /// <summary>Links declared once here; their members may come from any loaded rule set.</summary>
+    public TextInspectorLinkedRule[] LinkedRules { get; set; } = Array.Empty<TextInspectorLinkedRule>();
+
     public string? Description { get; set; }
     public string[] Tags { get; set; } = Array.Empty<string>();
     public TextInspectorRuleCategory Category { get; set; }

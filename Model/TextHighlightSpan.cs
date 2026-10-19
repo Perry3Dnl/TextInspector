@@ -15,6 +15,9 @@ public sealed class TextHighlightSpan
     public int DetectionScore { get; init; }
 
     public int HighlightIntensity { get; init; }
+    public int EffectiveSeverity { get; init; }
+    public IReadOnlyList<string> LinkedRuleKeys { get; init; } = Array.Empty<string>();
+    public bool IsLinked => LinkedRuleKeys.Count > 0;
     public int HighestDetectedSeverity { get; init; }
     public bool HasScoringEvidence { get; init; }
     public IReadOnlyList<string> RuleKeys { get; init; } = Array.Empty<string>();

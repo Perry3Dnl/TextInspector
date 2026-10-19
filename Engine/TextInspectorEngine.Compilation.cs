@@ -38,6 +38,7 @@ public sealed partial class TextInspectorEngine
         options.Validate();
 
         var compiledRules = new List<RuntimeRule>();
+        var linkOwners = new List<TextInspectorRulePattern>();
         var diagnostics = new List<TextInspectorDiagnostic>();
         var seenIds = new HashSet<Guid>();
         var seenKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -170,6 +171,7 @@ public sealed partial class TextInspectorEngine
                     .Distinct(StringComparer.Ordinal)
                     .ToArray();
 
+                linkOwners.Add(rule);
                 seenIds.Add(rule.TextInspectorRuleId);
                 seenKeys.Add(rule.Key.Trim());
                 compiledRules.Add(new RuntimeRule(
@@ -205,8 +207,9 @@ public sealed partial class TextInspectorEngine
 
         AddContextReferenceDiagnostics(compiledRules,diagnostics);
 
+        var compiledLinks = CompileLinkedRules(linkOwners, compiledRules, diagnostics);
         var frozenDiagnostics = diagnostics.ToArray();
-        var engine = new TextInspectorEngine(options,compiledRules.ToArray(),frozenDiagnostics);
+        var engine = new TextInspectorEngine(options,compiledRules.ToArray(),compiledLinks,frozenDiagnostics);
         return new TextInspectorCompilationResult { Engine = engine, Diagnostics = frozenDiagnostics };
     }
 

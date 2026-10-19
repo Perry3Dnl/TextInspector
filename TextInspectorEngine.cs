@@ -17,15 +17,19 @@ public sealed partial class TextInspectorEngine
     /// <summary>TextInspector does not evaluate composite policies.</summary>
     public int CompiledPolicyCount => 0;
 
+    public int CompiledLinkedRuleCount => _linkedRules.Length;
+    private readonly RuntimeLinkedRule[] _linkedRules;
     private readonly RuntimeRule[] _rules;
 
     private TextInspectorEngine(
         TextInspectorScoringOptions options,
         RuntimeRule[] rules,
+        RuntimeLinkedRule[] linkedRules,
         IReadOnlyList<TextInspectorDiagnostic> diagnostics)
     {
         Options = options;
         _rules = rules;
+        _linkedRules = linkedRules;
         CompilationDiagnostics = diagnostics;
     }
 
@@ -50,7 +54,8 @@ public sealed partial class TextInspectorEngine
         var evidence = BuildEvidence(text,normalized,runtimeDiagnostics);
         var contextualEvidence = ApplyContext(evidence,normalized.Text,runtimeDiagnostics);
         var evidenceWithCounts = ApplyCountsForScoring(contextualEvidence);
-        var summary = Summarize(evidenceWithCounts,text.Length);
+        var linkedMatches = ApplyLinkedRules(evidenceWithCounts);
+        var summary = Summarize(evidenceWithCounts,linkedMatches,text.Length);
 
         IReadOnlyList<TextHighlightSpan> highlightSpans = Array.Empty<TextHighlightSpan>();
         if(inspectionOptions.IncludeMarkedHtml || inspectionOptions.IncludeHighlightSpans)
@@ -71,6 +76,7 @@ public sealed partial class TextInspectorEngine
 
         return new TextInspectionResult
         {
+            LinkedRuleMatches = BuildPublicLinkedRules(text,linkedMatches,evidenceWithCounts,inspectionOptions),
             RiskAssessment = summary.RiskAssessment,
             MaskedText = maskedText,
             MarkedHtml = markedHtml,
@@ -661,6 +667,10 @@ public sealed partial class TextInspectorEngine
                 Category = e.Category,
                 DetectionScore = e.DetectionScore,
                 SeverityScore = e.SeverityScore,
+                EffectiveSeverity = e.EffectiveSeverity,
+                EffectiveRiskPoints = e.EffectiveRiskPoints,
+                RiskMultiplier = e.RiskMultiplier,
+                LinkedRuleKeys = e.LinkedRuleKeys,
                 RuleWeight = e.RuleWeight,
                 MaxCountForScoring = e.MaxCountForScoring,
                 Start = e.Start,
@@ -669,7 +679,7 @@ public sealed partial class TextInspectorEngine
                 MatchedText = inspectionOptions.IncludeMatchedText ? originalText.Substring(e.Start,e.Length) : "",
                 Snippet = snippet.Text,
                 SnippetStart = snippet.Start,
-                HighlightIntensity = NormalizeSeverity(e.SeverityScore),
+                HighlightIntensity = NormalizeSeverity(e.EffectiveSeverity),
                 Context = inspectionOptions.IncludeContextDetails ? e.Context : null,
                 ContributesToRisk = e.ContributesToRisk,
                 ScoringStatus = e.ScoringStatus
@@ -755,6 +765,13 @@ public sealed partial class TextInspectorEngine
         sb.Append(WebUtility.HtmlEncode(string.Join(",",span.RuleKeys)));
         sb.Append("\" data-categories=\"");
         sb.Append(WebUtility.HtmlEncode(string.Join(",",span.Categories)));
+        if(span.IsLinked)
+        {
+            sb.Append("\" data-linked-rules=\"");
+            sb.Append(WebUtility.HtmlEncode(string.Join(",",span.LinkedRuleKeys)));
+            sb.Append("\" data-effective-severity=\"");
+            sb.Append(span.EffectiveSeverity);
+        }
         sb.Append("\" style=\"");
         sb.Append(ScoreToHighlightStyle(span.HighlightIntensity));
         sb.Append("\">");
@@ -883,7 +900,14 @@ public sealed partial class TextInspectorEngine
         bool ContributesToRisk,
         TextEvidenceScoringDisposition ScoringStatus,
         bool IncludeSnippet,
-        TextEvidenceContext? Context);
+        TextEvidenceContext? Context)
+    {
+        public int RiskMultiplier { get; init; } = 1;
+        public int? LinkedEffectiveSeverity { get; init; }
+        public int EffectiveSeverity => LinkedEffectiveSeverity ?? SeverityScore;
+        public int EffectiveRiskPoints => ContributesToRisk ? MultiplyCapped(RuleWeight, RiskMultiplier, int.MaxValue) : 0;
+        public string[] LinkedRuleKeys { get; init; } = Array.Empty<string>();
+    }
 
     private readonly record struct HighlightSpanEvent(int Position,int EvidenceIndex,bool IsStart);
 

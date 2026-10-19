@@ -22,7 +22,9 @@ public class TextSafetyInfo
         int triggeredPolicyCount = 0,
         int scoringPolicyCount = 0,
         int highestPolicySeverity = 0,
-        int detectionScore = 0)
+        int detectionScore = 0,
+        int linkedRuleRiskPoints = 0,
+        int triggeredLinkedRuleCount = 0)
     {
         RiskScore = riskScore;
         HighestDetectedSeverity = highestDetectedSeverity;
@@ -42,6 +44,8 @@ public class TextSafetyInfo
         ScoringPolicyCount = scoringPolicyCount;
         HighestPolicySeverity = highestPolicySeverity;
         DetectionScore = detectionScore;
+        LinkedRuleRiskPoints = linkedRuleRiskPoints;
+        TriggeredLinkedRuleCount = triggeredLinkedRuleCount;
     }
 
     /// <summary>
@@ -87,7 +91,7 @@ public class TextSafetyInfo
     public int RuleRiskPoints { get; private set; }
 
     /// <summary>
-    /// All post-rule raw points. Preserved for compatibility and equals BuiltInBonusPoints + PolicyRiskPoints.
+    /// All post-rule raw points. Preserved for compatibility and equals BuiltInBonusPoints + PolicyRiskPoints + LinkedRuleRiskPoints.
     /// </summary>
     public int AdditionalRiskPoints { get; private set; }
 
@@ -95,6 +99,9 @@ public class TextSafetyInfo
     public int BuiltInBonusPoints { get; private set; }
 
     /// <summary>Raw score contributed by matched composite policies.</summary>
+    public int LinkedRuleRiskPoints { get; private set; }
+    public int TriggeredLinkedRuleCount { get; private set; }
+
     public int PolicyRiskPoints { get; private set; }
 
     public bool MeetsThreshold(int minimumPriorityScore) => RiskScore >= minimumPriorityScore;

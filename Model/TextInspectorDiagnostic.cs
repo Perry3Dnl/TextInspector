@@ -13,7 +13,9 @@ public enum TextInspectorDiagnosticKind
     PolicyReferenceNotFound = 9,
     InvalidEvidenceGroup = 10,
     InvalidNumericCondition = 11,
-    InvalidNumericCapture = 12
+    InvalidNumericCapture = 12,
+    InvalidLinkedRule = 13,
+    LinkedRuleReferenceNotFound = 14
 }
 
 public sealed class TextInspectorDiagnostic
