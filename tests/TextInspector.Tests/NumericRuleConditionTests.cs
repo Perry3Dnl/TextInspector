@@ -262,4 +262,45 @@ public sealed class NumericRuleConditionTests
         Assert.True(engine.HasMatch("Item A: -10.5"));
         Assert.False(engine.HasMatch("Item A: -10"));
     }
+    [Fact]
+    public void UnitAwareNumericConditionsReuseTheNormalEngine()
+    {
+        var rule = new TextInspectorRulePattern
+        {
+            TextInspectorRuleId = Guid.NewGuid(),Key = "DoseOverLimit",
+            Category = TextInspectorRuleCategory.PlatformIntegrity,
+            RegexPattern = @"\bparacetamol\s+(?<amount>\d+(?:\.\d+)?)\s*(?<unit>mg|g)\s+at\s+once\b",
+            NumericConditions = new[]
+            {
+                new TextInspectorNumericCondition
+                {
+                    CaptureGroup = "amount",
+                    UnitCaptureGroup = "unit",
+                    UnitFactors = new Dictionary<string,decimal>(StringComparer.OrdinalIgnoreCase)
+                    {
+                        ["mg"] = 1m, ["g"] = 1000m
+                    },
+                    Comparison = TextInspectorNumericComparison.GreaterThan,
+                    Value = 1000m
+                }
+            },
+            RuleWeight = 10,SeverityScore = 2
+        };
+        var engine = TextInspectorEngine.Compile(new TextInspectorScoringOptions(),new[] { rule });
+        Assert.False(engine.Inspect("paracetamol 500 mg at once").HasDetections);
+        Assert.False(engine.Inspect("paracetamol 1 g at once").HasDetections);
+        Assert.True(engine.Inspect("paracetamol 1.5 g at once").HasDetections);
+        Assert.True(engine.Inspect("paracetamol 1500 mg at once").HasDetections);
+    }
+
+    [Fact]
+    public void InvalidUnitDefinitionIsReportedAtCompilation()
+    {
+        var rule = Rule();
+        rule.NumericConditions[0].UnitCaptureGroup = "missing";
+        rule.NumericConditions[0].UnitFactors = new Dictionary<string,decimal> { ["g"] = 1000m };
+        var compiled = TextInspectorEngine.CompileWithDiagnostics(new TextInspectorScoringOptions(),new[] { rule });
+        Assert.Equal(0,compiled.Engine.CompiledRuleCount);
+    }
+
 }
