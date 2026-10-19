@@ -8,7 +8,7 @@ public sealed class LinkedRuleTests
     {
         TextInspectorRuleId = Guid.NewGuid(), Key = key, RegexPattern = @"\b" + key + @"\b",
         Category = TextInspectorRuleCategory.PlatformIntegrity, RuleWeight = weight, SeverityScore = severity,
-        DetectionScore = 73, MaxCountForScoring = 5
+        DetectionScore = 73, MaxCountForScoring = weight == 0 ? 0 : 5
     };
     private static TextInspectorLinkedRule Link(string key = "AB", params string[] members) => new()
     {
