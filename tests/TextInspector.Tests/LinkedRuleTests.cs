@@ -152,6 +152,7 @@ public sealed class LinkedRuleTests
         link.RiskPoints = 25;
         var scored = Compile(link, Rule("a", 0), Rule("b", 0)).Inspect("a b a b");
         Assert.Equal(25, scored.RiskAssessment.TotalRiskPoints);
+        Assert.Equal(6, scored.RiskAssessment.EffectiveSeverity);
         Assert.Equal(25, Assert.Single(scored.LinkedRuleMatches).FixedRiskPoints);
         Assert.Empty(Compile(Link(), Rule("a", 0), Rule("b", 0)).Inspect("a b").LinkedRuleMatches);
     }

@@ -62,6 +62,9 @@ public sealed partial class TextInspectorEngine
         int rawScore = AddRaw(baseRawScore,bonusRawScore);
         int effectiveSeverity = maxScoredSeverity;
         effectiveSeverity = Math.Max(effectiveSeverity, evidence.Where(hit => hit.ContributesToRisk).Select(hit => hit.EffectiveSeverity).DefaultIfEmpty(0).Max());
+        int linkedSeverity = linkedMatches.Where(match => match.TotalRiskPoints > 0)
+            .SelectMany(match => match.EvidenceIndexes).Select(index => evidence[index].EffectiveSeverity).DefaultIfEmpty(0).Max();
+        effectiveSeverity = Math.Max(effectiveSeverity, linkedSeverity);
         int obfuscationCount = GetScoredCount(categories,TextInspectorRuleCategory.Obfuscation);
         if(Options.ObfSeverityFloorAt > 0 && obfuscationCount >= Options.ObfSeverityFloorAt)
             effectiveSeverity = Math.Max(effectiveSeverity,Options.HighSeverityThreshold);

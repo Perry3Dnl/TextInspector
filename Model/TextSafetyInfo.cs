@@ -98,10 +98,12 @@ public class TextSafetyInfo
     /// <summary>Raw score from the built-in deterministic combo/obfuscation bonuses.</summary>
     public int BuiltInBonusPoints { get; private set; }
 
-    /// <summary>Raw score contributed by matched composite policies.</summary>
+    /// <summary>Raw score from linked escalation and fixed link contributions.</summary>
     public int LinkedRuleRiskPoints { get; private set; }
+    /// <summary>Triggered links, including zero-point flags.</summary>
     public int TriggeredLinkedRuleCount { get; private set; }
 
+    /// <summary>Raw score contributed by matched composite policies.</summary>
     public int PolicyRiskPoints { get; private set; }
 
     public bool MeetsThreshold(int minimumPriorityScore) => RiskScore >= minimumPriorityScore;
