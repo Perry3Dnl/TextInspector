@@ -4,6 +4,7 @@ public class TextSafetyInfo
 {
     private TextSafetyInfo() { }
 
+    /// <summary>Original constructor retained for binary compatibility with 1.0/1.1 clients.</summary>
     public TextSafetyInfo(
         int riskScore,
         int highestDetectedSeverity,
@@ -22,9 +23,32 @@ public class TextSafetyInfo
         int triggeredPolicyCount = 0,
         int scoringPolicyCount = 0,
         int highestPolicySeverity = 0,
-        int detectionScore = 0,
-        int linkedRuleRiskPoints = 0,
-        int triggeredLinkedRuleCount = 0)
+        int detectionScore = 0)
+        : this(riskScore, highestDetectedSeverity, detectedCategoryCount, totalEvidenceCount, length, totalRiskPoints, ruleRiskPoints, additionalRiskPoints, scoringEvidenceCount, highestScoredSeverity, scoringCategoryCount, effectiveSeverity, builtInBonusPoints, policyRiskPoints, triggeredPolicyCount, scoringPolicyCount, highestPolicySeverity, detectionScore, 0, 0)
+    {
+    }
+
+    public TextSafetyInfo(
+        int riskScore,
+        int highestDetectedSeverity,
+        int detectedCategoryCount,
+        int totalEvidenceCount,
+        int length,
+        int totalRiskPoints,
+        int ruleRiskPoints,
+        int additionalRiskPoints,
+        int scoringEvidenceCount,
+        int highestScoredSeverity,
+        int scoringCategoryCount,
+        int effectiveSeverity,
+        int builtInBonusPoints,
+        int policyRiskPoints,
+        int triggeredPolicyCount,
+        int scoringPolicyCount,
+        int highestPolicySeverity,
+        int detectionScore,
+        int linkedRuleRiskPoints,
+        int triggeredLinkedRuleCount)
     {
         RiskScore = riskScore;
         HighestDetectedSeverity = highestDetectedSeverity;
