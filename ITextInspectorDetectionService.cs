@@ -25,12 +25,4 @@ public interface ITextInspectorDetectionService
         IEnumerable<string?> texts,
         TextInspectionOptions? options = null);
 
-    /// <summary>
-    /// Parallel batch API is available in Pro. Free implementations may report
-    /// unsupported execution; use InspectMany for supported serial processing.
-    /// </summary>
-    IReadOnlyList<TextInspectionResult> InspectManyParallel(
-        IEnumerable<string?> texts, TextInspectionOptions? options = null,
-        int maxDegreeOfParallelism = -1);
-
 }
