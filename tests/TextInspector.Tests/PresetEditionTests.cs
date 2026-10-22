@@ -30,12 +30,15 @@ public sealed class PresetEditionTests
         var names = assembly.GetExportedTypes().Select(type => type.Name).ToArray();
         Assert.Contains("TextInspectorRulePattern", names);
         Assert.Contains("TextInspectorRuleContext", names);
-        Assert.DoesNotContain("TextInspectorPresets", names);
+        Assert.Contains("TextInspectorPresets", names);
+        Assert.Throws<NotSupportedException>(() => TextInspectorPresets.LoadPolicies());
         Assert.DoesNotContain(assembly.GetTypes(), type => type.Name.Contains("UrlAnalyzer") || type.Name.Contains("RuntimePolicy"));
         Assert.Throws<NotSupportedException>(() => new FileTextInspectorRepository("unused"));
         Assert.Throws<NotSupportedException>(() => new InMemoryTextInspectorRepository());
         var methods = typeof(TextInspectorEngine).GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
-        Assert.DoesNotContain(methods, method => method.Name is "Compile" or "CompileWithDiagnostics" or "FindFirstMatch" or "InspectManyParallel");
+        Assert.Contains(methods, method => method.Name is "Compile");
+        Assert.Contains(methods, method => method.Name is "FindFirstMatch");
+        Assert.Throws<NotSupportedException>(() => TextInspectorEngine.Compile(TextInspectorPresets.LoadOptions(), TextInspectorPresets.LoadRules()));
         Assert.DoesNotContain(assembly.GetManifestResourceNames(), name => name.EndsWith("policies.json"));
     }
 
