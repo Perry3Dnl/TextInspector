@@ -233,4 +233,19 @@ public sealed class EditionCompatibilityTests
         await Assert.ThrowsAsync<NotSupportedException>(() => file.RefreshAsync());
     }
 
+    [Fact]
+    public async Task ProConfigurationFacadeFailsExplicitlyWithoutExecutingAnyPaidFeature()
+    {
+        var config = (TextInspectorConfiguration)System.Runtime.Serialization.FormatterServices.GetUninitializedObject(typeof(TextInspectorConfiguration));
+        Assert.Throws<NotSupportedException>(() => _ = config.Options);
+        Assert.Throws<NotSupportedException>(() => _ = config.Rules);
+        Assert.Throws<NotSupportedException>(() => _ = config.Policies);
+        Assert.Throws<NotSupportedException>(() => config.Compile());
+        Assert.Throws<NotSupportedException>(() => config.CreateRepository());
+        Assert.Throws<NotSupportedException>(() => config.CreateService());
+        var monitor = new TextInspectorConfigurationMonitor(null!,null!,new TextInspectorService());
+        await Assert.ThrowsAsync<NotSupportedException>(() => monitor.RunAsync(TimeSpan.FromSeconds(1)));
+        await Assert.ThrowsAsync<NotSupportedException>(() => monitor.CheckForUpdatesAsync());
+    }
+
 }
