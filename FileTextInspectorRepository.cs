@@ -6,7 +6,7 @@ public sealed class FileTextInspectorRepository :
     ITextInspectorRefreshableRepository, ITextInspectorCachedVersionRepository
 {
     private static NotSupportedException Upgrade() => new("Update to TextInspector.Pro to use file-backed configuration repositories.");
-    public FileTextInspectorRepository(string directory) => throw Upgrade();
+    public FileTextInspectorRepository(string directory) { }
     public int? CachedOptionsVersion => throw Upgrade();
     public Task<int?> GetOptionsVersionAsync(CancellationToken ct = default) => Task.FromException<int?>(Upgrade());
     public Task<TextInspectorScoringOptions?> GetOptionsAsync(CancellationToken ct = default)
