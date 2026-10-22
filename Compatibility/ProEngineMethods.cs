@@ -11,7 +11,8 @@ public sealed partial class TextInspectorEngine
         => CompileBuiltIn(options, rules);
 
 
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]    public static TextInspectorEngine Compile(
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    public static TextInspectorEngine Compile(
         TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules,
         IEnumerable<TextInspectorPolicy> policies)
         => throw ProRequired();
@@ -21,26 +22,31 @@ public sealed partial class TextInspectorEngine
         => CompileWithDiagnosticsBuiltIn(options, rules);
 
 
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]    public static TextInspectorCompilationResult CompileWithDiagnostics(
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    public static TextInspectorCompilationResult CompileWithDiagnostics(
         TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules,
         IEnumerable<TextInspectorPolicy> policies)
         => throw ProRequired();
 
 
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]    public bool HasMatch(string? text, TextRuleMatchFilter? filter)
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    public bool HasMatch(string? text, TextRuleMatchFilter? filter)
         => throw ProRequired();
 
 
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]    public TextRuleMatch? FindFirstMatch(string? text, TextRuleMatchFilter? filter = null)
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    public TextRuleMatch? FindFirstMatch(string? text, TextRuleMatchFilter? filter = null)
         => throw ProRequired();
 
 
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]    public IReadOnlyList<TextRuleMatch> FindMatches(
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    public IReadOnlyList<TextRuleMatch> FindMatches(
         string? text, TextRuleMatchFilter? filter, int maxMatches = int.MaxValue)
         => throw ProRequired();
 
 
-    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]    public IReadOnlyList<TextInspectionResult> InspectManyParallel(
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
+    public IReadOnlyList<TextInspectionResult> InspectManyParallel(
         IEnumerable<string?> texts, TextInspectionOptions? options = null,
         int maxDegreeOfParallelism = -1)
         => throw ProRequired();
