@@ -55,8 +55,12 @@ jobs:
           var report = engine.CreateReport("Contact us at hello@example.com.");
           if(engine.CompiledRuleCount != 79 || !report.HasDetections || report.RequiresReview || report.RiskAssessment.TotalRiskPoints != 0)
               throw new Exception("Packed TextInspector consumer failed.");
-          if(typeof(TextInspectorEngine).GetMethods().Any(method => method.Name == "Compile"))
-              throw new Exception("Custom rule compilation must not be public in TextInspector.");
+          try
+          {
+              TextInspectorEngine.Compile(TextInspectorPresets.LoadOptions(), TextInspectorPresets.LoadRules(), Array.Empty<TextInspectorPolicy>());
+              throw new Exception("Composite policy compilation must require Pro.");
+          }
+          catch(NotSupportedException) { }
           Console.WriteLine("Packed TextInspector consumer passed.");
           EOF
           dotnet run -c Release
