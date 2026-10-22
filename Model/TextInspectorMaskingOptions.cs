@@ -1,9 +1,15 @@
 namespace TextInspector;
 
-internal sealed class TextInspectorMaskingOptions
+public sealed class TextInspectorMaskingOptions
 {
     public TextInspectorMaskingOptions() { }
     public bool Enabled { get; set; }
+    public int MinimumDetectionScore { get; set; } = 1;
+    public TextInspectorRuleCategory[] Categories { get; set; } = Array.Empty<TextInspectorRuleCategory>();
+    public string[] RuleKeys { get; set; } = Array.Empty<string>();
+    public string[] Tags { get; set; } = Array.Empty<string>();
+    public bool RequireAllTags { get; set; }
+    public bool ScoredEvidenceOnly { get; set; }
     public char MaskCharacter { get; set; } = '*';
     internal void Validate()
     {
