@@ -1,7 +1,7 @@
 namespace TextInspector;
 
 /// <summary>Exact decimal comparison for a captured number.</summary>
-internal enum TextInspectorNumericComparison
+public enum TextInspectorNumericComparison
 {
     Equal = 1,
     NotEqual = 2,
