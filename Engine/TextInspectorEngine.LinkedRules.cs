@@ -36,7 +36,7 @@ public sealed partial class TextInspectorEngine
                     continue;
                 }
                 var keys = link!.RuleKeys.Select(key => key.Trim()).ToArray();
-                if(keys.Distinct(StringComparer.OrdinalIgnoreCase).Count() != keys.Length || !seen.Add(link.Key.Trim()))
+                if(keys.Distinct(StringComparer.OrdinalIgnoreCase).Count() != keys.Length)
                 {
                     diagnostics.Add(Diagnostic(TextInspectorDiagnosticKind.InvalidLinkedRule, owner, "Duplicate link key or member key."));
                     continue;
@@ -46,6 +46,11 @@ public sealed partial class TextInspectorEngine
                 {
                     diagnostics.Add(Diagnostic(TextInspectorDiagnosticKind.LinkedRuleReferenceNotFound, owner,
                         $"LinkedRule '{link.Key}' references missing/disabled rules: {string.Join(", ", missing)}."));
+                    continue;
+                }
+                if(!seen.Add(link.Key.Trim()))
+                {
+                    diagnostics.Add(Diagnostic(TextInspectorDiagnosticKind.InvalidLinkedRule, owner, "Duplicate link key."));
                     continue;
                 }
                 output.Add(new RuntimeLinkedRule(link.Key.Trim(), link.Description, keys, link.MinimumMatchedRules,
