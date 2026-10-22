@@ -3,7 +3,7 @@ namespace TextInspector;
 /// <summary>
 /// A single match pattern the inspector compiles.
 /// </summary>
-internal class TextInspectorRulePattern
+public class TextInspectorRulePattern
 {
     public TextInspectorRulePattern() { }
     public Guid TextInspectorRuleId { get; set; }
@@ -29,6 +29,8 @@ internal class TextInspectorRulePattern
     public string? EvidenceGroup { get; set; }
 
     /// <summary>Higher-priority rules are evaluated first. This mainly affects fast first-match APIs.</summary>
+    public TextInspectorEvidenceCaptureMode EvidenceCaptureMode { get; set; } = TextInspectorEvidenceCaptureMode.LastCapture;
+
     public int Priority { get; set; }
 
     /// <summary>
