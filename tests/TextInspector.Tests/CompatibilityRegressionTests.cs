@@ -27,7 +27,7 @@ public sealed class CompatibilityRegressionTests
                 RuleWeight = 20, SeverityScore = 4, DetectionScore = 65
             }
         };
-        var engine = TextInspectorEngine.Compile(new TextInspectorScoringOptions(),rules);
+        var engine = TextInspectorEngine.CompileInternal(new TextInspectorScoringOptions(),rules);
         var result = engine.Inspect("alpha beta");
         Assert.Equal(2,engine.CompiledRuleCount);
         Assert.Equal(2,result.Evidence.Count);
