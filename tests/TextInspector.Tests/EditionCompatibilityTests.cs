@@ -236,7 +236,7 @@ public sealed class EditionCompatibilityTests
     [Fact]
     public async Task ProConfigurationFacadeFailsExplicitlyWithoutExecutingAnyPaidFeature()
     {
-        var config = new TextInspectorConfiguration();
+        var config = (TextInspectorConfiguration)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(TextInspectorConfiguration));
         Assert.Throws<NotSupportedException>(() => _ = config.Options);
         Assert.Throws<NotSupportedException>(() => _ = config.Rules);
         Assert.Throws<NotSupportedException>(() => _ = config.Policies);
