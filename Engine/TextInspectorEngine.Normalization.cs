@@ -9,7 +9,7 @@ namespace TextInspector;
 public sealed partial class TextInspectorEngine
 {
     private string NormalizeForMatchOnly(string text)
-        => NormalizeForMatchOnly(text,Options);
+        => NormalizeForMatchOnly(text,RuntimeOptions);
 
     private static string NormalizeForMatchOnly(string text,TextInspectorScoringOptions options)
     {
@@ -61,10 +61,10 @@ public sealed partial class TextInspectorEngine
         {
             char original = text[i];
 
-            if(Options.RemoveZeroWidthCharacters && IsIgnorableFormatCharacter(original))
+            if(RuntimeOptions.RemoveZeroWidthCharacters && IsIgnorableFormatCharacter(original))
                 continue;
 
-            char c = NormalizeCharacter(original,Options);
+            char c = NormalizeCharacter(original,RuntimeOptions);
             if(char.IsWhiteSpace(c))
             {
                 if(pendingWhitespaceStart < 0)
