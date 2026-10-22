@@ -35,4 +35,17 @@ public sealed class TextInspectorService : ITextInspectorService, ITextInspector
         => throw new NotSupportedException("Update to TextInspector.Pro to use parallel batch inspection.");
 
 
+    /// <summary>Pro-only targeted raw matching. Upgrade to TextInspector.Pro to use filters.</summary>
+    public bool HasMatch(string? text, TextRuleMatchFilter? filter)
+        => throw new NotSupportedException("Update to TextInspector.Pro to use filtered matching.");
+
+    /// <summary>Pro-only targeted first-match lookup.</summary>
+    public TextRuleMatch? FindFirstMatch(string? text, TextRuleMatchFilter? filter = null)
+        => throw new NotSupportedException("Update to TextInspector.Pro to use filtered matching.");
+
+    /// <summary>Pro-only targeted raw matching with filters.</summary>
+    public IReadOnlyList<TextRuleMatch> FindMatches(string? text, TextRuleMatchFilter? filter, int maxMatches = int.MaxValue)
+        => throw new NotSupportedException("Update to TextInspector.Pro to use filtered matching.");
+
+
 }
