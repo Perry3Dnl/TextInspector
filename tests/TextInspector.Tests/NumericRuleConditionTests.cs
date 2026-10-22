@@ -27,7 +27,7 @@ public sealed class NumericRuleConditionTests
     };
 
     private static TextInspectorEngine Compile(TextInspectorRulePattern rule) =>
-        TextInspectorEngine.Compile(new TextInspectorScoringOptions(), new[] { rule });
+        TextInspectorEngine.CompileInternal(new TextInspectorScoringOptions(), new[] { rule });
 
     [Theory]
     [InlineData(1, "10", true)]
@@ -286,7 +286,7 @@ public sealed class NumericRuleConditionTests
             },
             RuleWeight = 10,SeverityScore = 2
         };
-        var engine = TextInspectorEngine.Compile(new TextInspectorScoringOptions(),new[] { rule });
+        var engine = TextInspectorEngine.CompileInternal(new TextInspectorScoringOptions(),new[] { rule });
         Assert.False(engine.Inspect("paracetamol 500 mg at once").HasDetections);
         Assert.False(engine.Inspect("paracetamol 1 g at once").HasDetections);
         Assert.True(engine.Inspect("paracetamol 1.5 g at once").HasDetections);
@@ -299,7 +299,7 @@ public sealed class NumericRuleConditionTests
         var rule = Rule();
         rule.NumericConditions[0].UnitCaptureGroup = "missing";
         rule.NumericConditions[0].UnitFactors = new Dictionary<string,decimal> { ["g"] = 1000m };
-        var compiled = TextInspectorEngine.CompileWithDiagnostics(new TextInspectorScoringOptions(),new[] { rule });
+        var compiled = TextInspectorEngine.CompileWithDiagnosticsInternal(new TextInspectorScoringOptions(),new[] { rule });
         Assert.Equal(0,compiled.Engine.CompiledRuleCount);
     }
 
