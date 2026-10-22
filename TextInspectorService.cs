@@ -1,7 +1,7 @@
 namespace TextInspector;
 
 /// <summary>Read-only, reusable service for the embedded TextInspector rules. No persistence or rule mutation.</summary>
-public sealed class TextInspectorService : ITextInspectorService, ITextInspectorDetectionService, ITextInspectorMatchService, ITextInspectorReportService
+public sealed class TextInspectorService : ITextInspectorService, ITextInspectorDetectionService, ITextInspectorMatchService, ITextInspectorPolicyService, ITextInspectorReportService
 {
     private readonly TextInspectorEngine _engine;
     public TextInspectorService(TextInspectorOptions? options = null) => _engine = TextInspectorEngine.Create(options);
@@ -47,5 +47,41 @@ public sealed class TextInspectorService : ITextInspectorService, ITextInspector
     public IReadOnlyList<TextRuleMatch> FindMatches(string? text, TextRuleMatchFilter? filter, int maxMatches = int.MaxValue)
         => throw new NotSupportedException("Update to TextInspector.Pro to use filtered matching.");
 
+
+    /// <summary>Diagnostics from the immutable built-in Free engine.</summary>
+    public IReadOnlyList<TextInspectorDiagnostic> CompilationDiagnostics => _engine.CompilationDiagnostics;
+
+    /// <summary>Repository-backed option retrieval requires TextInspector.Pro.</summary>
+    public Task<TextInspectorScoringOptions> GetOptionsAsync(CancellationToken ct = default)
+        => Task.FromException<TextInspectorScoringOptions>(
+            new NotSupportedException("Update to TextInspector.Pro to use configuration repositories."));
+
+    /// <summary>Editable rule retrieval requires TextInspector.Pro.</summary>
+    public Task<IReadOnlyList<TextInspectorRulePattern>> GetAllRulesAsync(CancellationToken ct = default)
+        => Task.FromException<IReadOnlyList<TextInspectorRulePattern>>(
+            new NotSupportedException("Update to TextInspector.Pro to use editable rules."));
+
+    /// <summary>Composite policy retrieval requires TextInspector.Pro.</summary>
+    public Task<IReadOnlyList<TextInspectorPolicy>> GetAllPoliciesAsync(CancellationToken ct = default)
+        => Task.FromException<IReadOnlyList<TextInspectorPolicy>>(
+            new NotSupportedException("Update to TextInspector.Pro to use composite policies."));
+
+    /// <summary>Persistence requires TextInspector.Pro; Free never mutates embedded rules.</summary>
+    public Task SaveAsync(TextInspectorScoringOptions options,
+        IReadOnlyList<TextInspectorRulePattern> rules, Guid userId, CancellationToken ct = default)
+        => Task.FromException(new NotSupportedException(
+            "Update to TextInspector.Pro to save rule configurations."));
+
+    /// <summary>Persistence requires TextInspector.Pro; Free never mutates embedded policies.</summary>
+    public Task SaveAsync(TextInspectorScoringOptions options,
+        IReadOnlyList<TextInspectorRulePattern> rules,
+        IReadOnlyList<TextInspectorPolicy> policies, Guid userId, CancellationToken ct = default)
+        => Task.FromException(new NotSupportedException(
+            "Update to TextInspector.Pro to save composite policies."));
+
+    /// <summary>Pro-compatible repository constructor. Repository-backed inspection is Pro-only.</summary>
+    public TextInspectorService(ITextInspectorRepository repository)
+        : this(new TextInspectorOptions())
+        => throw new NotSupportedException("Update to TextInspector.Pro to use repositories.");
 
 }
