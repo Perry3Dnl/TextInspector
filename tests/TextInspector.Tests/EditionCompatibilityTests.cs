@@ -135,4 +135,36 @@ public sealed class EditionCompatibilityTests
         await Assert.ThrowsAsync<NotSupportedException>(() => service.SaveAsync(options,rules,policies,Guid.Empty));
     }
 
+    [Fact]
+    public void ProCompatiblePolicyMetadataRoundTripsWithoutRunningPolicies()
+    {
+        var policy = new TextInspectorPolicy
+        {
+            TextInspectorPolicyId = Guid.NewGuid(),
+            Key = "testing",
+            Description = "metadata",
+            Tags = new[] { "compat" },
+            Category = TextInspectorRuleCategory.PlatformIntegrity,
+            SeverityScore = 6,
+            RiskPoints = 15,
+            Condition = TextInspectorPolicyConditions.AllOf(
+                TextInspectorPolicyConditions.Rule("one"),
+                TextInspectorPolicyConditions.Category(TextInspectorRuleCategory.PlatformIntegrity)),
+            IsEnabled = true
+        };
+        var json = System.Text.Json.JsonSerializer.Serialize(policy);
+        var restored = System.Text.Json.JsonSerializer.Deserialize<TextInspectorPolicy>(json)!;
+        Assert.Equal(policy.TextInspectorPolicyId,restored.TextInspectorPolicyId);
+        Assert.Equal("testing",restored.Key);
+        Assert.Equal("metadata",restored.Description);
+        Assert.Single(restored.Tags);
+        Assert.Equal(TextInspectorRuleCategory.PlatformIntegrity,restored.Category);
+        Assert.Equal(6,restored.SeverityScore);
+        Assert.Equal(15,restored.RiskPoints);
+        Assert.True(restored.IsEnabled);
+        Assert.Equal(2,restored.Condition.Conditions.Length);
+        Assert.Throws<NotSupportedException>(() => TextInspectorPresets.LoadPolicies());
+        Assert.Throws<NotSupportedException>(() => TextInspectorPresets.WriteMissing("test-directory"));
+    }
+
 }
