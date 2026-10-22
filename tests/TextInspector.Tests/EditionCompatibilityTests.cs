@@ -120,4 +120,19 @@ public sealed class EditionCompatibilityTests
         Assert.True(options.Masking.ScoredEvidenceOnly);
     }
 
+    [Fact]
+    public async Task UnavailableConfigurationOperationsGiveUpgradeGuidance()
+    {
+        var service = new TextInspectorService();
+        Assert.NotNull(service.CompilationDiagnostics);
+        await Assert.ThrowsAsync<NotSupportedException>(() => service.GetOptionsAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => service.GetAllRulesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => service.GetAllPoliciesAsync());
+        var options = new TextInspectorScoringOptions();
+        var rules = Array.Empty<TextInspectorRulePattern>();
+        var policies = Array.Empty<TextInspectorPolicy>();
+        await Assert.ThrowsAsync<NotSupportedException>(() => service.SaveAsync(options,rules,Guid.Empty));
+        await Assert.ThrowsAsync<NotSupportedException>(() => service.SaveAsync(options,rules,policies,Guid.Empty));
+    }
+
 }
