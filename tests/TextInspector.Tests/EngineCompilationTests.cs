@@ -7,7 +7,7 @@ public sealed class EngineCompilationTests
     [Fact]
     public void PresetsCompileWithoutStructuralErrors()
     {
-        var result = TextInspectorEngine.CompileWithDiagnostics(
+        var result = TextInspectorEngine.CompileWithDiagnosticsInternal(
             TextInspectorPresets.LoadOptions(),
             TextInspectorPresets.LoadRules());
 
@@ -23,7 +23,7 @@ public sealed class EngineCompilationTests
     public void DuplicateRuleIdsAreRejected()
     {
         var id = Guid.NewGuid();
-        var result = TextInspectorEngine.CompileWithDiagnostics(
+        var result = TextInspectorEngine.CompileWithDiagnosticsInternal(
             new TextInspectorScoringOptions(),
             new[]
             {
@@ -40,7 +40,7 @@ public sealed class EngineCompilationTests
     [Fact]
     public void DuplicateRuleKeysAreRejectedCaseInsensitively()
     {
-        var result = TextInspectorEngine.CompileWithDiagnostics(
+        var result = TextInspectorEngine.CompileWithDiagnosticsInternal(
             new TextInspectorScoringOptions(),
             new[]
             {
@@ -60,7 +60,7 @@ public sealed class EngineCompilationTests
         var rule = Rule(Guid.NewGuid(), "bad-group", "(?<valid>alpha)");
         rule.EvidenceGroup = "missing";
 
-        var result = TextInspectorEngine.CompileWithDiagnostics(
+        var result = TextInspectorEngine.CompileWithDiagnosticsInternal(
             new TextInspectorScoringOptions(),
             new[] { rule });
 
@@ -76,7 +76,7 @@ public sealed class EngineCompilationTests
         var rule = Rule(Guid.NewGuid(),"invalid-detection-score","alpha");
         rule.DetectionScore = detectionScore;
 
-        var result = TextInspectorEngine.CompileWithDiagnostics(
+        var result = TextInspectorEngine.CompileWithDiagnosticsInternal(
             new TextInspectorScoringOptions(),
             new[] { rule });
 
@@ -96,7 +96,7 @@ public sealed class EngineCompilationTests
         };
 
         Assert.Throws<InvalidOperationException>(() =>
-            TextInspectorEngine.Compile(options, Array.Empty<TextInspectorRulePattern>()));
+            TextInspectorEngine.CompileInternal(options, Array.Empty<TextInspectorRulePattern>()));
     }
 
     private static TextInspectorRulePattern Rule(Guid id, string key, string pattern)
