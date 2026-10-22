@@ -3,6 +3,8 @@ namespace TextInspector;
 /// <summary>Pro-only custom regex-rule builder signatures. Free's built-in rule set remains immutable.</summary>
 public sealed class TextInspectorRuleBuilder
 {
+    private TextInspectorRuleBuilder() { }
+
     private static NotSupportedException Upgrade() => new("Update to TextInspector.Pro to create custom detection rules.");
     public static TextInspectorRuleBuilder Create(string key, TextInspectorRuleCategory category) => throw Upgrade();
     public TextInspectorRuleBuilder WithId(Guid id) => throw Upgrade();
