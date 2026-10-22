@@ -47,6 +47,12 @@ public class TextInspectorScoringOptions
     /// evidence-only matches can be masked without contributing risk points.
     /// </summary>
     public TextInspectorMaskingOptions Masking { get; set; } = new();
+    /// <summary>Pro-only URL analysis configuration; not evaluated by Free.</summary>
+    public TextInspectorUrlOptions UrlAnalysis { get; set; } = new();
+    /// <summary>Pro-only composite policy complexity option.</summary>
+    public int MaxPolicyConditionDepth { get; init; } = 16;
+    /// <summary>Pro-only composite policy complexity option.</summary>
+    public int MaxPolicyConditionNodes { get; init; } = 256;
 
     public int EvidenceSnippetPad { get; init; } = 28;
     public int DefaultMaxEvidenceSnippets { get; init; } = 3;
