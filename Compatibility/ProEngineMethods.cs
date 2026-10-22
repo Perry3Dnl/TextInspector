@@ -8,7 +8,7 @@ public sealed partial class TextInspectorEngine
 {
     public static TextInspectorEngine Compile(
         TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules)
-        => throw ProRequired();
+        => CompileBuiltIn(options, rules);
 
     public static TextInspectorEngine Compile(
         TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules,
@@ -17,7 +17,7 @@ public sealed partial class TextInspectorEngine
 
     public static TextInspectorCompilationResult CompileWithDiagnostics(
         TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules)
-        => throw ProRequired();
+        => CompileWithDiagnosticsBuiltIn(options, rules);
 
     public static TextInspectorCompilationResult CompileWithDiagnostics(
         TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules,
