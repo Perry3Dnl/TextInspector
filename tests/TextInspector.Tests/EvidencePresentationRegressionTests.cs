@@ -17,7 +17,7 @@ public sealed class EvidencePresentationRegressionTests
     {
         var scored = Rule("scored", "alpha");
         var evidenceOnly = Rule("support", "beta", 0);
-        var engine = TextInspectorEngine.Compile(new TextInspectorScoringOptions(), new[] { scored, evidenceOnly });
+        var engine = TextInspectorEngine.CompileInternal(new TextInspectorScoringOptions(), new[] { scored, evidenceOnly });
         const string text = "alpha beta";
         var baseline = engine.Inspect(text, new TextInspectionOptions { IncludeHighlightSpans = true });
         var selected = engine.Inspect(text, new TextInspectionOptions
@@ -41,7 +41,7 @@ public sealed class EvidencePresentationRegressionTests
     {
         var first = Rule("first", "alpha");
         var second = Rule("second", "pha");
-        var engine = TextInspectorEngine.Compile(new TextInspectorScoringOptions(), new[] { first, second });
+        var engine = TextInspectorEngine.CompileInternal(new TextInspectorScoringOptions(), new[] { first, second });
         var result = engine.Inspect("alpha", new TextInspectionOptions { IncludeHighlightSpans = true });
         Assert.Equal(2, result.Evidence.Count);
         Assert.NotEmpty(result.HighlightSpans);
@@ -53,7 +53,7 @@ public sealed class EvidencePresentationRegressionTests
     [Fact]
     public void HighlightCapZeroSuppressesDisplayOnly()
     {
-        var engine = TextInspectorEngine.Compile(
+        var engine = TextInspectorEngine.CompileInternal(
             new TextInspectorScoringOptions(), new[] { Rule("item", "alpha") });
         var result = engine.Inspect("alpha", new TextInspectionOptions
         {
@@ -68,7 +68,7 @@ public sealed class EvidencePresentationRegressionTests
     [Fact]
     public void ReportWithoutSourceLocationsStillKeepsOriginalEvidencePositions()
     {
-        var engine = TextInspectorEngine.Compile(new TextInspectorScoringOptions(),
+        var engine = TextInspectorEngine.CompileInternal(new TextInspectorScoringOptions(),
             new[] { Rule("rule", "alpha") });
         var report = engine.CreateReport("before alpha after",
             new TextInspectionReportOptions { IncludeSourceLocations = false, MaxReasonsPerFinding = 0 });
