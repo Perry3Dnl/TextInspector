@@ -10,7 +10,11 @@ namespace TextInspector;
 /// </summary>
 public sealed partial class TextInspectorEngine
 {
-    internal TextInspectorScoringOptions Options { get; }
+    internal TextInspectorScoringOptions RuntimeOptions { get; }
+    /// <summary>Defensive snapshot of the effective fixed-preset options; modifying it never mutates the Free engine.</summary>
+    public TextInspectorScoringOptions Options => System.Text.Json.JsonSerializer.Deserialize<TextInspectorScoringOptions>(
+        System.Text.Json.JsonSerializer.Serialize(RuntimeOptions,TextInspectorPresets.Json),
+        TextInspectorPresets.Json)!;
     public IReadOnlyList<TextInspectorDiagnostic> CompilationDiagnostics { get; }
     public int CompiledRuleCount => _rules.Length;
     public int CompiledPrefilteredRuleCount => _rules.Count(static rule => rule.PrefilterTerms.Length > 0);
@@ -27,7 +31,7 @@ public sealed partial class TextInspectorEngine
         RuntimeLinkedRule[] linkedRules,
         IReadOnlyList<TextInspectorDiagnostic> diagnostics)
     {
-        Options = options;
+        RuntimeOptions = options;
         _rules = rules;
         _linkedRules = linkedRules;
         CompilationDiagnostics = diagnostics;
@@ -41,8 +45,8 @@ public sealed partial class TextInspectorEngine
         text ??= "";
         inspectionOptions ??= new TextInspectionOptions();
 
-        if(Options.MaxInputLength > 0 && text.Length > Options.MaxInputLength)
-            throw new ArgumentException($"Input length {text.Length} exceeds configured MaxInputLength {Options.MaxInputLength}.",nameof(text));
+        if(RuntimeOptions.MaxInputLength > 0 && text.Length > RuntimeOptions.MaxInputLength)
+            throw new ArgumentException($"Input length {text.Length} exceeds configured MaxInputLength {RuntimeOptions.MaxInputLength}.",nameof(text));
 
         if(inspectionOptions.MaxReturnedEvidence is < 0)
             throw new ArgumentOutOfRangeException(nameof(inspectionOptions),"MaxReturnedEvidence cannot be negative.");
@@ -65,8 +69,8 @@ public sealed partial class TextInspectorEngine
             ? RenderMarkedHtml(text,highlightSpans)
             : null;
 
-        string? maskedText = Options.Masking.Enabled
-            ? RenderMaskedText(text,evidenceWithCounts,Options.Masking)
+        string? maskedText = RuntimeOptions.Masking.Enabled
+            ? RenderMaskedText(text,evidenceWithCounts,RuntimeOptions.Masking)
             : null;
 
         var publicEvidence = BuildPublicEvidence(text,evidenceWithCounts,inspectionOptions);
@@ -109,7 +113,7 @@ public sealed partial class TextInspectorEngine
             IncludeNonScoringEvidence = true
         });
 
-        return TextInspectionReportBuilder.Build(text,result,Options,reportOptions);
+        return TextInspectionReportBuilder.Build(text,result,RuntimeOptions,reportOptions);
     }
 
     public IReadOnlyList<TextInspectionResult> InspectMany(
@@ -129,8 +133,8 @@ public sealed partial class TextInspectorEngine
     public bool HasMatch(string? text)
     {
         text ??= "";
-        if(Options.MaxInputLength > 0 && text.Length > Options.MaxInputLength)
-            throw new ArgumentException($"Input length {text.Length} exceeds configured MaxInputLength {Options.MaxInputLength}.",nameof(text));
+        if(RuntimeOptions.MaxInputLength > 0 && text.Length > RuntimeOptions.MaxInputLength)
+            throw new ArgumentException($"Input length {text.Length} exceeds configured MaxInputLength {RuntimeOptions.MaxInputLength}.",nameof(text));
         if(text.Length == 0)
             return false;
 
@@ -184,8 +188,8 @@ public sealed partial class TextInspectorEngine
             throw new ArgumentOutOfRangeException(nameof(maxMatches),"maxMatches cannot be negative.");
         if(maxMatches == 0 || text.Length == 0)
             return Array.Empty<TextRuleMatch>();
-        if(Options.MaxInputLength > 0 && text.Length > Options.MaxInputLength)
-            throw new ArgumentException($"Input length {text.Length} exceeds configured MaxInputLength {Options.MaxInputLength}.",nameof(text));
+        if(RuntimeOptions.MaxInputLength > 0 && text.Length > RuntimeOptions.MaxInputLength)
+            throw new ArgumentException($"Input length {text.Length} exceeds configured MaxInputLength {RuntimeOptions.MaxInputLength}.",nameof(text));
 
         var normalized = NormalizeWithMap(text);
         if(normalized.Text.Length == 0)
@@ -338,7 +342,7 @@ public sealed partial class TextInspectorEngine
                     Kind = TextInspectorDiagnosticKind.RegexTimeout,
                     RuleId = rule.RuleId,
                     RuleKey = rule.Key,
-                    Message = $"Rule exceeded the {Options.RegexTimeoutMilliseconds} ms regex timeout and was skipped for this inspection."
+                    Message = $"Rule exceeded the {RuntimeOptions.RegexTimeoutMilliseconds} ms regex timeout and was skipped for this inspection."
                 });
             }
         }
@@ -365,7 +369,7 @@ public sealed partial class TextInspectorEngine
             return false;
         // Only a precise, rule-scoped known benign match is excluded. The remaining
         // evidence from this and other rules must continue through the engine.
-        foreach(var exclusion in Options.FalsePositiveExclusions)
+        foreach(var exclusion in RuntimeOptions.FalsePositiveExclusions)
         {
             if(string.Equals(exclusion.RuleKey,rule.Key,StringComparison.OrdinalIgnoreCase)
                && exclusion.MatchedText.Length == origEndExclusive - origStart
@@ -607,7 +611,7 @@ public sealed partial class TextInspectorEngine
                 Context: contextual.Context));
         }
 
-        if(Options.DeduplicateExactMatchesForScoring)
+        if(RuntimeOptions.DeduplicateExactMatchesForScoring)
         {
             foreach(var group in output
                 .Select((hit,index) => (hit,index))
@@ -786,25 +790,25 @@ public sealed partial class TextInspectorEngine
     {
         if(severity <= 0)
             return 0;
-        double normalized = (double)severity / Options.SeverityScaleMax * 100d;
+        double normalized = (double)severity / RuntimeOptions.SeverityScaleMax * 100d;
         return Clamp((int)Math.Round(normalized),0,100);
     }
 
     private int SaturatingScore(int raw)
     {
         if(raw <= 0)
-            return Options.ScoreMin;
-        if(raw >= Options.RawCapFor100)
-            return Options.ScoreMax;
+            return RuntimeOptions.ScoreMin;
+        if(raw >= RuntimeOptions.RawCapFor100)
+            return RuntimeOptions.ScoreMax;
 
-        long range = Options.ScoreMax - Options.ScoreMin;
-        int relative = (int)((range * raw) / (raw + Options.SaturationK));
-        int score = Options.ScoreMin + relative;
+        long range = RuntimeOptions.ScoreMax - RuntimeOptions.ScoreMin;
+        int relative = (int)((range * raw) / (raw + RuntimeOptions.SaturationK));
+        int score = RuntimeOptions.ScoreMin + relative;
 
-        if(score <= Options.ScoreMin)
-            score = Math.Max(Options.MinNonZeroScore,Options.ScoreMin);
+        if(score <= RuntimeOptions.ScoreMin)
+            score = Math.Max(RuntimeOptions.MinNonZeroScore,RuntimeOptions.ScoreMin);
 
-        return Clamp(score,Options.ScoreMin,Options.ScoreMax);
+        return Clamp(score,RuntimeOptions.ScoreMin,RuntimeOptions.ScoreMax);
     }
 
     private static int Clamp(int value,int minimum,int maximum)
