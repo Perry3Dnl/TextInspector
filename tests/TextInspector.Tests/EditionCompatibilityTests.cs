@@ -323,4 +323,19 @@ public sealed class EditionCompatibilityTests
         Assert.Contains("TextInspector.Pro",error.Message);
     }
 
+    private sealed class LegacyInspector : ITextInspectorService
+    {
+        public TextInspectionResult Inspect(string? text, bool includeMarkedHtml = false)
+            => new TextInspectorService().Inspect(text, includeMarkedHtml);
+    }
+
+    [Fact]
+    public void PublishedFreeInterfaceCanStillBeImplementedWithOnlyInspect()
+    {
+        ITextInspectorService inspector = new LegacyInspector();
+        Assert.NotNull(inspector.Inspect("hello@example.com"));
+        Assert.DoesNotContain(typeof(ITextInspectorService).GetMethods(),
+            method => method.Name != nameof(ITextInspectorService.Inspect));
+    }
+
 }
