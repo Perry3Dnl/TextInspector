@@ -167,4 +167,35 @@ public sealed class EditionCompatibilityTests
         Assert.Throws<NotSupportedException>(() => TextInspectorPresets.WriteMissing("test-directory"));
     }
 
+    [Fact]
+    public void PolicyConditionFactoriesRetainEveryPortableShape()
+    {
+        var leaf = TextInspectorPolicyConditions.Rule("rule",false,3);
+        Assert.Equal(TextInspectorPolicyConditionKind.Rule,leaf.Kind);
+        Assert.Equal("rule",leaf.RuleKey);
+        Assert.False(leaf.ScoredOnly);
+        Assert.Equal(3,leaf.MinimumOccurrences);
+        var category = TextInspectorPolicyConditions.Category(TextInspectorRuleCategory.PlatformIntegrity,false,2);
+        Assert.Equal(TextInspectorPolicyConditionKind.Category,category.Kind);
+        Assert.Equal(TextInspectorRuleCategory.PlatformIntegrity,category.Category);
+        Assert.False(category.ScoredOnly);
+        Assert.Equal(2,category.MinimumOccurrences);
+        var any = TextInspectorPolicyConditions.AnyOf(leaf,category);
+        Assert.Equal(TextInspectorPolicyConditionKind.AnyOf,any.Kind);
+        Assert.Equal(2,any.Conditions.Length);
+        var atLeast = TextInspectorPolicyConditions.AtLeast(2,leaf,category);
+        Assert.Equal(TextInspectorPolicyConditionKind.AtLeast,atLeast.Kind);
+        Assert.Equal(2,atLeast.MinimumSatisfied);
+        Assert.Equal(2,atLeast.Conditions.Length);
+        var proximity = TextInspectorPolicyConditions.Proximity(120,leaf,category);
+        Assert.Equal(TextInspectorPolicyConditionKind.Proximity,proximity.Kind);
+        Assert.Equal(120,proximity.WindowCharacters);
+        Assert.Equal(2,proximity.Conditions.Length);
+        Assert.Empty(TextInspectorPolicyConditions.AllOf(null!).Conditions);
+        Assert.Empty(TextInspectorPolicyConditions.AnyOf(null!).Conditions);
+        Assert.Empty(TextInspectorPolicyConditions.AtLeast(1,null!).Conditions);
+        Assert.Empty(TextInspectorPolicyConditions.Proximity(1,null!).Conditions);
+        Assert.Equal(8,TextInspectorUrlSignalKeys.All.Count);
+    }
+
 }
