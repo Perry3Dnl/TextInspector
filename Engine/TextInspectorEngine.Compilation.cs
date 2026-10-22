@@ -24,13 +24,33 @@ public sealed partial class TextInspectorEngine
         var disabledCategories = new HashSet<TextInspectorRuleCategory>(options.DisabledCategories);
         var rules = TextInspectorPresets.LoadRules()
             .Where(rule => !disabledKeys.Contains(rule.Key) && !disabledCategories.Contains(rule.Category));
-        return Compile(scoring, rules);
+        return CompileInternal(scoring, rules);
     }
 
-    internal static TextInspectorEngine Compile(TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules)
-        => CompileWithDiagnostics(options, rules).Engine;
+    /// <summary>Pro-only custom rule compilation. Free uses Create() with its embedded preset.</summary>
+    public static TextInspectorEngine Compile(TextInspectorScoringOptions options,
+        IEnumerable<TextInspectorRulePattern> rules)
+        => throw new NotSupportedException("Update to TextInspector.Pro to compile custom rules.");
 
-    internal static TextInspectorCompilationResult CompileWithDiagnostics(
+    /// <summary>Pro-only composite policy and custom rule compilation.</summary>
+    public static TextInspectorEngine Compile(TextInspectorScoringOptions options,
+        IEnumerable<TextInspectorRulePattern> rules, IEnumerable<TextInspectorPolicy> policies)
+        => throw new NotSupportedException("Update to TextInspector.Pro to compile custom policies.");
+
+    /// <summary>Pro-only custom rule compilation with detailed diagnostics.</summary>
+    public static TextInspectorCompilationResult CompileWithDiagnostics(TextInspectorScoringOptions options,
+        IEnumerable<TextInspectorRulePattern> rules)
+        => throw new NotSupportedException("Update to TextInspector.Pro to compile custom rules.");
+
+    /// <summary>Pro-only custom rule and policy compilation with diagnostics.</summary>
+    public static TextInspectorCompilationResult CompileWithDiagnostics(TextInspectorScoringOptions options,
+        IEnumerable<TextInspectorRulePattern> rules, IEnumerable<TextInspectorPolicy> policies)
+        => throw new NotSupportedException("Update to TextInspector.Pro to compile custom policies.");
+
+    internal static TextInspectorEngine CompileInternal(TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules)
+        => CompileWithDiagnosticsInternal(options, rules).Engine;
+
+    internal static TextInspectorCompilationResult CompileWithDiagnosticsInternal(
         TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules)
     {
         if(options is null) throw new ArgumentNullException(nameof(options));
