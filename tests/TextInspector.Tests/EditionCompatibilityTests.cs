@@ -310,4 +310,17 @@ public sealed class EditionCompatibilityTests
         Assert.False(engine.Options.Masking.Enabled);
     }
 
+    [Fact]
+    public async Task SharedServiceInterfaceSupportsFreeFunctionalityAndExplicitProOnlyFailures()
+    {
+        ITextInspectorService inspector = new TextInspectorService();
+        const string text = "Contact hello@example.com";
+        Assert.Equal(inspector.Inspect(text).RiskAssessment.RiskScore,inspector.Analyze(text).RiskScore);
+        Assert.Equal(inspector.Inspect(text,true).MarkedHtml ?? "",inspector.MarkText(text));
+        Assert.NotNull(inspector.CompilationDiagnostics);
+        var error = await Assert.ThrowsAsync<NotSupportedException>(
+            () => inspector.GetOptionsAsync());
+        Assert.Contains("TextInspector.Pro",error.Message);
+    }
+
 }
