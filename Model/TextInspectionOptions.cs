@@ -6,6 +6,10 @@ public sealed class TextInspectionOptions
     public bool IncludeMatchedText { get; init; } = true;
     public bool IncludeSnippets { get; init; } = true;
     public bool IncludeContextDetails { get; init; } = true;
+    /// <summary>Accepted for cross-edition source compatibility; Free has no policy evaluation.</summary>
+    public bool IncludePolicyDetails { get; init; } = true;
+    /// <summary>Accepted for cross-edition source compatibility; Free has no URL intelligence.</summary>
+    public bool IncludeUrlDetails { get; init; } = true;
 
     /// <summary>Return non-overlapping highlight spans mapped to the original text.</summary>
     public bool IncludeHighlightSpans { get; init; }
@@ -26,6 +30,8 @@ public sealed class TextInspectionOptions
     /// Optional cap on evidence returned to the caller. Scoring always uses the complete match set.
     /// Null means no cap.
     /// </summary>
+    public int? MaxReturnedPolicyMatches { get; init; }
+
     public int? MaxReturnedEvidence { get; init; }
 
     /// <summary>Optional cap on returned highlight spans. Null means no cap.</summary>
