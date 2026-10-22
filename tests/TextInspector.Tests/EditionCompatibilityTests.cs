@@ -276,4 +276,17 @@ public sealed class EditionCompatibilityTests
         }
     }
 
+    [Fact]
+    public void ProCustomCompilerSignaturesExistButCannotModifyTheFreePreset()
+    {
+        var options = new TextInspectorScoringOptions();
+        var rules = Array.Empty<TextInspectorRulePattern>();
+        var policies = Array.Empty<TextInspectorPolicy>();
+        Assert.Throws<NotSupportedException>(() => TextInspectorEngine.Compile(options,rules));
+        Assert.Throws<NotSupportedException>(() => TextInspectorEngine.Compile(options,rules,policies));
+        Assert.Throws<NotSupportedException>(() => TextInspectorEngine.CompileWithDiagnostics(options,rules));
+        Assert.Throws<NotSupportedException>(() => TextInspectorEngine.CompileWithDiagnostics(options,rules,policies));
+        Assert.NotNull(TextInspectorEngine.Create().Inspect("hello@example.com"));
+    }
+
 }
