@@ -1,7 +1,7 @@
 namespace TextInspector;
 
 /// <summary>Compares a numeric capture from the same regex match with a configured value.</summary>
-internal sealed class TextInspectorNumericCondition
+public sealed class TextInspectorNumericCondition
 {
     public TextInspectorNumericCondition() { }
 
