@@ -11,4 +11,18 @@ public sealed class TextInspectorService : ITextInspectorService, ITextInspector
     public IReadOnlyList<TextRuleMatch> FindMatches(string? text, int maxMatches = int.MaxValue) => _engine.FindMatches(text, maxMatches);
     public IReadOnlyList<TextInspectionResult> InspectMany(IEnumerable<string?> texts, TextInspectionOptions? options = null) => _engine.InspectMany(texts, options);
     public TextInspectionReport CreateReport(string? text, TextInspectionReportOptions? options = null) => _engine.CreateReport(text, options);
+    /// <summary>Returns the same deterministic risk summary as Pro for the Free preset.</summary>
+    public TextSafetyInfo Analyze(string? text) => Inspect(text).RiskAssessment;
+
+    /// <summary>Returns marked HTML using the same inspection output contract as Pro.</summary>
+    public string MarkText(string? text) => Inspect(text,includeMarkedHtml: true).MarkedHtml ?? "";
+
+    /// <summary>
+    /// Free uses an immutable embedded preset. Runtime repository refresh requires TextInspector.Pro.
+    /// </summary>
+    /// <exception cref="NotSupportedException">Repository refresh is a Pro-only feature.</exception>
+    public Task ReloadAsync(CancellationToken ct = default)
+        => Task.FromException(new NotSupportedException(
+            "Update to TextInspector.Pro to use repository reload."));
+
 }
