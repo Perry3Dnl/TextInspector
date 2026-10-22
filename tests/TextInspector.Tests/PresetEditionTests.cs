@@ -38,7 +38,8 @@ public sealed class PresetEditionTests
         var methods = typeof(TextInspectorEngine).GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
         Assert.Contains(methods, method => method.Name is "Compile");
         Assert.Contains(methods, method => method.Name is "FindFirstMatch");
-        Assert.Throws<NotSupportedException>(() => TextInspectorEngine.Compile(TextInspectorPresets.LoadOptions(), TextInspectorPresets.LoadRules()));
+        Assert.NotNull(TextInspectorEngine.Compile(TextInspectorPresets.LoadOptions(), TextInspectorPresets.LoadRules()));
+        Assert.Throws<NotSupportedException>(() => TextInspectorEngine.Compile(TextInspectorPresets.LoadOptions(), TextInspectorPresets.LoadRules(), Array.Empty<TextInspectorPolicy>()));
         Assert.DoesNotContain(assembly.GetManifestResourceNames(), name => name.EndsWith("policies.json"));
     }
 
