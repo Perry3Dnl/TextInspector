@@ -17,7 +17,7 @@ public sealed class RawPathTests
         var rule = Rule("captured", @"(?<capture>target)");
         rule.EvidenceGroup = "capture";
         rule.DetectionScore = 68;
-        var engine = TextInspectorEngine.Compile(new TextInspectorScoringOptions(), new[] { rule });
+        var engine = TextInspectorEngine.CompileInternal(new TextInspectorScoringOptions(), new[] { rule });
         const string input = "ＦＯＯ\u200b TARGET and target";
         var matches = engine.FindMatches(input);
         Assert.Equal(2, matches.Count);
@@ -42,7 +42,7 @@ public sealed class RawPathTests
     {
         var rule = Rule("optional-capture", @"(?<token>target)?suffix");
         rule.EvidenceGroup = "token";
-        var engine = TextInspectorEngine.Compile(new TextInspectorScoringOptions(), new[] { rule });
+        var engine = TextInspectorEngine.CompileInternal(new TextInspectorScoringOptions(), new[] { rule });
         Assert.False(engine.HasMatch("suffix"));
         Assert.Empty(engine.FindMatches("suffix"));
         Assert.Empty(engine.Inspect("suffix").Evidence);
@@ -54,7 +54,7 @@ public sealed class RawPathTests
     [Fact]
     public void NoInputAndWhitespaceOnlyTextAreSafeInAllFastPaths()
     {
-        var engine = TextInspectorEngine.Compile(new TextInspectorScoringOptions(), new[] { Rule("match", "something") });
+        var engine = TextInspectorEngine.CompileInternal(new TextInspectorScoringOptions(), new[] { Rule("match", "something") });
         Assert.False(engine.HasMatch(null));
         Assert.False(engine.HasMatch(""));
         Assert.False(engine.HasMatch("\u200b\u200b"));
@@ -77,7 +77,7 @@ public sealed class RawPathTests
         var second = Rule("any", @"\btarget\b");
         second.PrefilterMode = TextInspectorPrefilterMode.Any;
         second.PrefilterTerms = new[] { "gamma", "delta" };
-        var engine = TextInspectorEngine.Compile(new TextInspectorScoringOptions(), new[] { first, second });
+        var engine = TextInspectorEngine.CompileInternal(new TextInspectorScoringOptions(), new[] { first, second });
         Assert.Equal(2, engine.CompiledPrefilteredRuleCount);
         Assert.False(engine.HasMatch("target"));
         Assert.Empty(engine.FindMatches("target"));
@@ -91,7 +91,7 @@ public sealed class RawPathTests
     public void InspectionBatchAndHighlightCapsHonorConfiguredLimits()
     {
         var rule = Rule("target", "target");
-        var engine = TextInspectorEngine.Compile(new TextInspectorScoringOptions(), new[] { rule });
+        var engine = TextInspectorEngine.CompileInternal(new TextInspectorScoringOptions(), new[] { rule });
         var batch = engine.InspectMany(new string?[] { null, "target", "unrelated" });
         Assert.Equal(3, batch.Count);
         Assert.True(batch[1].HasDetections);

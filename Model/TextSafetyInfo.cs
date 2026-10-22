@@ -4,6 +4,7 @@ public class TextSafetyInfo
 {
     private TextSafetyInfo() { }
 
+    /// <summary>Original constructor retained for binary compatibility with 1.0/1.1 clients.</summary>
     public TextSafetyInfo(
         int riskScore,
         int highestDetectedSeverity,
@@ -23,6 +24,31 @@ public class TextSafetyInfo
         int scoringPolicyCount = 0,
         int highestPolicySeverity = 0,
         int detectionScore = 0)
+        : this(riskScore, highestDetectedSeverity, detectedCategoryCount, totalEvidenceCount, length, totalRiskPoints, ruleRiskPoints, additionalRiskPoints, scoringEvidenceCount, highestScoredSeverity, scoringCategoryCount, effectiveSeverity, builtInBonusPoints, policyRiskPoints, triggeredPolicyCount, scoringPolicyCount, highestPolicySeverity, detectionScore, 0, 0)
+    {
+    }
+
+    public TextSafetyInfo(
+        int riskScore,
+        int highestDetectedSeverity,
+        int detectedCategoryCount,
+        int totalEvidenceCount,
+        int length,
+        int totalRiskPoints,
+        int ruleRiskPoints,
+        int additionalRiskPoints,
+        int scoringEvidenceCount,
+        int highestScoredSeverity,
+        int scoringCategoryCount,
+        int effectiveSeverity,
+        int builtInBonusPoints,
+        int policyRiskPoints,
+        int triggeredPolicyCount,
+        int scoringPolicyCount,
+        int highestPolicySeverity,
+        int detectionScore,
+        int linkedRuleRiskPoints,
+        int triggeredLinkedRuleCount)
     {
         RiskScore = riskScore;
         HighestDetectedSeverity = highestDetectedSeverity;
@@ -42,6 +68,8 @@ public class TextSafetyInfo
         ScoringPolicyCount = scoringPolicyCount;
         HighestPolicySeverity = highestPolicySeverity;
         DetectionScore = detectionScore;
+        LinkedRuleRiskPoints = linkedRuleRiskPoints;
+        TriggeredLinkedRuleCount = triggeredLinkedRuleCount;
     }
 
     /// <summary>
@@ -87,12 +115,17 @@ public class TextSafetyInfo
     public int RuleRiskPoints { get; private set; }
 
     /// <summary>
-    /// All post-rule raw points. Preserved for compatibility and equals BuiltInBonusPoints + PolicyRiskPoints.
+    /// All post-rule raw points. Preserved for compatibility and equals BuiltInBonusPoints + PolicyRiskPoints + LinkedRuleRiskPoints.
     /// </summary>
     public int AdditionalRiskPoints { get; private set; }
 
     /// <summary>Raw score from the built-in deterministic combo/obfuscation bonuses.</summary>
     public int BuiltInBonusPoints { get; private set; }
+
+    /// <summary>Raw score from linked escalation and fixed link contributions.</summary>
+    public int LinkedRuleRiskPoints { get; private set; }
+    /// <summary>Triggered links, including zero-point flags.</summary>
+    public int TriggeredLinkedRuleCount { get; private set; }
 
     /// <summary>Raw score contributed by matched composite policies.</summary>
     public int PolicyRiskPoints { get; private set; }

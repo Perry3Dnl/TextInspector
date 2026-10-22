@@ -15,7 +15,7 @@ public sealed class RegexTimeoutAndContextCoverageTests
     public void PathologicalRegexIsSafelySkippedOnFullAndFastPaths()
     {
         var rule = Rule("catastrophic", @"^(a+)+$");
-        var engine = TextInspectorEngine.Compile(
+        var engine = TextInspectorEngine.CompileInternal(
             new TextInspectorScoringOptions { RegexTimeoutMilliseconds = 1 }, new[] { rule });
         string input = new string('a', 4096) + "!";
         Assert.False(engine.HasMatch(input));
@@ -38,7 +38,7 @@ public sealed class RegexTimeoutAndContextCoverageTests
             RequireAnyCategories = new[] { TextInspectorRuleCategory.Fraud },
             RequireAnyRegexPatterns = new[] { @"\bextra\b" }
         };
-        var engine = TextInspectorEngine.Compile(new TextInspectorScoringOptions(), new[] { trigger, target });
+        var engine = TextInspectorEngine.CompileInternal(new TextInspectorScoringOptions(), new[] { trigger, target });
         var result = engine.Inspect("trigger extra target");
         Assert.True(Assert.Single(result.Evidence, e => e.RuleKey == "target").ContributesToRisk);
         var missing = engine.Inspect("trigger target");
@@ -57,7 +57,7 @@ public sealed class RegexTimeoutAndContextCoverageTests
             ExcludeAnyRuleKeys = new[] { "blocker" },
             ExcludeAnyCategories = new[] { TextInspectorRuleCategory.Threats }
         };
-        var engine = TextInspectorEngine.Compile(new TextInspectorScoringOptions(), new[] { blocker, target });
+        var engine = TextInspectorEngine.CompileInternal(new TextInspectorScoringOptions(), new[] { blocker, target });
         var result = engine.Inspect("block target");
         var evidence = Assert.Single(result.Evidence, e => e.RuleKey == "target");
         Assert.False(evidence.ContributesToRisk);

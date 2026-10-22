@@ -5,7 +5,7 @@ namespace TextInspector;
 /// occurrence only contributes to scoring when its required nearby context is present and
 /// no exclusion matches.
 /// </summary>
-internal sealed class TextInspectorRuleContext
+public sealed class TextInspectorRuleContext
 {
     public TextInspectorRuleContext() { }
     /// <summary>

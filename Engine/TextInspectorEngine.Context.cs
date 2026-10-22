@@ -55,7 +55,7 @@ public sealed partial class TextInspectorEngine
                     Kind = TextInspectorDiagnosticKind.RegexTimeout,
                     RuleId = rule.RuleId,
                     RuleKey = rule.Key,
-                    Message = $"Context {kind} regex exceeded the {Options.RegexTimeoutMilliseconds} ms timeout; this occurrence was not scored."
+                    Message = $"Context {kind} regex exceeded the {RuntimeOptions.RegexTimeoutMilliseconds} ms timeout; this occurrence was not scored."
                 });
                 return false;
             }

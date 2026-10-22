@@ -49,7 +49,7 @@ public sealed class FalsePositiveCorpusTests
                 RuleWeight = 50, MaxCountForScoring = 10, DetectionScore = 95, SeverityScore = 9
             }
         };
-        return TextInspectorEngine.Compile(options,rules);
+        return TextInspectorEngine.CompileInternal(options,rules);
     }
 
     [Theory]

@@ -17,7 +17,7 @@ public sealed class EmptyAndMaskingBoundariesTests
     [Fact]
     public void NonmatchingTextPreservesMaskAndEncodesPlainMarkup()
     {
-        var engine = TextInspectorEngine.Compile(
+        var engine = TextInspectorEngine.CompileInternal(
             new TextInspectorScoringOptions { Masking = new TextInspectorMaskingOptions { Enabled = true } },
             Array.Empty<TextInspectorRulePattern>());
         var result = engine.Inspect("<strong>nothing</strong>", includeMarkedHtml: true);

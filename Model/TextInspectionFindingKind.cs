@@ -7,5 +7,6 @@ public enum TextInspectionFindingKind
     Policy = 0,
 
     /// <summary>Scored standalone evidence was grouped by category because no scoring policy consumed it.</summary>
-    Category = 1
+    Category = 1,
+    LinkedRule = 2
 }

@@ -13,6 +13,9 @@ public sealed class TextInspectionResult
     /// </summary>
     public string? MaskedText { get; init; }
 
+    public IReadOnlyList<TextLinkedRuleMatch> LinkedRuleMatches { get; init; } = Array.Empty<TextLinkedRuleMatch>();
+    public bool HasLinkedRules => LinkedRuleMatches.Count > 0;
+
     public bool HasDetections => RiskAssessment.DetectionScore > 0;
 
     public string? MarkedHtml { get; init; }

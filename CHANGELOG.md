@@ -1,7 +1,15 @@
 # Changelog
 
+### Linked rules (1.1.0, work in progress)
+
+- Add shared linked-rule evaluation with distinct-member thresholds, optional windows, deterministic strongest-once multipliers, original/effective scores and exact participant highlights.
+- Add linked match, score-contribution and report markers, plus focused regression tests.
+- Keep custom configuration internal and the fixed Free preset unchanged.
+- Keep package versions at 1.1.0; coverage gates and deployment workflows are unchanged.
+
 ## 1.1.0 — 2026-10-15
 
+- Add the shared numeric capture-condition evaluator and boundary regression tests used by Pro's configurable rules. The fixed Free preset and public configuration surface remain unchanged.
 - Add the English/Dutch lexical evidence port from the validated v0.8.5 source set, bringing the built-in preset to 79 rules while keeping imported lexical signals evidence-only.
 - Add exact, rule-scoped false-positive exclusions for scored inspection without changing raw matching behavior.
 - Add calibrated handling for locally negated credential requests and attributed/quoted threat examples.

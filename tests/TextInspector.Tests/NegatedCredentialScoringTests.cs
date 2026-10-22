@@ -7,7 +7,7 @@ public sealed class NegatedCredentialScoringTests
     private static TextInspectorEngine Create()
     {
         var options = TextInspectorPresets.LoadOptions();
-        return TextInspectorEngine.Compile(options,new[] {
+        return TextInspectorEngine.CompileInternal(options,new[] {
             new TextInspectorRulePattern {
                 TextInspectorRuleId = Guid.Parse("a4b59731-ffae-4a11-88bb-100000000001"),
                 Key = "Credential_Test", Category = TextInspectorRuleCategory.Fraud,

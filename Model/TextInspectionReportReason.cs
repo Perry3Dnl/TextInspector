@@ -11,6 +11,8 @@ public sealed class TextInspectionReportReason
     public string Message { get; init; } = "";
     public bool ContributesToRisk { get; init; }
     public string? RuleKey { get; init; }
+    public string? LinkedRuleKey { get; init; }
+    public bool IsLinkedRule => LinkedRuleKey is not null;
     public string? PolicyKey { get; init; }
     public int? Start { get; init; }
     public int? Length { get; init; }

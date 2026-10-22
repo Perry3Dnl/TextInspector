@@ -4,7 +4,7 @@ namespace TextInspector.Tests;
 
 public sealed class PresetCalibrationTests
 {
-    private static readonly TextInspectorEngine Engine = TextInspectorEngine.Compile(
+    private static readonly TextInspectorEngine Engine = TextInspectorEngine.CompileInternal(
         TextInspectorPresets.LoadOptions(),
         TextInspectorPresets.LoadRules());
 

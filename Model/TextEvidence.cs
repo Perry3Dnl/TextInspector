@@ -11,6 +11,11 @@ public sealed class TextEvidence
     public IReadOnlyList<string> Tags { get; init; } = Array.Empty<string>();
     public TextInspectorRuleCategory Category { get; init; }
     public int SeverityScore { get; init; }
+    public int EffectiveSeverity { get; init; }
+    public int EffectiveRiskPoints { get; init; }
+    public int RiskMultiplier { get; init; } = 1;
+    public IReadOnlyList<string> LinkedRuleKeys { get; init; } = Array.Empty<string>();
+    public bool IsLinked => LinkedRuleKeys.Count > 0;
     public int RuleWeight { get; init; }
     public int MaxCountForScoring { get; init; }
 

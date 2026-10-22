@@ -10,22 +10,30 @@ namespace TextInspector;
 /// </summary>
 public sealed partial class TextInspectorEngine
 {
-    internal TextInspectorScoringOptions Options { get; }
+    internal TextInspectorScoringOptions RuntimeOptions { get; }
+    /// <summary>Defensive snapshot of the effective fixed-preset options; modifying it never mutates the Free engine.</summary>
+    public TextInspectorScoringOptions Options => System.Text.Json.JsonSerializer.Deserialize<TextInspectorScoringOptions>(
+        System.Text.Json.JsonSerializer.Serialize(RuntimeOptions,TextInspectorPresets.Json),
+        TextInspectorPresets.Json)!;
     public IReadOnlyList<TextInspectorDiagnostic> CompilationDiagnostics { get; }
     public int CompiledRuleCount => _rules.Length;
     public int CompiledPrefilteredRuleCount => _rules.Count(static rule => rule.PrefilterTerms.Length > 0);
     /// <summary>TextInspector does not evaluate composite policies.</summary>
     public int CompiledPolicyCount => 0;
 
+    public int CompiledLinkedRuleCount => _linkedRules.Length;
+    private readonly RuntimeLinkedRule[] _linkedRules;
     private readonly RuntimeRule[] _rules;
 
     private TextInspectorEngine(
         TextInspectorScoringOptions options,
         RuntimeRule[] rules,
+        RuntimeLinkedRule[] linkedRules,
         IReadOnlyList<TextInspectorDiagnostic> diagnostics)
     {
-        Options = options;
+        RuntimeOptions = options;
         _rules = rules;
+        _linkedRules = linkedRules;
         CompilationDiagnostics = diagnostics;
     }
 
@@ -37,8 +45,8 @@ public sealed partial class TextInspectorEngine
         text ??= "";
         inspectionOptions ??= new TextInspectionOptions();
 
-        if(Options.MaxInputLength > 0 && text.Length > Options.MaxInputLength)
-            throw new ArgumentException($"Input length {text.Length} exceeds configured MaxInputLength {Options.MaxInputLength}.",nameof(text));
+        if(RuntimeOptions.MaxInputLength > 0 && text.Length > RuntimeOptions.MaxInputLength)
+            throw new ArgumentException($"Input length {text.Length} exceeds configured MaxInputLength {RuntimeOptions.MaxInputLength}.",nameof(text));
 
         if(inspectionOptions.MaxReturnedEvidence is < 0)
             throw new ArgumentOutOfRangeException(nameof(inspectionOptions),"MaxReturnedEvidence cannot be negative.");
@@ -50,7 +58,8 @@ public sealed partial class TextInspectorEngine
         var evidence = BuildEvidence(text,normalized,runtimeDiagnostics);
         var contextualEvidence = ApplyContext(evidence,normalized.Text,runtimeDiagnostics);
         var evidenceWithCounts = ApplyCountsForScoring(contextualEvidence);
-        var summary = Summarize(evidenceWithCounts,text.Length);
+        var linkedMatches = ApplyLinkedRules(evidenceWithCounts);
+        var summary = Summarize(evidenceWithCounts,linkedMatches,text.Length);
 
         IReadOnlyList<TextHighlightSpan> highlightSpans = Array.Empty<TextHighlightSpan>();
         if(inspectionOptions.IncludeMarkedHtml || inspectionOptions.IncludeHighlightSpans)
@@ -60,8 +69,8 @@ public sealed partial class TextInspectorEngine
             ? RenderMarkedHtml(text,highlightSpans)
             : null;
 
-        string? maskedText = Options.Masking.Enabled
-            ? RenderMaskedText(text,evidenceWithCounts,Options.Masking)
+        string? maskedText = RuntimeOptions.Masking.Enabled
+            ? RenderMaskedText(text,evidenceWithCounts,RuntimeOptions.Masking)
             : null;
 
         var publicEvidence = BuildPublicEvidence(text,evidenceWithCounts,inspectionOptions);
@@ -71,6 +80,7 @@ public sealed partial class TextInspectorEngine
 
         return new TextInspectionResult
         {
+            LinkedRuleMatches = BuildPublicLinkedRules(text,linkedMatches,evidenceWithCounts,inspectionOptions),
             RiskAssessment = summary.RiskAssessment,
             MaskedText = maskedText,
             MarkedHtml = markedHtml,
@@ -103,7 +113,7 @@ public sealed partial class TextInspectorEngine
             IncludeNonScoringEvidence = true
         });
 
-        return TextInspectionReportBuilder.Build(text,result,Options,reportOptions);
+        return TextInspectionReportBuilder.Build(text,result,RuntimeOptions,reportOptions);
     }
 
     public IReadOnlyList<TextInspectionResult> InspectMany(
@@ -115,16 +125,16 @@ public sealed partial class TextInspectorEngine
     }
 
     /// <summary>
-    /// Fast raw-rule pre-screen. Returns true on the first primary regex/evidence-group hit.
+    /// Fast raw-rule pre-screen. Returns true on the first regex/evidence-group hit satisfying numeric conditions.
     /// Context gates, scoring, snippets, and category aggregation are intentionally skipped.
-    /// Regex timeouts are treated as no match for the timed-out rule.
+    /// Regex timeouts and invalid numeric captures are skipped; use Inspect for runtime diagnostics.
     /// </summary>
 
     public bool HasMatch(string? text)
     {
         text ??= "";
-        if(Options.MaxInputLength > 0 && text.Length > Options.MaxInputLength)
-            throw new ArgumentException($"Input length {text.Length} exceeds configured MaxInputLength {Options.MaxInputLength}.",nameof(text));
+        if(RuntimeOptions.MaxInputLength > 0 && text.Length > RuntimeOptions.MaxInputLength)
+            throw new ArgumentException($"Input length {text.Length} exceeds configured MaxInputLength {RuntimeOptions.MaxInputLength}.",nameof(text));
         if(text.Length == 0)
             return false;
 
@@ -141,6 +151,9 @@ public sealed partial class TextInspectorEngine
             {
                 for(var match = rule.Regex.Match(normalized);match.Success;match = match.NextMatch())
                 {
+                    if(!PassesNumericConditions(rule,match))
+                        continue;
+
                     if(rule.EvidenceGroup is null)
                     {
                         if(match.Length > 0)
@@ -165,7 +178,7 @@ public sealed partial class TextInspectorEngine
 
     /// <summary>
     /// Returns raw matches in priority/compile order with exact original-text spans.
-    /// This skips contextual scoring.
+    /// Numeric conditions apply; contextual scoring is skipped.
     /// </summary>
 
     public IReadOnlyList<TextRuleMatch> FindMatches(string? text,int maxMatches = int.MaxValue)
@@ -175,8 +188,8 @@ public sealed partial class TextInspectorEngine
             throw new ArgumentOutOfRangeException(nameof(maxMatches),"maxMatches cannot be negative.");
         if(maxMatches == 0 || text.Length == 0)
             return Array.Empty<TextRuleMatch>();
-        if(Options.MaxInputLength > 0 && text.Length > Options.MaxInputLength)
-            throw new ArgumentException($"Input length {text.Length} exceeds configured MaxInputLength {Options.MaxInputLength}.",nameof(text));
+        if(RuntimeOptions.MaxInputLength > 0 && text.Length > RuntimeOptions.MaxInputLength)
+            throw new ArgumentException($"Input length {text.Length} exceeds configured MaxInputLength {RuntimeOptions.MaxInputLength}.",nameof(text));
 
         var normalized = NormalizeWithMap(text);
         if(normalized.Text.Length == 0)
@@ -193,6 +206,9 @@ public sealed partial class TextInspectorEngine
             {
                 for(var match = rule.Regex.Match(normalized.Text);match.Success;match = match.NextMatch())
                 {
+                    if(!PassesNumericConditions(rule,match))
+                        continue;
+
                     if(TryGetFirstEvidenceCapture(rule,match,out var capture)
                             && TryCreateRuleMatch(rule,capture,normalized,text.Length,out var captured))
                     {
@@ -307,6 +323,9 @@ public sealed partial class TextInspectorEngine
             {
                 for(var match = rule.Regex.Match(normalized.Text);match.Success;match = match.NextMatch())
                 {
+                    if(!PassesNumericConditions(rule,match,runtimeDiagnostics))
+                        continue;
+
                     if(TryGetFirstEvidenceCapture(rule,match,out var capture))
                     {
                         TryAddEvidenceHit(evidence,rule,capture,originalText,normalized);
@@ -323,7 +342,7 @@ public sealed partial class TextInspectorEngine
                     Kind = TextInspectorDiagnosticKind.RegexTimeout,
                     RuleId = rule.RuleId,
                     RuleKey = rule.Key,
-                    Message = $"Rule exceeded the {Options.RegexTimeoutMilliseconds} ms regex timeout and was skipped for this inspection."
+                    Message = $"Rule exceeded the {RuntimeOptions.RegexTimeoutMilliseconds} ms regex timeout and was skipped for this inspection."
                 });
             }
         }
@@ -350,7 +369,7 @@ public sealed partial class TextInspectorEngine
             return false;
         // Only a precise, rule-scoped known benign match is excluded. The remaining
         // evidence from this and other rules must continue through the engine.
-        foreach(var exclusion in Options.FalsePositiveExclusions)
+        foreach(var exclusion in RuntimeOptions.FalsePositiveExclusions)
         {
             if(string.Equals(exclusion.RuleKey,rule.Key,StringComparison.OrdinalIgnoreCase)
                && exclusion.MatchedText.Length == origEndExclusive - origStart
@@ -592,7 +611,7 @@ public sealed partial class TextInspectorEngine
                 Context: contextual.Context));
         }
 
-        if(Options.DeduplicateExactMatchesForScoring)
+        if(RuntimeOptions.DeduplicateExactMatchesForScoring)
         {
             foreach(var group in output
                 .Select((hit,index) => (hit,index))
@@ -652,6 +671,10 @@ public sealed partial class TextInspectorEngine
                 Category = e.Category,
                 DetectionScore = e.DetectionScore,
                 SeverityScore = e.SeverityScore,
+                EffectiveSeverity = e.EffectiveSeverity,
+                EffectiveRiskPoints = e.EffectiveRiskPoints,
+                RiskMultiplier = e.RiskMultiplier,
+                LinkedRuleKeys = e.LinkedRuleKeys,
                 RuleWeight = e.RuleWeight,
                 MaxCountForScoring = e.MaxCountForScoring,
                 Start = e.Start,
@@ -660,7 +683,7 @@ public sealed partial class TextInspectorEngine
                 MatchedText = inspectionOptions.IncludeMatchedText ? originalText.Substring(e.Start,e.Length) : "",
                 Snippet = snippet.Text,
                 SnippetStart = snippet.Start,
-                HighlightIntensity = NormalizeSeverity(e.SeverityScore),
+                HighlightIntensity = NormalizeSeverity(e.EffectiveSeverity),
                 Context = inspectionOptions.IncludeContextDetails ? e.Context : null,
                 ContributesToRisk = e.ContributesToRisk,
                 ScoringStatus = e.ScoringStatus
@@ -746,6 +769,13 @@ public sealed partial class TextInspectorEngine
         sb.Append(WebUtility.HtmlEncode(string.Join(",",span.RuleKeys)));
         sb.Append("\" data-categories=\"");
         sb.Append(WebUtility.HtmlEncode(string.Join(",",span.Categories)));
+        if(span.IsLinked)
+        {
+            sb.Append("\" data-linked-rules=\"");
+            sb.Append(WebUtility.HtmlEncode(string.Join(",",span.LinkedRuleKeys)));
+            sb.Append("\" data-effective-severity=\"");
+            sb.Append(span.EffectiveSeverity);
+        }
         sb.Append("\" style=\"");
         sb.Append(ScoreToHighlightStyle(span.HighlightIntensity));
         sb.Append("\">");
@@ -760,25 +790,25 @@ public sealed partial class TextInspectorEngine
     {
         if(severity <= 0)
             return 0;
-        double normalized = (double)severity / Options.SeverityScaleMax * 100d;
+        double normalized = (double)severity / RuntimeOptions.SeverityScaleMax * 100d;
         return Clamp((int)Math.Round(normalized),0,100);
     }
 
     private int SaturatingScore(int raw)
     {
         if(raw <= 0)
-            return Options.ScoreMin;
-        if(raw >= Options.RawCapFor100)
-            return Options.ScoreMax;
+            return RuntimeOptions.ScoreMin;
+        if(raw >= RuntimeOptions.RawCapFor100)
+            return RuntimeOptions.ScoreMax;
 
-        long range = Options.ScoreMax - Options.ScoreMin;
-        int relative = (int)((range * raw) / (raw + Options.SaturationK));
-        int score = Options.ScoreMin + relative;
+        long range = RuntimeOptions.ScoreMax - RuntimeOptions.ScoreMin;
+        int relative = (int)((range * raw) / (raw + RuntimeOptions.SaturationK));
+        int score = RuntimeOptions.ScoreMin + relative;
 
-        if(score <= Options.ScoreMin)
-            score = Math.Max(Options.MinNonZeroScore,Options.ScoreMin);
+        if(score <= RuntimeOptions.ScoreMin)
+            score = Math.Max(RuntimeOptions.MinNonZeroScore,RuntimeOptions.ScoreMin);
 
-        return Clamp(score,Options.ScoreMin,Options.ScoreMax);
+        return Clamp(score,RuntimeOptions.ScoreMin,RuntimeOptions.ScoreMax);
     }
 
     private static int Clamp(int value,int minimum,int maximum)
@@ -874,7 +904,14 @@ public sealed partial class TextInspectorEngine
         bool ContributesToRisk,
         TextEvidenceScoringDisposition ScoringStatus,
         bool IncludeSnippet,
-        TextEvidenceContext? Context);
+        TextEvidenceContext? Context)
+    {
+        public int RiskMultiplier { get; init; } = 1;
+        public int? LinkedEffectiveSeverity { get; init; }
+        public int EffectiveSeverity => LinkedEffectiveSeverity ?? SeverityScore;
+        public int EffectiveRiskPoints => ContributesToRisk ? MultiplyCapped(RuleWeight, RiskMultiplier, int.MaxValue) : 0;
+        public string[] LinkedRuleKeys { get; init; } = Array.Empty<string>();
+    }
 
     private readonly record struct HighlightSpanEvent(int Position,int EvidenceIndex,bool IsStart);
 
@@ -898,6 +935,7 @@ public sealed partial class TextInspectorEngine
         int Priority,
         int SourceOrder,
         Regex Regex,
+        RuntimeNumericCondition[] NumericConditions,
         string? EvidenceGroup,
         string[] PrefilterTerms,
         TextInspectorPrefilterMode PrefilterMode,
@@ -936,5 +974,28 @@ public sealed partial class TextInspectorEngine
         TextSafetyInfo RiskAssessment,
         IReadOnlyList<TextCategorySummary> Categories,
         IReadOnlyList<TextScoreContribution> Contributions);
+
+    /// <summary>
+    /// Pro-only parallel batch inspection. Use InspectMany in Free or update to TextInspector.Pro.
+    /// </summary>
+    /// <exception cref="NotSupportedException">Parallel batch processing requires Pro.</exception>
+    public IReadOnlyList<TextInspectionResult> InspectManyParallel(
+        IEnumerable<string?> texts, TextInspectionOptions? options = null,
+        int maxDegreeOfParallelism = -1)
+        => throw new NotSupportedException("Update to TextInspector.Pro to use parallel batch inspection.");
+
+
+    /// <summary>Pro-only targeted raw matching. Upgrade to TextInspector.Pro to use filters.</summary>
+    public bool HasMatch(string? text, TextRuleMatchFilter? filter)
+        => throw new NotSupportedException("Update to TextInspector.Pro to use filtered matching.");
+
+    /// <summary>Pro-only targeted first-match lookup.</summary>
+    public TextRuleMatch? FindFirstMatch(string? text, TextRuleMatchFilter? filter = null)
+        => throw new NotSupportedException("Update to TextInspector.Pro to use filtered matching.");
+
+    /// <summary>Pro-only targeted raw matching with filters.</summary>
+    public IReadOnlyList<TextRuleMatch> FindMatches(string? text, TextRuleMatchFilter? filter, int maxMatches = int.MaxValue)
+        => throw new NotSupportedException("Update to TextInspector.Pro to use filtered matching.");
+
 
 }

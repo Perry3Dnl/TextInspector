@@ -25,7 +25,7 @@ public sealed class FalsePositiveExclusionTests
                 DetectionScore = 80, SeverityScore = 5, RuleWeight = 10
             }
         };
-        return TextInspectorEngine.Compile(options,rules);
+        return TextInspectorEngine.CompileInternal(options,rules);
     }
 
     [Fact]

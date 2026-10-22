@@ -3,11 +3,14 @@ namespace TextInspector;
 /// <summary>
 /// A single match pattern the inspector compiles.
 /// </summary>
-internal class TextInspectorRulePattern
+public class TextInspectorRulePattern
 {
     public TextInspectorRulePattern() { }
     public Guid TextInspectorRuleId { get; set; }
     public string Key { get; set; } = "";
+    /// <summary>Links declared once here; their members may come from any loaded rule set.</summary>
+    public TextInspectorLinkedRule[] LinkedRules { get; set; } = Array.Empty<TextInspectorLinkedRule>();
+
     public string? Description { get; set; }
     public string[] Tags { get; set; } = Array.Empty<string>();
     public TextInspectorRuleCategory Category { get; set; }
@@ -22,11 +25,17 @@ internal class TextInspectorRulePattern
     public int SeverityScore { get; set; }
     public string RegexPattern { get; set; } = "";
 
+    /// <summary>All numeric conditions must hold for the same regex match. Empty preserves regex-only matching.</summary>
+    public TextInspectorNumericCondition[] NumericConditions { get; set; } = Array.Empty<TextInspectorNumericCondition>();
+
     /// <summary>
     /// Optional named or numbered regex capture group to use as the exact evidence/highlight span.
     /// The full regex still controls detection. Empty/null uses the complete match.
     /// </summary>
     public string? EvidenceGroup { get; set; }
+
+    /// <summary>Pro-compatible evidence capture configuration; custom rule compilation requires TextInspector.Pro.</summary>
+    public TextInspectorEvidenceCaptureMode EvidenceCaptureMode { get; set; } = TextInspectorEvidenceCaptureMode.LastCapture;
 
     /// <summary>Higher-priority rules are evaluated first. This mainly affects fast first-match APIs.</summary>
     public int Priority { get; set; }

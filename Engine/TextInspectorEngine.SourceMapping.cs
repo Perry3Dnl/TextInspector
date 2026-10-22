@@ -44,8 +44,8 @@ public sealed partial class TextInspectorEngine
 
     private (string? Text,int? Start) CreateSnippet(string originalText,int start,int length)
     {
-        int snippetStart = Math.Max(0,start - Options.EvidenceSnippetPad);
-        int snippetEnd = Math.Min(originalText.Length,start + length + Options.EvidenceSnippetPad);
+        int snippetStart = Math.Max(0,start - RuntimeOptions.EvidenceSnippetPad);
+        int snippetEnd = Math.Min(originalText.Length,start + length + RuntimeOptions.EvidenceSnippetPad);
 
         if(snippetStart > 0 && snippetStart < originalText.Length && char.IsLowSurrogate(originalText[snippetStart]))
             snippetStart--;

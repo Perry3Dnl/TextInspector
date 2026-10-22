@@ -24,13 +24,33 @@ public sealed partial class TextInspectorEngine
         var disabledCategories = new HashSet<TextInspectorRuleCategory>(options.DisabledCategories);
         var rules = TextInspectorPresets.LoadRules()
             .Where(rule => !disabledKeys.Contains(rule.Key) && !disabledCategories.Contains(rule.Category));
-        return Compile(scoring, rules);
+        return CompileInternal(scoring, rules);
     }
 
-    internal static TextInspectorEngine Compile(TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules)
-        => CompileWithDiagnostics(options, rules).Engine;
+    /// <summary>Pro-only custom rule compilation. Free uses Create() with its embedded preset.</summary>
+    public static TextInspectorEngine Compile(TextInspectorScoringOptions options,
+        IEnumerable<TextInspectorRulePattern> rules)
+        => throw new NotSupportedException("Update to TextInspector.Pro to compile custom rules.");
 
-    internal static TextInspectorCompilationResult CompileWithDiagnostics(
+    /// <summary>Pro-only composite policy and custom rule compilation.</summary>
+    public static TextInspectorEngine Compile(TextInspectorScoringOptions options,
+        IEnumerable<TextInspectorRulePattern> rules, IEnumerable<TextInspectorPolicy> policies)
+        => throw new NotSupportedException("Update to TextInspector.Pro to compile custom policies.");
+
+    /// <summary>Pro-only custom rule compilation with detailed diagnostics.</summary>
+    public static TextInspectorCompilationResult CompileWithDiagnostics(TextInspectorScoringOptions options,
+        IEnumerable<TextInspectorRulePattern> rules)
+        => throw new NotSupportedException("Update to TextInspector.Pro to compile custom rules.");
+
+    /// <summary>Pro-only custom rule and policy compilation with diagnostics.</summary>
+    public static TextInspectorCompilationResult CompileWithDiagnostics(TextInspectorScoringOptions options,
+        IEnumerable<TextInspectorRulePattern> rules, IEnumerable<TextInspectorPolicy> policies)
+        => throw new NotSupportedException("Update to TextInspector.Pro to compile custom policies.");
+
+    internal static TextInspectorEngine CompileInternal(TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules)
+        => CompileWithDiagnosticsInternal(options, rules).Engine;
+
+    internal static TextInspectorCompilationResult CompileWithDiagnosticsInternal(
         TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules)
     {
         if(options is null) throw new ArgumentNullException(nameof(options));
@@ -38,6 +58,7 @@ public sealed partial class TextInspectorEngine
         options.Validate();
 
         var compiledRules = new List<RuntimeRule>();
+        var linkOwners = new List<TextInspectorRulePattern>();
         var diagnostics = new List<TextInspectorDiagnostic>();
         var seenIds = new HashSet<Guid>();
         var seenKeys = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -158,6 +179,9 @@ public sealed partial class TextInspectorEngine
                     continue;
                 }
 
+                if(!TryCompileNumericConditions(rule,regex,diagnostics,out var numericConditions))
+                    continue;
+
                 if(!TryCompileContext(rule,options,diagnostics,out var context))
                     continue;
 
@@ -167,6 +191,7 @@ public sealed partial class TextInspectorEngine
                     .Distinct(StringComparer.Ordinal)
                     .ToArray();
 
+                linkOwners.Add(rule);
                 seenIds.Add(rule.TextInspectorRuleId);
                 seenKeys.Add(rule.Key.Trim());
                 compiledRules.Add(new RuntimeRule(
@@ -180,6 +205,7 @@ public sealed partial class TextInspectorEngine
                     Priority: rule.Priority,
                     SourceOrder: ruleSourceOrder,
                     Regex: regex,
+                    NumericConditions: numericConditions,
                     EvidenceGroup: evidenceGroup,
                     PrefilterTerms: prefilterTerms,
                     PrefilterMode: rule.PrefilterMode,
@@ -201,8 +227,9 @@ public sealed partial class TextInspectorEngine
 
         AddContextReferenceDiagnostics(compiledRules,diagnostics);
 
+        var compiledLinks = CompileLinkedRules(linkOwners, compiledRules, diagnostics);
         var frozenDiagnostics = diagnostics.ToArray();
-        var engine = new TextInspectorEngine(options,compiledRules.ToArray(),frozenDiagnostics);
+        var engine = new TextInspectorEngine(options,compiledRules.ToArray(),compiledLinks,frozenDiagnostics);
         return new TextInspectorCompilationResult { Engine = engine, Diagnostics = frozenDiagnostics };
     }
 

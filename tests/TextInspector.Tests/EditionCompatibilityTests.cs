@@ -1,0 +1,341 @@
+using TextInspector;
+
+namespace TextInspector.Tests;
+
+public sealed class EditionCompatibilityTests
+{
+    [Fact]
+    public void FreeExposesProStyleAnalysisAndMarkupWithoutChangingInspection()
+    {
+        var inspector = new TextInspectorService();
+        var text = "hello@example.com";
+        var ordinary = inspector.Inspect(text,includeMarkedHtml: true);
+        Assert.Equal(ordinary.RiskAssessment.RiskScore,inspector.Analyze(text).RiskScore);
+        Assert.Equal(ordinary.MarkedHtml ?? "",inspector.MarkText(text));
+    }
+
+    [Fact]
+    public async Task FreeRepositoryRefreshReportsProUpgradeRequirement()
+    {
+        var service = new TextInspectorService();
+        var error = await Assert.ThrowsAsync<NotSupportedException>(() => service.ReloadAsync());
+        Assert.Contains("TextInspector.Pro",error.Message);
+    }
+    [Fact]
+    public void ProOnlyBatchApiIsVisibleButFailsClearlyInFree()
+    {
+        var service = new TextInspectorService();
+        var engine = TextInspectorEngine.Create();
+        var sample = new string?[] { "sample" };
+        Assert.Contains("TextInspector.Pro",
+            Assert.Throws<NotSupportedException>(() => service.InspectManyParallel(sample)).Message);
+        Assert.Contains("TextInspector.Pro",
+            Assert.Throws<NotSupportedException>(() => engine.InspectManyParallel(sample)).Message);
+    }
+
+    [Fact]
+    public void ProCompatibleOutputOptionsDoNotChangeFreeInspection()
+    {
+        var engine = TextInspectorEngine.Create();
+        const string text = "hello@example.com";
+        var baseline = engine.Inspect(text);
+        var compatible = engine.Inspect(text, new TextInspectionOptions
+        {
+            IncludePolicyDetails = true,
+            IncludeUrlDetails = true,
+            MaxReturnedPolicyMatches = 0
+        });
+        Assert.Equal(baseline.RiskAssessment.RiskScore,compatible.RiskAssessment.RiskScore);
+        Assert.Equal(baseline.Evidence.Count,compatible.Evidence.Count);
+    }
+
+    [Fact]
+    public void FilteredMatchApiRejectsPaidOperationsWithoutSuppressingNormalInspection()
+    {
+        var filter = new TextRuleMatchFilter
+        {
+            RuleIds = new[] { Guid.NewGuid() },
+            RuleKeys = new[] { "demo" },
+            Categories = new[] { TextInspectorRuleCategory.PlatformIntegrity },
+            Tags = new[] { "demo" },
+            RequireAllTags = true,
+            MinimumSeverityScore = 3,
+            MinimumPriority = 1
+        };
+        Assert.Single(filter.RuleIds);
+        Assert.Single(filter.RuleKeys);
+        Assert.Single(filter.Categories);
+        Assert.Single(filter.Tags);
+        Assert.True(filter.RequireAllTags);
+        Assert.Equal(3,filter.MinimumSeverityScore);
+        Assert.Equal(1,filter.MinimumPriority);
+        var service = new TextInspectorService();
+        var engine = TextInspectorEngine.Create();
+        Assert.Throws<NotSupportedException>(() => service.HasMatch("hello",filter));
+        Assert.Throws<NotSupportedException>(() => service.FindFirstMatch("hello",filter));
+        Assert.Throws<NotSupportedException>(() => service.FindMatches("hello",filter));
+        Assert.Throws<NotSupportedException>(() => engine.HasMatch("hello",filter));
+        Assert.Throws<NotSupportedException>(() => engine.FindFirstMatch("hello",filter));
+        Assert.Throws<NotSupportedException>(() => engine.FindMatches("hello",filter));
+        Assert.NotNull(service.Inspect("hello"));
+    }
+
+    [Fact]
+    public void ProCompatibleDtoFieldsRoundTripWithoutActivatingPaidFeatures()
+    {
+        var options = new TextInspectorScoringOptions
+        {
+            MaxPolicyConditionDepth = 20,
+            MaxPolicyConditionNodes = 300,
+            UrlAnalysis = new TextInspectorUrlOptions
+            {
+                Enabled = false,
+                FirstPartyDomains = new[] { "example.org" },
+                TrustedDomains = new[] { "example.com" },
+                ShortenerDomains = new[] { "short.test" },
+                SuspiciousPathTerms = new[] { "login" }
+            },
+            Masking = new TextInspectorMaskingOptions
+            {
+                MinimumDetectionScore = 4,
+                Categories = new[] { TextInspectorRuleCategory.PlatformIntegrity },
+                RuleKeys = new[] { "rule" },
+                Tags = new[] { "tag" },
+                RequireAllTags = true,
+                ScoredEvidenceOnly = true
+            }
+        };
+        Assert.Equal(20,options.MaxPolicyConditionDepth);
+        Assert.Equal(300,options.MaxPolicyConditionNodes);
+        Assert.False(options.UrlAnalysis.Enabled);
+        Assert.Single(options.UrlAnalysis.FirstPartyDomains);
+        Assert.Single(options.UrlAnalysis.TrustedDomains);
+        Assert.Single(options.UrlAnalysis.ShortenerDomains);
+        Assert.Single(options.UrlAnalysis.SuspiciousPathTerms);
+        Assert.Equal(4,options.Masking.MinimumDetectionScore);
+        Assert.Single(options.Masking.Categories);
+        Assert.Single(options.Masking.RuleKeys);
+        Assert.Single(options.Masking.Tags);
+        Assert.True(options.Masking.RequireAllTags);
+        Assert.True(options.Masking.ScoredEvidenceOnly);
+    }
+
+    [Fact]
+    public async Task UnavailableConfigurationOperationsGiveUpgradeGuidance()
+    {
+        var service = new TextInspectorService();
+        Assert.NotNull(service.CompilationDiagnostics);
+        await Assert.ThrowsAsync<NotSupportedException>(() => service.GetOptionsAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => service.GetAllRulesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => service.GetAllPoliciesAsync());
+        var options = new TextInspectorScoringOptions();
+        var rules = Array.Empty<TextInspectorRulePattern>();
+        var policies = Array.Empty<TextInspectorPolicy>();
+        await Assert.ThrowsAsync<NotSupportedException>(() => service.SaveAsync(options,rules,Guid.Empty));
+        await Assert.ThrowsAsync<NotSupportedException>(() => service.SaveAsync(options,rules,policies,Guid.Empty));
+    }
+
+    [Fact]
+    public void ProCompatiblePolicyMetadataRoundTripsWithoutRunningPolicies()
+    {
+        var policy = new TextInspectorPolicy
+        {
+            TextInspectorPolicyId = Guid.NewGuid(),
+            Key = "testing",
+            Description = "metadata",
+            Tags = new[] { "compat" },
+            Category = TextInspectorRuleCategory.PlatformIntegrity,
+            SeverityScore = 6,
+            RiskPoints = 15,
+            Condition = TextInspectorPolicyConditions.AllOf(
+                TextInspectorPolicyConditions.Rule("one"),
+                TextInspectorPolicyConditions.Category(TextInspectorRuleCategory.PlatformIntegrity)),
+            IsEnabled = true
+        };
+        var json = System.Text.Json.JsonSerializer.Serialize(policy);
+        var restored = System.Text.Json.JsonSerializer.Deserialize<TextInspectorPolicy>(json)!;
+        Assert.Equal(policy.TextInspectorPolicyId,restored.TextInspectorPolicyId);
+        Assert.Equal("testing",restored.Key);
+        Assert.Equal("metadata",restored.Description);
+        Assert.Single(restored.Tags);
+        Assert.Equal(TextInspectorRuleCategory.PlatformIntegrity,restored.Category);
+        Assert.Equal(6,restored.SeverityScore);
+        Assert.Equal(15,restored.RiskPoints);
+        Assert.True(restored.IsEnabled);
+        Assert.Equal(2,restored.Condition.Conditions.Length);
+        Assert.Throws<NotSupportedException>(() => TextInspectorPresets.LoadPolicies());
+        Assert.Throws<NotSupportedException>(() => TextInspectorPresets.WriteMissing("test-directory"));
+    }
+
+    [Fact]
+    public void PolicyConditionFactoriesRetainEveryPortableShape()
+    {
+        var leaf = TextInspectorPolicyConditions.Rule("rule",false,3);
+        Assert.Equal(TextInspectorPolicyConditionKind.Rule,leaf.Kind);
+        Assert.Equal("rule",leaf.RuleKey);
+        Assert.False(leaf.ScoredOnly);
+        Assert.Equal(3,leaf.MinimumOccurrences);
+        var category = TextInspectorPolicyConditions.Category(TextInspectorRuleCategory.PlatformIntegrity,false,2);
+        Assert.Equal(TextInspectorPolicyConditionKind.Category,category.Kind);
+        Assert.Equal(TextInspectorRuleCategory.PlatformIntegrity,category.Category);
+        Assert.False(category.ScoredOnly);
+        Assert.Equal(2,category.MinimumOccurrences);
+        var any = TextInspectorPolicyConditions.AnyOf(leaf,category);
+        Assert.Equal(TextInspectorPolicyConditionKind.AnyOf,any.Kind);
+        Assert.Equal(2,any.Conditions.Length);
+        var atLeast = TextInspectorPolicyConditions.AtLeast(2,leaf,category);
+        Assert.Equal(TextInspectorPolicyConditionKind.AtLeast,atLeast.Kind);
+        Assert.Equal(2,atLeast.MinimumSatisfied);
+        Assert.Equal(2,atLeast.Conditions.Length);
+        var proximity = TextInspectorPolicyConditions.Proximity(120,leaf,category);
+        Assert.Equal(TextInspectorPolicyConditionKind.Proximity,proximity.Kind);
+        Assert.Equal(120,proximity.WindowCharacters);
+        Assert.Equal(2,proximity.Conditions.Length);
+        Assert.Empty(TextInspectorPolicyConditions.AllOf(null!).Conditions);
+        Assert.Empty(TextInspectorPolicyConditions.AnyOf(null!).Conditions);
+        Assert.Empty(TextInspectorPolicyConditions.AtLeast(1,null!).Conditions);
+        Assert.Empty(TextInspectorPolicyConditions.Proximity(1,null!).Conditions);
+        Assert.Equal(8,TextInspectorUrlSignalKeys.All.Count);
+    }
+
+    [Fact]
+    public async Task FreeRepositoryStubsRejectEveryPaidPersistenceOperation()
+    {
+        var options = new TextInspectorScoringOptions();
+        var rule = new TextInspectorRulePattern();
+        var policy = new TextInspectorPolicy();
+        var memory = new InMemoryTextInspectorRepository();
+        var detached = new InMemoryTextInspectorRepository(options,new[] { rule },new[] { policy });
+        Assert.NotNull(detached);
+        Assert.Throws<NotSupportedException>(() => _ = memory.CachedOptionsVersion);
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.GetOptionsVersionAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.GetOptionsAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.GetEnabledRulesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.GetAllRulesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.GetEnabledPoliciesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.GetAllPoliciesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.SaveOptionsAsync(options,Guid.Empty));
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.UpsertRuleAsync(rule,Guid.Empty));
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.UpsertPolicyAsync(policy,Guid.Empty));
+        await Assert.ThrowsAsync<NotSupportedException>(() =>
+            memory.SaveConfigurationAsync(options,new[] { rule },new[] { policy },Guid.Empty));
+        var file = new FileTextInspectorRepository("unused-directory");
+        Assert.Throws<NotSupportedException>(() => _ = file.CachedOptionsVersion);
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.GetOptionsVersionAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.GetOptionsAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.GetEnabledRulesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.GetAllRulesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.GetEnabledPoliciesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.GetAllPoliciesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.SaveOptionsAsync(options,Guid.Empty));
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.UpsertRuleAsync(rule,Guid.Empty));
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.UpsertPolicyAsync(policy,Guid.Empty));
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.RefreshAsync());
+    }
+
+    [Fact]
+    public async Task ProConfigurationFacadeFailsExplicitlyWithoutExecutingAnyPaidFeature()
+    {
+        var config = (TextInspectorConfiguration)System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(typeof(TextInspectorConfiguration));
+        Assert.Throws<NotSupportedException>(() => _ = config.Options);
+        Assert.Throws<NotSupportedException>(() => _ = config.Rules);
+        Assert.Throws<NotSupportedException>(() => _ = config.Policies);
+        Assert.Throws<NotSupportedException>(() => config.Compile());
+        Assert.Throws<NotSupportedException>(() => config.CreateRepository());
+        Assert.Throws<NotSupportedException>(() => config.CreateService());
+        var monitor = new TextInspectorConfigurationMonitor(null!,null!,new TextInspectorService());
+        await Assert.ThrowsAsync<NotSupportedException>(() => monitor.RunAsync(TimeSpan.FromSeconds(1)));
+        await Assert.ThrowsAsync<NotSupportedException>(() => monitor.CheckForUpdatesAsync());
+    }
+
+    [Fact]
+    public void EveryProBuilderEntryPointRejectsUnavailablePaidBehavior()
+    {
+        var types = new[]
+        {
+            typeof(TextInspectorBuilder),typeof(TextInspectorRuleBuilder),
+            typeof(TextInspectorRuleContextBuilder),typeof(TextInspectorPolicyBuilder),
+            typeof(TextInspectorPro)
+        };
+        foreach(var type in types)
+        {
+            var instance = type.IsAbstract ? null : System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(type);
+            foreach(var method in type.GetMethods(System.Reflection.BindingFlags.Public |
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Instance |
+                System.Reflection.BindingFlags.DeclaredOnly))
+            {
+                var arguments = method.GetParameters()
+                    .Select(parameter => parameter.ParameterType.IsValueType
+                        ? Activator.CreateInstance(parameter.ParameterType)
+                        : null).ToArray();
+                var error = Assert.Throws<System.Reflection.TargetInvocationException>(() =>
+                    method.Invoke(instance,arguments));
+                Assert.IsType<NotSupportedException>(error.InnerException);
+                Assert.Contains("TextInspector.Pro",error.InnerException!.Message);
+            }
+        }
+    }
+
+    [Fact]
+    public void ProCustomCompilerSignaturesExistButCannotModifyTheFreePreset()
+    {
+        var options = new TextInspectorScoringOptions();
+        var rules = Array.Empty<TextInspectorRulePattern>();
+        var policies = Array.Empty<TextInspectorPolicy>();
+        Assert.Throws<NotSupportedException>(() => TextInspectorEngine.Compile(options,rules));
+        Assert.Throws<NotSupportedException>(() => TextInspectorEngine.Compile(options,rules,policies));
+        Assert.Throws<NotSupportedException>(() => TextInspectorEngine.CompileWithDiagnostics(options,rules));
+        Assert.Throws<NotSupportedException>(() => TextInspectorEngine.CompileWithDiagnostics(options,rules,policies));
+        Assert.NotNull(TextInspectorEngine.Create().Inspect("hello@example.com"));
+    }
+
+    [Fact]
+    public void ExposingProCompatibleEngineOptionsDoesNotAllowMutatingFreeInspection()
+    {
+        var engine = TextInspectorEngine.Create();
+        var before = engine.Inspect("hello@example.com");
+        var options = engine.Options;
+        options.Masking.Enabled = true;
+        options.FalsePositiveExclusions = new[]
+        {
+            new TextInspectorFalsePositiveExclusion
+            {
+                RuleKey = "PII_Email_Address",MatchedText = "hello@example.com"
+            }
+        };
+        var after = engine.Inspect("hello@example.com");
+        Assert.Equal(before.RiskAssessment.RiskScore,after.RiskAssessment.RiskScore);
+        Assert.Equal(before.Evidence.Count,after.Evidence.Count);
+        Assert.Null(after.MaskedText);
+        Assert.False(engine.Options.Masking.Enabled);
+    }
+
+    [Fact]
+    public async Task SharedServiceInterfaceSupportsFreeFunctionalityAndExplicitProOnlyFailures()
+    {
+        ITextInspectorExtendedService inspector = new TextInspectorService();
+        const string text = "Contact hello@example.com";
+        Assert.Equal(inspector.Inspect(text).RiskAssessment.RiskScore,inspector.Analyze(text).RiskScore);
+        Assert.Equal(inspector.Inspect(text,true).MarkedHtml ?? "",inspector.MarkText(text));
+        Assert.NotNull(inspector.CompilationDiagnostics);
+        var error = await Assert.ThrowsAsync<NotSupportedException>(
+            () => inspector.GetOptionsAsync());
+        Assert.Contains("TextInspector.Pro",error.Message);
+    }
+
+    private sealed class LegacyInspector : ITextInspectorService
+    {
+        public TextInspectionResult Inspect(string? text, bool includeMarkedHtml = false)
+            => new TextInspectorService().Inspect(text, includeMarkedHtml);
+    }
+
+    [Fact]
+    public void PublishedFreeInterfaceCanStillBeImplementedWithOnlyInspect()
+    {
+        ITextInspectorService inspector = new LegacyInspector();
+        Assert.NotNull(inspector.Inspect("hello@example.com"));
+        Assert.DoesNotContain(typeof(ITextInspectorService).GetMethods(),
+            method => method.Name != nameof(ITextInspectorService.Inspect));
+    }
+
+}

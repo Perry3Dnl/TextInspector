@@ -1,6 +1,6 @@
 namespace TextInspector;
 
-internal static class TextInspectionReportBuilder
+internal static partial class TextInspectionReportBuilder
 {
     public static TextInspectionReport Build(
         string originalText,
@@ -35,6 +35,7 @@ internal static class TextInspectionReportBuilder
             findings.Add(CreateCategoryFinding(category,evidence,scoringOptions,reportOptions));
         }
 
+        findings.AddRange(CreateLinkedFindings(result, scoringOptions, reportOptions));
         findings = findings
             .OrderByDescending(static finding => finding.ContributesToRisk)
             .ThenByDescending(static finding => finding.RiskLevel)
@@ -79,6 +80,7 @@ internal static class TextInspectionReportBuilder
             RequiresReview = isFlagged,
             Summary = BuildSummary(overallRisk,allFindings,supporting.Length),
             MaskedText = result.MaskedText,
+            LinkedRuleMatches = result.LinkedRuleMatches,
             RiskAssessment = result.RiskAssessment,
             Findings = findings,
             SupportingEvidence = supporting,
@@ -206,6 +208,8 @@ internal static class TextInspectionReportBuilder
                     ? TextInspectionRiskLevel.Informational
                     : findingRisk,
                 DetectionScore = span.DetectionScore,
+                EffectiveSeverity = span.EffectiveSeverity,
+                LinkedRuleKeys = span.LinkedRuleKeys,
                 HighestDetectedSeverity = span.HighestDetectedSeverity,
                 HasScoringEvidence = span.HasScoringEvidence,
                 FindingIds = findingIds,
