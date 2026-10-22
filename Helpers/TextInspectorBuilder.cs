@@ -1,6 +1,7 @@
 namespace TextInspector;
 
 /// <summary>Source-compatible API placeholder. Custom configuration requires TextInspector Pro.</summary>
+[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 public sealed class TextInspectorBuilder
 {
     private TextInspectorBuilder() { }
