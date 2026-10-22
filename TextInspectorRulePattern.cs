@@ -3,7 +3,7 @@ namespace TextInspector;
 /// <summary>
 /// A single match pattern the inspector compiles.
 /// </summary>
-internal class TextInspectorRulePattern
+public class TextInspectorRulePattern
 {
     public TextInspectorRulePattern() { }
     public Guid TextInspectorRuleId { get; set; }
@@ -33,6 +33,9 @@ internal class TextInspectorRulePattern
     /// The full regex still controls detection. Empty/null uses the complete match.
     /// </summary>
     public string? EvidenceGroup { get; set; }
+
+    /// <summary>Pro-compatible evidence capture configuration; custom rule compilation requires TextInspector.Pro.</summary>
+    public TextInspectorEvidenceCaptureMode EvidenceCaptureMode { get; set; } = TextInspectorEvidenceCaptureMode.LastCapture;
 
     /// <summary>Higher-priority rules are evaluated first. This mainly affects fast first-match APIs.</summary>
     public int Priority { get; set; }
