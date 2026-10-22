@@ -248,4 +248,32 @@ public sealed class EditionCompatibilityTests
         await Assert.ThrowsAsync<NotSupportedException>(() => monitor.CheckForUpdatesAsync());
     }
 
+    [Fact]
+    public void EveryProBuilderEntryPointRejectsUnavailablePaidBehavior()
+    {
+        var types = new[]
+        {
+            typeof(TextInspectorBuilder),typeof(TextInspectorRuleBuilder),
+            typeof(TextInspectorRuleContextBuilder),typeof(TextInspectorPolicyBuilder),
+            typeof(TextInspectorPro)
+        };
+        foreach(var type in types)
+        {
+            var instance = type.IsAbstract ? null : Activator.CreateInstance(type);
+            foreach(var method in type.GetMethods(System.Reflection.BindingFlags.Public |
+                System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Instance |
+                System.Reflection.BindingFlags.DeclaredOnly))
+            {
+                var arguments = method.GetParameters()
+                    .Select(parameter => parameter.ParameterType.IsValueType
+                        ? Activator.CreateInstance(parameter.ParameterType)
+                        : null).ToArray();
+                var error = Assert.Throws<System.Reflection.TargetInvocationException>(() =>
+                    method.Invoke(instance,arguments));
+                Assert.IsType<NotSupportedException>(error.InnerException);
+                Assert.Contains("TextInspector.Pro",error.InnerException!.Message);
+            }
+        }
+    }
+
 }
