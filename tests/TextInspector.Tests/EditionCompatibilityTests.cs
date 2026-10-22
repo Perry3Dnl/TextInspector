@@ -198,4 +198,39 @@ public sealed class EditionCompatibilityTests
         Assert.Equal(8,TextInspectorUrlSignalKeys.All.Count);
     }
 
+    [Fact]
+    public async Task FreeRepositoryStubsRejectEveryPaidPersistenceOperation()
+    {
+        var options = new TextInspectorScoringOptions();
+        var rule = new TextInspectorRulePattern();
+        var policy = new TextInspectorPolicy();
+        var memory = new InMemoryTextInspectorRepository();
+        var detached = new InMemoryTextInspectorRepository(options,new[] { rule },new[] { policy });
+        Assert.NotNull(detached);
+        Assert.Throws<NotSupportedException>(() => _ = memory.CachedOptionsVersion);
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.GetOptionsVersionAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.GetOptionsAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.GetEnabledRulesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.GetAllRulesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.GetEnabledPoliciesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.GetAllPoliciesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.SaveOptionsAsync(options,Guid.Empty));
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.UpsertRuleAsync(rule,Guid.Empty));
+        await Assert.ThrowsAsync<NotSupportedException>(() => memory.UpsertPolicyAsync(policy,Guid.Empty));
+        await Assert.ThrowsAsync<NotSupportedException>(() =>
+            memory.SaveConfigurationAsync(options,new[] { rule },new[] { policy },Guid.Empty));
+        var file = new FileTextInspectorRepository("unused-directory");
+        Assert.Throws<NotSupportedException>(() => _ = file.CachedOptionsVersion);
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.GetOptionsVersionAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.GetOptionsAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.GetEnabledRulesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.GetAllRulesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.GetEnabledPoliciesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.GetAllPoliciesAsync());
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.SaveOptionsAsync(options,Guid.Empty));
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.UpsertRuleAsync(rule,Guid.Empty));
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.UpsertPolicyAsync(policy,Guid.Empty));
+        await Assert.ThrowsAsync<NotSupportedException>(() => file.RefreshAsync());
+    }
+
 }
