@@ -10,7 +10,8 @@ public sealed partial class TextInspectorEngine
         TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules)
         => CompileBuiltIn(options, rules);
 
-    public static TextInspectorEngine Compile(
+
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]    public static TextInspectorEngine Compile(
         TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules,
         IEnumerable<TextInspectorPolicy> policies)
         => throw ProRequired();
@@ -19,22 +20,27 @@ public sealed partial class TextInspectorEngine
         TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules)
         => CompileWithDiagnosticsBuiltIn(options, rules);
 
-    public static TextInspectorCompilationResult CompileWithDiagnostics(
+
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]    public static TextInspectorCompilationResult CompileWithDiagnostics(
         TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules,
         IEnumerable<TextInspectorPolicy> policies)
         => throw ProRequired();
 
-    public bool HasMatch(string? text, TextRuleMatchFilter? filter)
+
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]    public bool HasMatch(string? text, TextRuleMatchFilter? filter)
         => throw ProRequired();
 
-    public TextRuleMatch? FindFirstMatch(string? text, TextRuleMatchFilter? filter = null)
+
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]    public TextRuleMatch? FindFirstMatch(string? text, TextRuleMatchFilter? filter = null)
         => throw ProRequired();
 
-    public IReadOnlyList<TextRuleMatch> FindMatches(
+
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]    public IReadOnlyList<TextRuleMatch> FindMatches(
         string? text, TextRuleMatchFilter? filter, int maxMatches = int.MaxValue)
         => throw ProRequired();
 
-    public IReadOnlyList<TextInspectionResult> InspectManyParallel(
+
+    [System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]    public IReadOnlyList<TextInspectionResult> InspectManyParallel(
         IEnumerable<string?> texts, TextInspectionOptions? options = null,
         int maxDegreeOfParallelism = -1)
         => throw ProRequired();
