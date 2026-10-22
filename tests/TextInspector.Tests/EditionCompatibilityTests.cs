@@ -259,7 +259,7 @@ public sealed class EditionCompatibilityTests
         };
         foreach(var type in types)
         {
-            var instance = type.IsAbstract ? null : Activator.CreateInstance(type);
+            var instance = type.IsAbstract ? null : System.Runtime.CompilerServices.RuntimeHelpers.GetUninitializedObject(type);
             foreach(var method in type.GetMethods(System.Reflection.BindingFlags.Public |
                 System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Instance |
                 System.Reflection.BindingFlags.DeclaredOnly))
