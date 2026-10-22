@@ -6,10 +6,11 @@ namespace TextInspector;
 /// <summary>
 /// Built-in scoring options and rules embedded in the assembly.
 /// </summary>
-internal static class TextInspectorPresets
+public static class TextInspectorPresets
 {
     public const string OptionsFileName = "options.json";
     public const string RulesFileName = "rules.json";
+    public const string PoliciesFileName = "policies.json";
 
     internal static readonly JsonSerializerOptions Json = new()
     {
@@ -25,6 +26,14 @@ internal static class TextInspectorPresets
 
     public static IReadOnlyList<TextInspectorRulePattern> LoadRules()
         => Read<List<TextInspectorRulePattern>>(RulesFileName);
+
+    /// <summary>Composite policies require TextInspector Pro.</summary>
+    public static IReadOnlyList<TextInspectorPolicy> LoadPolicies()
+        => throw new NotSupportedException("Composite policies require TextInspector Pro.");
+
+    /// <summary>Writing a configurable preset directory requires TextInspector Pro.</summary>
+    public static void WriteMissing(string directory)
+        => throw new NotSupportedException("Preset file persistence requires TextInspector Pro.");
 
     private static T Read<T>(string fileName)
     {
