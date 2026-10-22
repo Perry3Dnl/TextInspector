@@ -10,7 +10,7 @@ namespace TextInspector;
 /// </summary>
 public sealed partial class TextInspectorEngine
 {
-    internal TextInspectorScoringOptions Options { get; }
+    public TextInspectorScoringOptions Options { get; }
     public IReadOnlyList<TextInspectorDiagnostic> CompilationDiagnostics { get; }
     public int CompiledRuleCount => _rules.Length;
     public int CompiledPrefilteredRuleCount => _rules.Count(static rule => rule.PrefilterTerms.Length > 0);
