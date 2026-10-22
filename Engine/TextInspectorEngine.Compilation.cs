@@ -24,13 +24,13 @@ public sealed partial class TextInspectorEngine
         var disabledCategories = new HashSet<TextInspectorRuleCategory>(options.DisabledCategories);
         var rules = TextInspectorPresets.LoadRules()
             .Where(rule => !disabledKeys.Contains(rule.Key) && !disabledCategories.Contains(rule.Category));
-        return Compile(scoring, rules);
+        return CompileBuiltIn(scoring, rules);
     }
 
-    internal static TextInspectorEngine Compile(TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules)
-        => CompileWithDiagnostics(options, rules).Engine;
+    private static TextInspectorEngine CompileBuiltIn(TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules)
+        => CompileWithDiagnosticsBuiltIn(options, rules).Engine;
 
-    internal static TextInspectorCompilationResult CompileWithDiagnostics(
+    private static TextInspectorCompilationResult CompileWithDiagnosticsBuiltIn(
         TextInspectorScoringOptions options, IEnumerable<TextInspectorRulePattern> rules)
     {
         if(options is null) throw new ArgumentNullException(nameof(options));
