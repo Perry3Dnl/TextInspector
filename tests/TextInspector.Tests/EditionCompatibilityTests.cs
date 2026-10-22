@@ -289,4 +289,25 @@ public sealed class EditionCompatibilityTests
         Assert.NotNull(TextInspectorEngine.Create().Inspect("hello@example.com"));
     }
 
+    [Fact]
+    public void ExposingProCompatibleEngineOptionsDoesNotAllowMutatingFreeInspection()
+    {
+        var engine = TextInspectorEngine.Create();
+        var before = engine.Inspect("hello@example.com");
+        var options = engine.Options;
+        options.Masking.Enabled = true;
+        options.FalsePositiveExclusions = new[]
+        {
+            new TextInspectorFalsePositiveExclusion
+            {
+                RuleKey = "PII_Email_Address",MatchedText = "hello@example.com"
+            }
+        };
+        var after = engine.Inspect("hello@example.com");
+        Assert.Equal(before.RiskAssessment.RiskScore,after.RiskAssessment.RiskScore);
+        Assert.Equal(before.Evidence.Count,after.Evidence.Count);
+        Assert.Null(after.MaskedText);
+        Assert.False(engine.Options.Masking.Enabled);
+    }
+
 }
