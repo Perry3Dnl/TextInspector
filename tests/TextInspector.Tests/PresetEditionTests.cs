@@ -28,8 +28,8 @@ public sealed class PresetEditionTests
     {
         var assembly = typeof(TextInspectorEngine).Assembly;
         var names = assembly.GetExportedTypes().Select(type => type.Name).ToArray();
-        Assert.DoesNotContain("TextInspectorRulePattern", names);
-        Assert.DoesNotContain("TextInspectorRuleContext", names);
+        Assert.Contains("TextInspectorRulePattern", names);
+        Assert.Contains("TextInspectorRuleContext", names);
         Assert.DoesNotContain("TextInspectorPresets", names);
         Assert.DoesNotContain(assembly.GetTypes(), type => type.Name.Contains("Repository") || type.Name.Contains("UrlAnalyzer") || type.Name.Contains("RuntimePolicy"));
         var methods = typeof(TextInspectorEngine).GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
