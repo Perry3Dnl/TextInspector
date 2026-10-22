@@ -7,6 +7,12 @@ public sealed class TextInspectionOptions
     public bool IncludeSnippets { get; init; } = true;
     public bool IncludeContextDetails { get; init; } = true;
 
+    /// <summary>Pro-compatible option. Free does not evaluate composite policies.</summary>
+    public bool IncludePolicyDetails { get; init; } = true;
+
+    /// <summary>Pro-compatible option. Free does not produce URL intelligence observations.</summary>
+    public bool IncludeUrlDetails { get; init; } = true;
+
     /// <summary>Return non-overlapping highlight spans mapped to the original text.</summary>
     public bool IncludeHighlightSpans { get; init; }
 
@@ -27,6 +33,9 @@ public sealed class TextInspectionOptions
     /// Null means no cap.
     /// </summary>
     public int? MaxReturnedEvidence { get; init; }
+
+    /// <summary>Pro-compatible option. Free has no policy matches to limit.</summary>
+    public int? MaxReturnedPolicyMatches { get; init; }
 
     /// <summary>Optional cap on returned highlight spans. Null means no cap.</summary>
     public int? MaxReturnedHighlightSpans { get; init; }
