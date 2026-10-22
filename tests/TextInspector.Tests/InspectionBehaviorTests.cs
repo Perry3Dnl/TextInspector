@@ -57,7 +57,7 @@ public sealed class InspectionBehaviorTests
     public void InputLimitIsEnforcedOnFullAndFastPaths()
     {
         var options = new TextInspectorScoringOptions { MaxInputLength = 3 };
-        var engine = TextInspectorEngine.Compile(options, new[]
+        var engine = TextInspectorEngine.CompileInternal(options, new[]
         {
             new TextInspectorRulePattern
             {
@@ -104,7 +104,7 @@ public sealed class InspectionBehaviorTests
     [Fact]
     public void EvidenceOnlyMatchHasPositiveDetectionScoreWithoutRisk()
     {
-        var engine = TextInspectorEngine.Compile(
+        var engine = TextInspectorEngine.CompileInternal(
             new TextInspectorScoringOptions(),
             new[]
             {
@@ -146,7 +146,7 @@ public sealed class InspectionBehaviorTests
                 MaskCharacter = '*'
             }
         };
-        var engine = TextInspectorEngine.Compile(
+        var engine = TextInspectorEngine.CompileInternal(
             options,
             new[]
             {
@@ -184,7 +184,7 @@ public sealed class InspectionBehaviorTests
     }
 
     private static TextInspectorEngine Engine(params TextInspectorRulePattern[] rules)
-        => TextInspectorEngine.Compile(new TextInspectorScoringOptions(), rules);
+        => TextInspectorEngine.CompileInternal(new TextInspectorScoringOptions(), rules);
 
     private static TextInspectorRulePattern Rule(
         string key,
