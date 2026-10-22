@@ -23,7 +23,7 @@ public sealed class LinkedRuleTests
     {
         if(rules.Length == 0) rules = new[] { Rule("a"), Rule("b"), Rule("c"), Rule("d") };
         rules[0].LinkedRules = new[] { link };
-        return TextInspectorEngine.Compile(Options(), rules);
+        return TextInspectorEngine.CompileInternal(Options(), rules);
     }
 
     [Theory]
@@ -92,7 +92,7 @@ public sealed class LinkedRuleTests
         var a = Rule("a"); var b = Rule("b"); var c = Rule("c");
         var ab = Link(); var ac = Link("AC", "a", "c"); ac.Multiplier = 3;
         a.LinkedRules = new[] { ac, ab };
-        var result = TextInspectorEngine.Compile(Options(), new[] { c, b, a }).Inspect("a b c");
+        var result = TextInspectorEngine.CompileInternal(Options(), new[] { c, b, a }).Inspect("a b c");
         Assert.Equal(80, result.RiskAssessment.TotalRiskPoints); // 30 + 20 + 30
         Assert.Equal(50, result.RiskAssessment.LinkedRuleRiskPoints);
         Assert.Equal(2, result.LinkedRuleMatches.Count);
@@ -101,7 +101,7 @@ public sealed class LinkedRuleTests
         Assert.Equal(3, evidence.RiskMultiplier);
         Assert.Equal(50, result.RiskContributions.Where(item => item.IsLinkedRule).Sum(item => item.RiskPoints));
         ab.Multiplier = 3;
-        var tied = TextInspectorEngine.Compile(Options(), new[] { a, b, c }).Inspect("a b c");
+        var tied = TextInspectorEngine.CompileInternal(Options(), new[] { a, b, c }).Inspect("a b c");
         Assert.Equal(40, Assert.Single(tied.LinkedRuleMatches, item => item.LinkedRuleKey == "AB").EscalationRiskPoints);
         Assert.Equal(20, Assert.Single(tied.LinkedRuleMatches, item => item.LinkedRuleKey == "AC").EscalationRiskPoints);
     }
@@ -235,7 +235,7 @@ public sealed class LinkedRuleTests
         var b = Rule("b"); b.IsEnabled = false;
         Assert.Equal(0, Compile(Link(), Rule("a"), b).CompiledLinkedRuleCount);
         var a = Rule("a"); a.LinkedRules = new[] { Link(), Link() };
-        var duplicate = TextInspectorEngine.Compile(Options(), new[] { a, Rule("b") });
+        var duplicate = TextInspectorEngine.CompileInternal(Options(), new[] { a, Rule("b") });
         Assert.Equal(1, duplicate.CompiledLinkedRuleCount);
         Assert.Contains(duplicate.CompilationDiagnostics, item => item.Kind == TextInspectorDiagnosticKind.InvalidLinkedRule);
     }
