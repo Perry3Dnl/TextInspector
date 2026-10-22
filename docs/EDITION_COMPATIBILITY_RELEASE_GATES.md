@@ -30,3 +30,7 @@
 - [ ] Review product documentation and update changelog without publishing.
 
 **Status:** Development branches only. This document does not certify edition parity, release readiness, or identical default scores.
+
+## Historical public interface compatibility blocker
+
+The Free `ITextInspectorService` and `ITextInspectorDetectionService` interfaces have gained members for Pro parity. Since the core targets `netstandard2.0`, existing third-party implementations may stop compiling or loading against this candidate. Bidirectional reflection parity between the two 1.1.0 editions does **not** establish binary compatibility with previously published packages. Treat this as a release blocker until a historical consumer ABI check passes or the API design is revised without breaking older implementations.
