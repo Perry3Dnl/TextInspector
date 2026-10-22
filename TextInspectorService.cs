@@ -5,7 +5,7 @@ public sealed partial class TextInspectorService : ITextInspectorService, ITextI
 {
     private readonly TextInspectorEngine _engine;
     public TextInspectorService() : this((TextInspectorOptions?)null) { }
-    public TextInspectorService(TextInspectorOptions? options) => _engine = TextInspectorEngine.Create(options);
+    public TextInspectorService(TextInspectorOptions? options = null) => _engine = TextInspectorEngine.Create(options);
     public TextInspectionResult Inspect(string? text, bool includeMarkedHtml = false) => _engine.Inspect(text, includeMarkedHtml);
     public TextInspectionResult Inspect(string? text, TextInspectionOptions? options) => _engine.Inspect(text, options);
     public bool HasMatch(string? text) => _engine.HasMatch(text);
