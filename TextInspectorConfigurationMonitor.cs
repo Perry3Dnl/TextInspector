@@ -1,6 +1,7 @@
 namespace TextInspector;
 
 /// <summary>API-compatible placeholder. Persistent custom configuration requires TextInspector Pro.</summary>
+[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 public sealed class TextInspectorConfigurationMonitor
 {
     private static NotSupportedException Unavailable() => new("Persistence and advanced configuration require TextInspector Pro.");
