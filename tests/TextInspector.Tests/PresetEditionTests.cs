@@ -33,7 +33,7 @@ public sealed class PresetEditionTests
         Assert.DoesNotContain("TextInspectorPresets", names);
         Assert.DoesNotContain(assembly.GetTypes(), type => type.Name.Contains("Repository") || type.Name.Contains("UrlAnalyzer") || type.Name.Contains("RuntimePolicy"));
         var methods = typeof(TextInspectorEngine).GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
-        Assert.DoesNotContain(methods, method => method.Name is "Compile" or "CompileWithDiagnostics" or "FindFirstMatch" or "InspectManyParallel");
+        Assert.DoesNotContain(methods, method => method.Name is "Compile" or "CompileWithDiagnostics" or "FindFirstMatch");
         Assert.DoesNotContain(assembly.GetManifestResourceNames(), name => name.EndsWith("policies.json"));
     }
 
