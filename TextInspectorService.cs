@@ -1,7 +1,7 @@
 namespace TextInspector;
 
 /// <summary>Read-only, reusable service for the embedded TextInspector rules. No persistence or rule mutation.</summary>
-public sealed class TextInspectorService : ITextInspectorService, ITextInspectorDetectionService, ITextInspectorReportService
+public sealed class TextInspectorService : ITextInspectorService, ITextInspectorDetectionService, ITextInspectorMatchService, ITextInspectorReportService
 {
     private readonly TextInspectorEngine _engine;
     public TextInspectorService(TextInspectorOptions? options = null) => _engine = TextInspectorEngine.Create(options);
