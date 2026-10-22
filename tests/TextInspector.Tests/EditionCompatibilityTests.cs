@@ -313,7 +313,7 @@ public sealed class EditionCompatibilityTests
     [Fact]
     public async Task SharedServiceInterfaceSupportsFreeFunctionalityAndExplicitProOnlyFailures()
     {
-        ITextInspectorService inspector = new TextInspectorService();
+        ITextInspectorExtendedService inspector = new TextInspectorService();
         const string text = "Contact hello@example.com";
         Assert.Equal(inspector.Inspect(text).RiskAssessment.RiskScore,inspector.Analyze(text).RiskScore);
         Assert.Equal(inspector.Inspect(text,true).MarkedHtml ?? "",inspector.MarkText(text));
