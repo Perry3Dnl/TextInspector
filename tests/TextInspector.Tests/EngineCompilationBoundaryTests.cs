@@ -51,7 +51,7 @@ public sealed class EngineCompilationBoundaryTests
         var valid = Rule();
         valid.Key = "valid";
         valid.RegexPattern = "working";
-        var compilation = TextInspectorEngine.CompileWithDiagnostics(
+        var compilation = TextInspectorEngine.CompileWithDiagnosticsInternal(
             new TextInspectorScoringOptions(), new[] { invalid, valid });
         Assert.Equal(1, compilation.Engine.CompiledRuleCount);
         Assert.NotEmpty(compilation.Diagnostics);
@@ -66,7 +66,7 @@ public sealed class EngineCompilationBoundaryTests
         low.Key = "low"; low.Priority = -2;
         var high = Rule();
         high.Key = "high"; high.Priority = 10; high.PrefilterTerms = new[] { "MUST" };
-        var compilation = TextInspectorEngine.CompileWithDiagnostics(
+        var compilation = TextInspectorEngine.CompileWithDiagnosticsInternal(
             new TextInspectorScoringOptions(), new[] { low, high });
         Assert.Equal(2, compilation.Engine.CompiledRuleCount);
         Assert.Equal(1, compilation.Engine.CompiledPrefilteredRuleCount);
@@ -80,7 +80,7 @@ public sealed class EngineCompilationBoundaryTests
     {
         var invalid = Rule();
         invalid.Context = new TextInspectorRuleContext { ExcludeAnyRegexPatterns = new[] { "(" } };
-        var result = TextInspectorEngine.CompileWithDiagnostics(new TextInspectorScoringOptions(), new[] { invalid });
+        var result = TextInspectorEngine.CompileWithDiagnosticsInternal(new TextInspectorScoringOptions(), new[] { invalid });
         Assert.Empty(result.Engine.FindMatches("target"));
         Assert.Contains(result.Diagnostics, x => x.Kind == TextInspectorDiagnosticKind.InvalidContextRegex);
     }
@@ -90,7 +90,7 @@ public sealed class EngineCompilationBoundaryTests
     {
         var invalid = Rule();
         invalid.Context = new TextInspectorRuleContext { RequireAnyRuleKeys = new[] { "nonexistent-rule-for-boundary-tests" } };
-        var result = TextInspectorEngine.CompileWithDiagnostics(new TextInspectorScoringOptions(), new[] { invalid });
+        var result = TextInspectorEngine.CompileWithDiagnosticsInternal(new TextInspectorScoringOptions(), new[] { invalid });
         Assert.Contains(result.Diagnostics, x => x.Kind == TextInspectorDiagnosticKind.ContextReferenceNotFound);
     }
 }
