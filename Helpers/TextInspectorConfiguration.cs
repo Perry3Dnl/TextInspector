@@ -1,6 +1,7 @@
 namespace TextInspector;
 
 /// <summary>Portable shape of Pro configuration snapshots. Custom configuration requires Pro.</summary>
+[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 public sealed class TextInspectorConfiguration
 {
     private TextInspectorConfiguration() { }
