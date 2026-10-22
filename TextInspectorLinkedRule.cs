@@ -1,7 +1,7 @@
 namespace TextInspector;
 
 /// <summary>A named link stored on one rule, referencing distinct existing rules in the same inspection.</summary>
-internal sealed class TextInspectorLinkedRule
+public sealed class TextInspectorLinkedRule
 {
     public TextInspectorLinkedRule() { }
     public string Key { get; set; } = "";
