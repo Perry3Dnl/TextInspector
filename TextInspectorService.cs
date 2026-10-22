@@ -25,4 +25,14 @@ public sealed class TextInspectorService : ITextInspectorService, ITextInspector
         => Task.FromException(new NotSupportedException(
             "Update to TextInspector.Pro to use repository reload."));
 
+    /// <summary>
+    /// Pro-only parallel batch inspection. Use InspectMany in Free or update to TextInspector.Pro.
+    /// </summary>
+    /// <exception cref="NotSupportedException">Parallel batch processing requires Pro.</exception>
+    public IReadOnlyList<TextInspectionResult> InspectManyParallel(
+        IEnumerable<string?> texts, TextInspectionOptions? options = null,
+        int maxDegreeOfParallelism = -1)
+        => throw new NotSupportedException("Update to TextInspector.Pro to use parallel batch inspection.");
+
+
 }
