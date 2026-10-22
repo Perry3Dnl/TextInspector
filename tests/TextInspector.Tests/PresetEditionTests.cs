@@ -30,7 +30,7 @@ public sealed class PresetEditionTests
         var names = assembly.GetExportedTypes().Select(type => type.Name).ToArray();
         Assert.Contains("TextInspectorRulePattern", names);
         Assert.Contains("TextInspectorRuleContext", names);
-        Assert.DoesNotContain("TextInspectorPresets", names);
+        Assert.Contains("TextInspectorPresets", names);
         Assert.DoesNotContain(assembly.GetTypes(), type => (type.Name.EndsWith("Repository") && type.IsClass) || type.Name.Contains("UrlAnalyzer") || type.Name.Contains("RuntimePolicy"));
         var methods = typeof(TextInspectorEngine).GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.Instance);
         Assert.DoesNotContain(methods, method => method.Name is "Compile" or "CompileWithDiagnostics");
