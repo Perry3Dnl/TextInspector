@@ -1,6 +1,7 @@
 namespace TextInspector;
 
 /// <summary>Setup helpers for the extended TextInspector Pro edition.</summary>
+[System.Diagnostics.CodeAnalysis.ExcludeFromCodeCoverage]
 public static class TextInspectorPro
 {
     /// <summary>Creates a reusable inspector with the full preset and optional application configuration.</summary>
