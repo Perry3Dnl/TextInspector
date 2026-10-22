@@ -42,8 +42,8 @@ public sealed class EditionCompatibilityFacadeTests
         Assert.True(service.HasMatch("hello@example.com"));
         Assert.True(service.Analyze("hello@example.com").TotalRiskPoints >= 0);
         Assert.Contains("<mark", service.MarkText("hello@example.com"), StringComparison.OrdinalIgnoreCase);
-        Assert.Throws<NotSupportedException>(() => service.GetOptionsAsync());
-        Assert.Throws<NotSupportedException>(() => service.ReloadAsync());
+        Assert.Throws<NotSupportedException>(() => { _ = service.GetOptionsAsync(); });
+        Assert.Throws<NotSupportedException>(() => { _ = service.ReloadAsync(); });
     }
 
     [Fact]
