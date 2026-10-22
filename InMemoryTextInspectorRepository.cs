@@ -6,10 +6,10 @@ public sealed class InMemoryTextInspectorRepository :
     ITextInspectorAtomicConfigurationRepository, ITextInspectorCachedVersionRepository
 {
     private static NotSupportedException Upgrade() => new("Update to TextInspector.Pro to use editable configuration repositories.");
-    public InMemoryTextInspectorRepository() => throw Upgrade();
+    public InMemoryTextInspectorRepository() { }
     public InMemoryTextInspectorRepository(TextInspectorScoringOptions options,
         IEnumerable<TextInspectorRulePattern> rules,
-        IEnumerable<TextInspectorPolicy>? policies = null) => throw Upgrade();
+        IEnumerable<TextInspectorPolicy>? policies = null) { }
 
     public int? CachedOptionsVersion => throw Upgrade();
     public Task<int?> GetOptionsVersionAsync(CancellationToken ct = default) => Task.FromException<int?>(Upgrade());
