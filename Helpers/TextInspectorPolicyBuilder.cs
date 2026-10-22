@@ -3,6 +3,8 @@ namespace TextInspector;
 /// <summary>Pro policy-authoring API compatibility. Free does not evaluate custom policies.</summary>
 public sealed class TextInspectorPolicyBuilder
 {
+    private TextInspectorPolicyBuilder() { }
+
     private static NotSupportedException Upgrade() => new("Update to TextInspector.Pro to author policies.");
     public static TextInspectorPolicyBuilder Create(string key) => throw Upgrade();
     public TextInspectorPolicyBuilder WithId(Guid id) => throw Upgrade();
