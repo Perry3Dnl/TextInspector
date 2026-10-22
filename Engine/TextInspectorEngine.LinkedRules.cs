@@ -106,7 +106,7 @@ public sealed partial class TextInspectorEngine
             evidence[index] = hit with
             {
                 RiskMultiplier = winner.Rule.Multiplier,
-                LinkedEffectiveSeverity = Math.Max(hit.SeverityScore, MultiplyCapped(hit.SeverityScore, winner.Rule.Multiplier, Options.SeverityScaleMax)),
+                LinkedEffectiveSeverity = Math.Max(hit.SeverityScore, MultiplyCapped(hit.SeverityScore, winner.Rule.Multiplier, RuntimeOptions.SeverityScaleMax)),
                 LinkedRuleKeys = active.Select(match => match.Rule.Key).OrderBy(key => key, StringComparer.Ordinal).ToArray()
             };
         }
