@@ -41,7 +41,7 @@ public sealed class EditionCompatibilityFacadeTests
         var service = new TextInspectorService();
         Assert.True(service.HasMatch("hello@example.com"));
         Assert.True(service.Analyze("hello@example.com").TotalRiskPoints >= 0);
-        Assert.Contains("<mark", service.MarkText("hello@example.com"), StringComparison.OrdinalIgnoreCase);
+        Assert.Contains("text-inspector-hit", service.MarkText("hello@example.com"), StringComparison.OrdinalIgnoreCase);
         Assert.Throws<NotSupportedException>(() => { _ = service.GetOptionsAsync(); });
         Assert.Throws<NotSupportedException>(() => { _ = service.ReloadAsync(); });
     }
