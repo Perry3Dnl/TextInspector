@@ -3,7 +3,7 @@ namespace TextInspector;
 /// <summary>
 /// Scoring, matching-safety, and normalization knobs for a compiled inspector.
 /// </summary>
-internal class TextInspectorScoringOptions
+public class TextInspectorScoringOptions
 {
     public TextInspectorScoringOptions() { }
 
